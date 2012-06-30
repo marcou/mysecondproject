@@ -56,6 +56,16 @@ public class MainMenu extends Activity {
         	}
         });
         
+        Button CreatorButton = (Button)findViewById(R.id.Options);
+        CreatorButton.setOnClickListener(new OnClickListener() {
+        	
+        	//@Override
+			public void onClick(View v) {
+        		Intent OptionsIntent = new Intent(MainMenu.this,Options.class);
+        		startActivity(OptionsIntent);
+        	}
+        });
+        
 //        Button CreditsButton = (Button)findViewById(R.id.Credits);
 //        CreditsButton.setOnClickListener(new OnClickListener() {
 //        	
