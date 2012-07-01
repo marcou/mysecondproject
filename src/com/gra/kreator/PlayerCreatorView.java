@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 /**
@@ -20,49 +22,50 @@ import android.view.View.OnTouchListener;
  *
  */
 
-public class PlayerCreatorView extends View implements OnTouchListener {
-    private static final String TAG = "DrawView";
-
-    List<Point> points = new ArrayList<Point>();
-    Paint paint = new Paint();
-
+public class PlayerCreatorView extends SurfaceView implements OnTouchListener {
+	private LogoPainter painter;
+	private PlayerCreatorLoopThread thread;
+	
     public PlayerCreatorView(Context context) {
         super(context);
         setFocusable(true);
         setFocusableInTouchMode(true);
-
         this.setOnTouchListener(this);
-
-        paint.setColor(Color.WHITE);
-        paint.setAntiAlias(true);
+        painter = new LogoPainter(100,200);
+    	thread = new PlayerCreatorLoopThread(this);
+        getHolder().addCallback(new SurfaceHolder.Callback() {
+               //@Override
+               public void surfaceDestroyed(SurfaceHolder holder) {
+                      boolean retry = true;
+                      thread.setRunning(false);
+                      while (retry) {
+                             try {
+                            	 thread.join();
+                                   retry = false;
+                             } catch (InterruptedException e) {}
+                      }
+               }
+               //@Override
+               public void surfaceCreated(SurfaceHolder holder) {
+            	   thread.setRunning(true);
+            	   thread.start();
+	            }
+	            //@Override
+	            public void surfaceChanged(SurfaceHolder holder, int format,int width, int height) {
+	            	
+	            }
+        }); 
     }
 
     @Override
     public void onDraw(Canvas canvas) {
-        for (Point point : points) {
-            canvas.drawCircle(point.x, point.y, 5, paint);
-            // Log.d(TAG, "Painting: "+point);
-        }
+        painter.onDraw(canvas);
     }
 
     public boolean onTouch(View view, MotionEvent event) {
-        // if(event.getAction() != MotionEvent.ACTION_DOWN)
-        // return super.onTouchEvent(event);
-        Point point = new Point();
-        point.x = event.getX();
-        point.y = event.getY();
-        points.add(point);
-        invalidate();
-        Log.d(TAG, "point: " + point);
+    	float x = event.getX();
+        float y = event.getY();
+        painter.collision((int)x, (int)y);
         return true;
-    }
-}
-
-class Point {
-    float x, y;
-
-    @Override
-    public String toString() {
-        return x + ", " + y;
     }
 }
