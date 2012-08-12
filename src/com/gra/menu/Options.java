@@ -7,9 +7,11 @@ import android.view.WindowManager;
 
 import com.gra.R;
 import com.gra.kreator.PlayerCreatorView;
+import com.gra.minigra.MiniGame1View;
 
 public class Options extends Activity {
-	PlayerCreatorView view;
+	//PlayerCreatorView view;
+	MiniGame1View view;
     /** Called when the activity is first created. */
 //    @Override
 //    public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,10 @@ public class Options extends Activity {
                                          WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        view = new PlayerCreatorView(this);
+//        view = new PlayerCreatorView(this);
+//        setContentView(view);
+//        view.requestFocus();
+        view = new MiniGame1View(this);
         setContentView(view);
         view.requestFocus();
     }
