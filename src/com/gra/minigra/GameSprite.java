@@ -10,8 +10,8 @@ import android.graphics.Rect;
 
 enum spriteType{coin};
 
-public class MiniGameSprite {
-	private MiniGame1View gameView;
+public class GameSprite {
+	private GameView gameView;
     private Bitmap bmp;
     
     private int x;
@@ -28,9 +28,9 @@ public class MiniGameSprite {
     private int frames;
     private boolean animated = false;
     
-    private List<MiniGameSprite> sprites;
+    private List<GameSprite> sprites;
 
-    public MiniGameSprite(MiniGame1View gameView, List<MiniGameSprite> sprites, int x, int y,int MaxLife, spriteType st) {
+    public GameSprite(GameView gameView, List<GameSprite> sprites, int x, int y,int MaxLife, spriteType st) {
     	this.st = st;
     	this.gameView = gameView;
     	this.sprites = sprites;

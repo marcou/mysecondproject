@@ -6,12 +6,12 @@ import android.graphics.Canvas;
 	 * watek generujacy petle kreatora
 	 */
 
-public class MiniGame1LoopThread extends Thread {
+public class GameLoopThread extends Thread {
        static final long FPS = 15;
-       private MiniGame1View view;
+       private GameView view;
        private boolean running = false;
        
-       public MiniGame1LoopThread(MiniGame1View view) {
+       public GameLoopThread(GameView view) {
            this.view = view;
        }
 

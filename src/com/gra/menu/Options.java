@@ -7,11 +7,11 @@ import android.view.WindowManager;
 
 import com.gra.R;
 import com.gra.kreator.PlayerCreatorView;
-import com.gra.minigra.MiniGame1View;
+import com.gra.minigra.GameView;
 
 public class Options extends Activity {
 	//PlayerCreatorView view;
-	MiniGame1View view;
+	GameView view;
     /** Called when the activity is first created. */
 //    @Override
 //    public void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class Options extends Activity {
 //        view = new PlayerCreatorView(this);
 //        setContentView(view);
 //        view.requestFocus();
-        view = new MiniGame1View(this);
+        view = new GameView(this);
         setContentView(view);
         view.requestFocus();
     }

@@ -24,7 +24,7 @@ import android.util.Log;
  */
 public class Ball{
 
-	private MiniGame1View view;
+	private GameView view;
 	
 	private float velocity;		//predkosc kulki
 	private float X_speed;		//predkosc w plaszczyznie X
@@ -45,7 +45,7 @@ public class Ball{
 	private List<Ball> balls;
 	private Paint paint = new Paint();
 	
-	public Ball(MiniGame1View gameView, List<Ball> balls, float x_position, float y_position, float velocity, float direction, float radius, float mass, float elasticity, int life){
+	public Ball(GameView gameView, List<Ball> balls, float x_position, float y_position, float velocity, float direction, float radius, float mass, float elasticity, int life){
 		
 		this.view = gameView;
 		

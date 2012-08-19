@@ -9,8 +9,8 @@ import android.view.WindowManager;
  * @author Szpdada
  * activity do kreatora gracza
  */
-public class MiniGame1Activity extends Activity {
-	    MiniGame1View view;
+public class GameActivity extends Activity {
+	    GameView view;
 
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class MiniGame1Activity extends Activity {
 	                                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-	        view = new MiniGame1View(this);
+	        view = new GameView(this);
 	        setContentView(view);
 	        view.requestFocus();
 	    }
