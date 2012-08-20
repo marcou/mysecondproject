@@ -14,6 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 /**
  * 
  * @author Szpada
@@ -23,6 +24,15 @@ import android.view.View.OnTouchListener;
  */
 
 public class GameView extends SurfaceView{
+	
+	//test do przyciskow
+	private boolean down = false;
+	private boolean up = false;
+	private long startTime=0;
+	private long endTime=0;
+	private long touchTime;
+	
+	
 	private GameLoopThread thread;
 	
 	private List<Ball> balls = new ArrayList<Ball>();	//lista kulek
@@ -33,13 +43,14 @@ public class GameView extends SurfaceView{
 	
 	private static float world_gravity = 9.8f;	//grawitacja danego swiata
 	
-	private long coolDown = 300;	//co ile mozna kliknac w ekran
+	private long coolDown = 100;	//co ile mozna kliknac w ekran
 	private long lastClick;	//czas ostatniego klikniecia
 	
     public GameView(Context context) {
         super(context);
         setFocusable(true);
         setFocusableInTouchMode(true);
+        setLongClickable(true);
         //this.setOnTouchListener(this);
     	thread = new GameLoopThread(this);
         getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -69,10 +80,10 @@ public class GameView extends SurfaceView{
     public void createSprites(){
     	paint = new Paint();
     	paint.setColor(Color.BLACK);
-    	earth = new Earth(this, 240, 400, 200, 50, 10.0);
-    	player = new Player(this, 240, 200, 10, 1, 270);
+    	earth = new Earth(this, 240, 400, 2000, 50, 10.0);
+    	player = new Player(this, 240, 340, 1, 10, 270);
     	
-    	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());   
     }
     
     @Override
@@ -83,11 +94,25 @@ public class GameView extends SurfaceView{
     	canvas.drawText("X : " + player.getX(), 240, 10, paint);
     	canvas.drawText("Y : " + player.getY(), 240, 20, paint);
     	canvas.drawText("Angle : " + player.getAngle(), 240, 30, paint);
+    	canvas.drawText("On_Ground : " + player.isOn_ground(), 240, 40, paint);
+    	
+//    	canvas.drawText("UP : " + up, 140, 10, paint);
+//    	canvas.drawText("DOWN : " + down, 140, 20, paint);
+
     	paint.setColor(Color.BLACK);
     	
     	earth.onDraw(canvas);
     	player.onDraw(canvas);
+    	
+    	resolveGravity();
     }
+    
+    public void resolveGravity(){
+    	if(!player.isOn_ground()){
+    		player.resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
+    	}
+    }
+    
     public void checkCollision(){
     	for(int i = 0; i < balls.size(); i++){
     		for(int j = i + 1; j < balls.size(); j++){
@@ -100,39 +125,81 @@ public class GameView extends SurfaceView{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+    	
+    	float x = event.getX();
+        float y = event.getY();
+        if(event.getAction()==MotionEvent.ACTION_DOWN){
+        	if(y > 400){
+        		if(player.isOn_ground()){
+        			player.jump();
+        		}
+        	}
+        	else{
+	        	if(x < 240){
+		        	player.move(false);
+	        	}
+	        	if(x > 240){
+		        	player.move(true);
+	        	}
+        	}
+    	 }
+    	 if(event.getAction()==MotionEvent.ACTION_UP){
+    		 //
+    	 }
+    		return super.onTouchEvent(event);		
+    	}
+    	
+    	/*
     	if(System.currentTimeMillis() - lastClick > coolDown) {
     		lastClick = System.currentTimeMillis();
 	    	float x = event.getX();
 	        float y = event.getY();
 	        Random rand = new Random();
 	        
-	        boolean isReleased = event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL;
-	        boolean isPressed = event.getAction() == MotionEvent.ACTION_DOWN;
-
-	        if (isReleased) {
-	        	//
-	        } 
-	        if (isPressed) {
+	        //Log.d("onTouchEvent", "EVENT : " + event.getAction());
+	        if(event.getAction() == MotionEvent.ACTION_DOWN){
+	             //record the start time
 	        	if(x < 240){
 		        	player.move(false);
 		        }
-		        if(x > 240){
+	        	if(x > 240){
 		        	player.move(true);
-		        };
-	        }
+	        	}
+	             startTime = event.getEventTime();
 
-	        
-//	        if(event.getAction() == MotionEvent.ACTION_DOWN ){
-//		        if(x < 240){
-//		        	player.move(false);
-//		        }
-//		        if(x > 240){
-//		        	player.move(true);
-//		        }
-//	        }
-    	}
-    	return false;
+	             Log.d("LC", "IN DOWN");
+	          }else if(event.getAction() == MotionEvent.ACTION_UP){
+	             //record the end time
+	             endTime = event.getEventTime();
+	             Log.d("LC", "IN UP");
+	          }else if(event.getAction() == MotionEvent.ACTION_MOVE){
+	              Log.d("LC", "IN move");
+	              if(x < 240){
+			        	player.move(false);
+	              }
+		        	if(x > 240){
+			        	player.move(true);
+		        	}
+	              endTime=0;
+	          }
+	          //verify
+	          if(endTime - startTime >= 10){
+	              Log.d("LC", "time touched greater than 10ms");
+		              if(x < 240){
+				        	player.move(false);
+		              }
+			        	if(x > 240){
+				        	player.move(true);
+			        	}
+	        	startTime=0; 
+	        	endTime=0;
+	        	return false; //notify that you handled this event (do not propagate)
+	          }
+    		}
+        return true;//propogate to enable drag
+
     }
+    */
     public void resolveCollision(Ball ball1, Ball ball2){
     	/*
     	 * kolizje 2D moja wersja :/

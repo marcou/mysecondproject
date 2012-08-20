@@ -3,6 +3,7 @@ package com.gra.minigra;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
  * 
@@ -14,6 +15,13 @@ public class Player {
 
 	private GameView view;
 
+	private int speed = 3;
+	private double jump_power = 5.0;
+	private double current_jump_power;
+	
+	private double x_speed;		//predkosc w plaszczyznie X
+	private double y_speed;		//predkosc w plaszczyznie Y
+	
 	private int x;
 	private int y;
 	
@@ -28,7 +36,7 @@ public class Player {
 	
 	private Paint paint;
 	
-	public Player(GameView view, int x, int y, int radius, int mass, int degree){
+	public Player(GameView view, int x, int y,  int mass, int radius, int degree){
 		this.view = view;
 		this.x = x;
 		this.y = y;
@@ -56,38 +64,97 @@ public class Player {
 		if(clockwise){
 			//gracz jest na ziemi
 			if(on_ground){
-				if(angle < 360){
-					this.angle++;
+				if(angle + speed < 360){
+					this.angle += this.speed;
 				}
-				else if(angle == 360){
-					this.angle = 0;
+				else if(angle + speed >= 360){
+					this.angle = angle - 360 + speed;
 				}
 				this.x = (int)(		Math.cos(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_x		);
 				this.y = (int)(		Math.sin(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_y		);
 			}
 			//gracz jest w powietrzu
 			else{
-				
+				if(angle + speed < 360){
+					this.angle += this.speed;
+				}
+				else if(angle + speed >= 360){
+					this.angle = angle - 360 + speed;
+				}
+				this.x = (int)(		Math.cos(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_x		);
+				this.y = (int)(		Math.sin(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_y		);
 			}
 		}
 		//przeciwnie do ruchu wskazowek zegara
 		else{
 			//gracz jest na ziemi
 			if(on_ground){
-				if(angle > 0){
-					this.angle--;
+				if(angle - speed > 0){
+					this.angle -= this.speed;
 				}
-				else if(angle == 0){
-					this.angle = 360;
+				else if(angle - speed <= 0){
+					this.angle = angle + 360 - speed;
 				}
 				this.x = (int)(		Math.cos(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_x		);
 				this.y = (int)(		Math.sin(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_y		);
 			}
 			//gracz jest w powietrzu
 			else{
-				
+				if(angle + speed < 360){
+					this.angle += this.speed;
+				}
+				else if(angle + speed >= 360){
+					this.angle = angle - 360 + speed;
+				}
+				this.x = (int)(		Math.cos(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_x		);
+				this.y = (int)(		Math.sin(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_y		);
 			}
 		}
+	}
+	
+	public void resolveGravity(double gravity, int mass, int radius){
+		this.earth_radius = radius;
+		double distance = (Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2));
+		double power = (gravity * mass * this.mass)/(distance);	//wzor na sile grawitacji
+		Log.d("grawitacja", "sila grawitacji : " + power);
+		//jesli sila wyrzutu jest mniejsza od grawitacji
+		Log.d("grawitacja", "sila podskoku : " + current_jump_power);
+		if(current_jump_power - power < 0){
+			power = power - current_jump_power;
+			current_jump_power = 0;
+			//spadamy z sila power - current_jump_power
+			resolvePower(power, false);
+		}
+		else{
+			current_jump_power -= power;
+			resolvePower(power, true);
+		}
+	}
+	
+	public void jump(){
+		current_jump_power = jump_power;
+		on_ground = false;
+	}
+	//w pierwszej zmiennej znajduje sie sila z jaka
+	//gracz sie unosi/opada (druga zmienna)
+	//sila jest wypadkowa grawitacji i sily wyskoku
+	public void resolvePower(double power, boolean move_up){	
+		x_speed = Math.cos(angle) * power;	//obliczenie skladowej X						
+		y_speed = Math.sin(angle) * power;	//obliczenie skladowej Y
+		
+		if(!move_up){
+			x_speed = -x_speed;
+			y_speed = -y_speed;
+		}
+		this.x += x_speed;
+		this.y += y_speed;
+		
+		//jesli kulka spadnie "za nisko" ustawaimy ja na wyjsciawa pozycje
+//		if(Math.pow((Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2)),0.5) < this.radius + this.earth_radius){
+//			on_ground = true;
+//			this.x = (int)(		Math.cos(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_x		);
+//			this.y = (int)(		Math.sin(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_y		);
+//		}
 	}
 	
 	public GameView getView() {
