@@ -1,4 +1,4 @@
-package com.gra.minigra;
+package com.gra.gra;
 
 import java.util.List;
 

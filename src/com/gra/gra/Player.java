@@ -1,4 +1,4 @@
-package com.gra.minigra;
+package com.gra.gra;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,7 +16,7 @@ public class Player {
 	private GameView view;
 
 	private int speed = 3;
-	private double jump_power = 12.5;
+	private double jump_power = 14.5;
 	private double current_jump_power;
 	
 	private double x_speed;		//predkosc w plaszczyznie X
@@ -45,7 +45,7 @@ public class Player {
 		this.angle = degree;
 		
 		paint = new Paint();
-		paint.setColor(Color.GREEN);
+		paint.setColor(Color.YELLOW);
 	}
 	
 	public void onDraw(Canvas canvas){
@@ -118,12 +118,13 @@ public class Player {
 	}
 	
 	public void resolveGravity(double gravity, int mass, int radius){
+		//ZREZYGNOWALEM Z GRAWITACJI ZALEZNEJ OD ODLEGLOSCI BO TA KURWA WYLATUJE W KOSMOS
 		this.earth_radius = radius;
 		double distance = (Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2));
-		double power = (gravity * mass * this.mass)/(distance);	//wzor na sile grawitacji
-		Log.d("grawitacja", "sila grawitacji : " + power);
+		double power = gravity;//(gravity * mass * this.mass)/(distance);	//wzor na sile grawitacji
+		//Log.d("grawitacja", "sila grawitacji : " + power);
 		//jesli sila wyrzutu jest mniejsza od grawitacji
-		Log.d("grawitacja", "sila podskoku : " + current_jump_power);
+		//Log.d("grawitacja", "sila podskoku : " + current_jump_power);
 		if(current_jump_power <= 0){
 			current_jump_power -= power;
 			//power = power + current_jump_power;
@@ -152,8 +153,8 @@ public class Player {
 			x_speed = -x_speed;
 			y_speed = -y_speed;
 		}
-		Log.d("resolvePower", "X speed : " + x_speed);
-		Log.d("resolvePower", "Y speed : " + y_speed);
+		//Log.d("resolvePower", "X speed : " + x_speed);
+		//Log.d("resolvePower", "Y speed : " + y_speed);
 		
 		this.x += x_speed;
 		this.y += y_speed;

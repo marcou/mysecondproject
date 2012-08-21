@@ -1,4 +1,4 @@
-package com.gra.minigra;
+package com.gra.gra;
 
 import java.util.List;
 
@@ -9,6 +9,10 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
+
+/*==================================================================================================*
+ *			MARTWA KLASA - poki co sie nie przyda ale jej nie wydupiam z sentymentu czy cos :/		*
+ *==================================================================================================*/
 /**
  * @author Szpada
  * 

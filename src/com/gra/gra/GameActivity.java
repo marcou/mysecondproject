@@ -1,4 +1,4 @@
-package com.gra.minigra;
+package com.gra.gra;
 
 import android.app.Activity;
 import android.os.Bundle;

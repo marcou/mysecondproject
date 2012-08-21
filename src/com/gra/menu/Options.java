@@ -6,8 +6,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.gra.R;
+import com.gra.gra.GameView;
 import com.gra.kreator.PlayerCreatorView;
-import com.gra.minigra.GameView;
 
 public class Options extends Activity {
 	//PlayerCreatorView view;

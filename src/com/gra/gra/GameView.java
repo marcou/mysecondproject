@@ -1,4 +1,4 @@
-package com.gra.minigra;
+package com.gra.gra;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +38,9 @@ public class GameView extends SurfaceView{
 	private List<Ball> balls = new ArrayList<Ball>();	//lista kulek
 	private Earth earth;	//ziemia
 	private Player player;	//gracz
+	private List<FlyingObject> flyingObjects = new ArrayList<FlyingObject>();//lista obiektow latajacych 
 	
 	private Paint paint;
-	
-	private static float world_gravity = 9.8f;	//grawitacja danego swiata
 	
 	private long coolDown = 100;	//co ile mozna kliknac w ekran
 	private long lastClick;	//czas ostatniego klikniecia
@@ -78,33 +77,73 @@ public class GameView extends SurfaceView{
         }); 
     }
     public void createSprites(){
+    	Log.d("START PROGRAMU", "=============================================");
+    	Log.d("==============", "=============================================");
+    	Log.d("START PROGRAMU", "=============================================");
     	paint = new Paint();
     	paint.setColor(Color.BLACK);	//x		y		mass	radius	gravity
-    	earth = new Earth	(this, 		240, 	400, 	2000, 	100, 	9.8);
+    	earth = new Earth	(this, 		240, 	400, 	300, 	100, 	2.8);
     									//x		y		mass	radius	angle
-    	player = new Player	(this, 		240, 	340, 	1, 		10, 	270);
+    	player = new Player	(this, 		240, 	290, 	1, 		10, 	270);
+    	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	player.setY(earth.getY() - earth.getRadius() - player.getRadius());
     	
-    	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());   
+    	FlyingObject fo1 = 				//x		y		speed	angle	mass	radius
+    	new FlyingObject	(this, 		320, 	10, 	0.0, 	0, 	10, 	10);
+    	
+    	fo1.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	flyingObjects.add(fo1);
+    	
+    	FlyingObject fo2 = 				//x		y		speed	angle	mass	radius
+    	   new FlyingObject	(this, 		210, 	700, 	0.0, 	90, 	20, 	10);
+    	    	
+    	fo2.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	//flyingObjects.add(fo2);
+    	
+    	FlyingObject fo3 = 				//x		y		speed	angle	mass	radius
+    	   new FlyingObject	(this, 		50, 	300, 	0.0, 	90, 	20, 	10);
+    	    	    	
+    	fo2.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	//flyingObjects.add(fo3);
+    	
+    	FlyingObject fo4 = 				//x		y		speed	angle	mass	radius
+    	   new FlyingObject	(this, 		430, 	401, 	1.0, 	90, 	20, 	10);
+    	    	    	
+    	fo2.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	//flyingObjects.add(fo4);
+    	
     }
     
     @Override
     public void onDraw(Canvas canvas) {
     	canvas.drawRect(0, 0, 480, 800, this.paint);
     	
-    	paint.setColor(Color.GREEN);
-    	canvas.drawText("X : " + player.getX(), 240, 10, paint);
-    	canvas.drawText("Y : " + player.getY(), 240, 20, paint);
-    	canvas.drawText("Angle : " + player.getAngle(), 240, 30, paint);
-    	canvas.drawText("On_Ground : " + player.isOn_ground(), 240, 40, paint);
+    	//informacje o graczu
+//    	paint.setColor(Color.GREEN);
+//    	canvas.drawText("X : " + player.getX(), 240, 10, paint);
+//    	canvas.drawText("Y : " + player.getY(), 240, 20, paint);
+//    	canvas.drawText("Angle : " + player.getAngle(), 240, 30, paint);
+//    	canvas.drawText("On_Ground : " + player.isOn_ground(), 240, 40, paint);
     	
-//    	canvas.drawText("UP : " + up, 140, 10, paint);
-//    	canvas.drawText("DOWN : " + down, 140, 20, paint);
+    	//informacje o asteroidzie
+    	paint.setColor(Color.RED);
+    	for(int i = flyingObjects.size()-1; i >= 0; i--){
+    		canvas.drawText("X : " + flyingObjects.get(i).getX(), i * 120, 10, paint);
+        	canvas.drawText("Y : " + flyingObjects.get(i).getY(), i * 120, 20, paint);
+        	canvas.drawText("Angle : " + flyingObjects.get(i).getAngle(), i * 120, 30, paint);
+        	canvas.drawText("On_Ground : " + flyingObjects.get(i).isOn_ground(), i * 120, 40, paint);
+    	}
 
     	paint.setColor(Color.BLACK);
     	
     	earth.onDraw(canvas);
     	player.onDraw(canvas);
-    	
+    	for(int i = flyingObjects.size()-1; i >= 0; i--){
+    		flyingObjects.get(i).onDraw(canvas);
+    		if(!flyingObjects.get(i).isOn_ground()){
+    			flyingObjects.get(i).resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
+    		}
+    	}
     	resolveGravity();
     }
     

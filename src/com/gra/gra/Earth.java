@@ -1,4 +1,4 @@
-package com.gra.minigra;
+package com.gra.gra;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -31,7 +31,7 @@ public class Earth {
 		this.gravity = gravity;
 		
 		this.paint = new Paint();
-		paint.setColor(Color.MAGENTA);
+		paint.setColor(Color.LTGRAY);
 	}
 	public GameView getView() {
 		return view;
