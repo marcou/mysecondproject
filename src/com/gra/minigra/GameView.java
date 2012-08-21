@@ -79,9 +79,10 @@ public class GameView extends SurfaceView{
     }
     public void createSprites(){
     	paint = new Paint();
-    	paint.setColor(Color.BLACK);
-    	earth = new Earth(this, 240, 400, 2000, 50, 10.0);
-    	player = new Player(this, 240, 340, 1, 10, 270);
+    	paint.setColor(Color.BLACK);	//x		y		mass	radius	gravity
+    	earth = new Earth	(this, 		240, 	400, 	2000, 	100, 	9.8);
+    									//x		y		mass	radius	angle
+    	player = new Player	(this, 		240, 	340, 	1, 		10, 	270);
     	
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());   
     }

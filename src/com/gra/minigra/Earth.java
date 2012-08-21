@@ -14,15 +14,15 @@ public class Earth {
 	
 	private GameView view;
 	
-	private int x;			//pozycja X srodka
-	private int y;			//pozycja Y srodka
+	private float x;			//pozycja X srodka
+	private float y;			//pozycja Y srodka
 	private int mass;		//masa ziemi
 	private int radius; 	//promien ziemi
 	private double gravity;	//stala grawitacyjna
 	
 	private Paint paint;
 	
-	public Earth(GameView view, int x, int y, int mass, int radius, double gravity){
+	public Earth(GameView view, float x, float y, int mass, int radius, double gravity){
 		this.view = view;
 		this.x = x;
 		this.y = y;
@@ -39,16 +39,16 @@ public class Earth {
 	public void setView(GameView view) {
 		this.view = view;
 	}
-	public int getX() {
+	public float getX() {
 		return x;
 	}
-	public void setX(int x) {
+	public void setX(float x) {
 		this.x = x;
 	}
-	public int getY() {
+	public float getY() {
 		return y;
 	}
-	public void setY(int y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 	public int getMass() {
