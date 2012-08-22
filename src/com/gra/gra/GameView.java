@@ -82,36 +82,34 @@ public class GameView extends SurfaceView{
     	Log.d("START PROGRAMU", "=============================================");
     	paint = new Paint();
     	paint.setColor(Color.BLACK);	//x		y		mass	radius	gravity
-    	earth = new Earth	(this, 		240, 	400, 	300, 	100, 	2.8);
+    	earth = new Earth	(this, 		240, 	400, 	400, 	100, 	2.8);
     									//x		y		mass	radius	angle
     	player = new Player	(this, 		240, 	290, 	1, 		10, 	270);
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY(earth.getY() - earth.getRadius() - player.getRadius());
     	
-    	FlyingObject fo1 = 				//x		y		speed	angle	mass	radius
-    	new FlyingObject	(this, 		320, 	10, 	0.0, 	0, 	10, 	10);
+    	Asteroid a1 = new Asteroid(this, 10, 10, 0, 0, 10, 10);
+    	flyingObjects.add(a1);
     	
-    	fo1.set_earth(earth.getX(), earth.getY(), earth.getRadius());
-    	flyingObjects.add(fo1);
+    	FlyingObject fo1 = 				//x		y		speed	angle	mass	radius
+    	new FlyingObject	(this, 		20, 	10, 	2.0, 	30, 	20, 	10);
+    	//flyingObjects.add(fo1);
     	
     	FlyingObject fo2 = 				//x		y		speed	angle	mass	radius
-    	   new FlyingObject	(this, 		210, 	700, 	0.0, 	90, 	20, 	10);
-    	    	
-    	fo2.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	   new FlyingObject	(this, 		210, 	700, 	4.0, 	90, 	20, 	10);
     	//flyingObjects.add(fo2);
     	
     	FlyingObject fo3 = 				//x		y		speed	angle	mass	radius
-    	   new FlyingObject	(this, 		50, 	300, 	0.0, 	90, 	20, 	10);
-    	    	    	
-    	fo2.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	   new FlyingObject	(this, 		430, 	200, 	3.0, 	0, 		20, 	10);   	    	
     	//flyingObjects.add(fo3);
     	
     	FlyingObject fo4 = 				//x		y		speed	angle	mass	radius
-    	   new FlyingObject	(this, 		430, 	401, 	1.0, 	90, 	20, 	10);
-    	    	    	
-    	fo2.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	   new FlyingObject	(this, 		430, 	600, 	3.0, 	130, 	20, 	10);
     	//flyingObjects.add(fo4);
     	
+    	for(int i = 0; i < flyingObjects.size(); i++){
+    		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    	}
     }
     
     @Override
@@ -119,29 +117,45 @@ public class GameView extends SurfaceView{
     	canvas.drawRect(0, 0, 480, 800, this.paint);
     	
     	//informacje o graczu
-//    	paint.setColor(Color.GREEN);
-//    	canvas.drawText("X : " + player.getX(), 240, 10, paint);
-//    	canvas.drawText("Y : " + player.getY(), 240, 20, paint);
-//    	canvas.drawText("Angle : " + player.getAngle(), 240, 30, paint);
-//    	canvas.drawText("On_Ground : " + player.isOn_ground(), 240, 40, paint);
+    	paint.setColor(Color.GREEN);
+    	canvas.drawText("X : " + player.getX(), 240, 10, paint);
+    	canvas.drawText("Y : " + player.getY(), 240, 20, paint);
+    	canvas.drawText("Angle : " + player.getAngle(), 240, 30, paint);
+    	canvas.drawText("On_Ground : " + player.isOn_ground(), 240, 40, paint);
+    	canvas.drawText("Points : " + player.getPoints(), 240, 50, paint);
     	
     	//informacje o asteroidzie
-    	paint.setColor(Color.RED);
-    	for(int i = flyingObjects.size()-1; i >= 0; i--){
-    		canvas.drawText("X : " + flyingObjects.get(i).getX(), i * 120, 10, paint);
-        	canvas.drawText("Y : " + flyingObjects.get(i).getY(), i * 120, 20, paint);
-        	canvas.drawText("Angle : " + flyingObjects.get(i).getAngle(), i * 120, 30, paint);
-        	canvas.drawText("On_Ground : " + flyingObjects.get(i).isOn_ground(), i * 120, 40, paint);
-    	}
+//    	paint.setColor(Color.RED);
+//    	for(int i = flyingObjects.size()-1; i >= 0; i--){
+//    		canvas.drawText("X : " + flyingObjects.get(i).getX(), i * 120, 10, paint);
+//        	canvas.drawText("Y : " + flyingObjects.get(i).getY(), i * 120, 20, paint);
+//        	canvas.drawText("Angle : " + (int)flyingObjects.get(i).getAngle(), i * 120, 30, paint);
+//        	canvas.drawText("On_Ground : " + flyingObjects.get(i).isOn_ground(), i * 120, 40, paint);
+//    	}
 
     	paint.setColor(Color.BLACK);
     	
     	earth.onDraw(canvas);
     	player.onDraw(canvas);
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
+    		//rysowanie obiektow
     		flyingObjects.get(i).onDraw(canvas);
+    		//przesuwanie obiektow
     		if(!flyingObjects.get(i).isOn_ground()){
     			flyingObjects.get(i).resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
+    		}
+    		//sprawdzenie kolizji miedzy obiektami latajacymi
+    		for(int j = i - 1; j >= 0; j--){
+    			if(flyingObjects.get(i).checkCollision(flyingObjects.get(j).getX(), flyingObjects.get(j).getY(), flyingObjects.get(j).getRadius())){
+    				//rozwiazanie kolizji
+    				flyingObjects.get(i).resolveCollision();
+    				flyingObjects.get(j).resolveCollision();
+    			}
+    			
+    		}
+    		//sprawdzenie kolizji gracza z obiektami latajacymi
+    		if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius())){
+    			player.resolveCollision(flyingObjects.get(i));
     		}
     	}
     	resolveGravity();

@@ -36,6 +36,8 @@ public class Player {
 	
 	private Paint paint;
 	
+	private long points = 100;		//punkty gracza
+	
 	public Player(GameView view, float x, float y,  int mass, int radius, int degree){
 		this.view = view;
 		this.x = x;
@@ -165,6 +167,27 @@ public class Player {
 			this.x = (float) (		Math.cos(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_x		);
 			this.y = (float) (		Math.sin(Math.toRadians(this.angle)) * (this.radius + this.earth_radius) + this.earth_y		);
 		}
+	}
+	
+	public boolean checkCollision(float x, float y, int radius) {
+		if(Math.pow(Math.pow(x - this.x,2) + Math.pow(y - this.y,2),0.5) <= this.radius + radius){
+			return true;
+		}
+		return false;
+	}
+
+	public void resolveCollision(FlyingObject object) {
+		if(object instanceof Asteroid){
+			setPoints(0);
+		}
+	}
+	
+	public void setPoints(long points){
+		this.points = points;
+	}
+	
+	public long getPoints(){
+		return points;
 	}
 	
 	public GameView getView() {

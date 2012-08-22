@@ -21,6 +21,9 @@ import android.util.Log;
 public class FlyingObject {
 	private GameView view;
 	
+	private static double gravity_const = 6.0;	//stala grawitacji ktora ma sprawidz ze grawitacja 
+												//bedzie bardziej "miodowa". zwiekszenie tego wspolczynnika
+												//zmniejsza grawitacje. Ustaw na 1.0 jesli nie chcesz zeby mial wplyw na cokolwiek
 	private float x;
 	private float y;
 	
@@ -30,7 +33,7 @@ public class FlyingObject {
 	
 	private int mass;			//masa obiektu
 	private int radius;			//promien naszego obiektu
-	private int angle;			//kat - godzina 6 to 90stopni, 12 270
+	private double angle;		//kat - godzina 6 to 90stopni, 12 270
 	
 	private float earth_x;		//pozycja X srodka ziemi
 	private float earth_y;		//pozycja Y srodka ziemi
@@ -68,34 +71,30 @@ public class FlyingObject {
 	
 	//metoda obslugujaca ruch obiektu
 	public void move(){
-		//znajac kat rozbijamy predkosc na skladowe x i y a nastepnie wykonujemy ruch
-		//x_speed = Math.cos(Math.toRadians(angle)) * speed;
-		//y_speed = Math.sin(Math.toRadians(angle)) * speed;
+		//zmieniamy pozycje x i y o odpowiednie przesuniecia x_speed, y_speed
 		x += x_speed;
 		y += y_speed;
-		
+		//kat ladowania jest odbiciem lustrzanym kata pod jakim podrozuje obiekt
+		double landing_angle = 180 + angle;
+
 		//jezeli obiekt znajduje sie na ziemi to przestaje dzialac sila grawitacji
 		if(Math.pow((Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2)),0.5) < this.radius + this.earth_radius){
 			on_ground = true;
-			this.x = (float) (		Math.cos(Math.toRadians(180 + this.angle)) * (this.radius + this.earth_radius) + this.earth_x		);
-			this.y = (float) (		Math.sin(Math.toRadians(180 + this.angle)) * (this.radius + this.earth_radius) + this.earth_y		);
+			this.x = (float) (		Math.cos(Math.toRadians(landing_angle)) * (this.radius + this.earth_radius) + this.earth_x		);
+			this.y = (float) (		Math.sin(Math.toRadians(landing_angle)) * (this.radius + this.earth_radius) + this.earth_y		);
 		}
 	}
 	
 	public void resolveGravity(double gravity, int mass, int radius){
 		this.earth_radius = radius;
 		double distance = (Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2));//odleglosc do kwadratu
-		double power = (gravity * mass * this.mass)/(distance);	//wzor na sile grawitacji
+		double power = (gravity * mass * this.mass)/(distance * gravity_const);	//wzor na sile grawitacji
 		//obliczamy kat beta (miedzy prosta wyznaczona przez srodek obiektu i ziemie a prosta predkosci obiektu
 		
 		distance = Math.pow(distance, 0.5);	//prawdziwa odleglosc
 		
 		double cos_beta =  Math.abs((earth_x - x)/distance);
-//		if(earth_x - x < 0){
-//			cos_beta =  (x - earth_x)/distance;
-//		}
 		double beta = Math.toDegrees(Math.acos((cos_beta)));
-		
 		/*
 		 * 	|	3cw	|	4cw	|
 		 * 	|-------|-------|
@@ -111,19 +110,25 @@ public class FlyingObject {
 		 * III	-	beta = alfa
 		 * IV	- 	beta = 180 - alfa
 		 */
+		double landing_angle = 0;// = 180 + beta;
 		
 		//pierwsza cwairtka
-		if(this.x > 240 && this.y >= 400){
-			beta = beta + 180;
+		if(this.x >= 240 && this.y >= 400){
+			landing_angle = 180 + beta;
 		}
 		//druga cwiartka
 		else if(this.x < 240 && this.y >= 400){
-			beta = 360 - beta;
+			landing_angle = 360 - beta;
+		}
+		//trzecia cwiartka
+		else if(this.x < 240 && this.y < 400){
+			landing_angle = beta;
 		}
 		//czwarta cwiartka
 		else if(this.x >= 240 && this.y < 400){
-			beta = 180 - beta;
+			landing_angle = 180 - beta;
 		}
+		beta = landing_angle;
 		
 		//skladowa X grawitacji
 		double x_power = Math.cos(Math.toRadians(beta)) * power;
@@ -133,12 +138,23 @@ public class FlyingObject {
 		x_speed += x_power;
 		y_speed += y_power;
 		
-		
-		//trzecia cwiartka
-		angle = (int)beta;
-		Log.d("FO", "kat : " + angle);
+		angle = beta;
 		
 		move();
+	}
+	
+	public boolean checkCollision(float x, float y, int radius){
+		if(Math.pow(Math.pow(x - this.x,2) + Math.pow(y - this.y,2),0.5) <= this.radius + radius){
+			return true;
+		}
+		return false;
+	}
+	
+	
+	public void resolveCollision(){
+		//=====================================================================================================
+		//metoda abstrakcyja - bedzie roziwazywana w ramach konkretnych obiektow dziedziczacych po FlyingObject
+		//=====================================================================================================
 	}
 
 	public GameView getView() {
@@ -205,11 +221,11 @@ public class FlyingObject {
 		this.radius = radius;
 	}
 
-	public int getAngle() {
+	public double getAngle() {
 		return angle;
 	}
 
-	public void setAngle(int angle) {
+	public void setAngle(double angle) {
 		this.angle = angle;
 	}
 
