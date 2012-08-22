@@ -177,11 +177,17 @@ public class Player {
 	}
 
 	public void resolveCollision(FlyingObject object) {
+		//kolizja gracza z asteroida
 		if(object instanceof Asteroid){
 			setPoints(points - 1);
 		}
+		//kolizja gracza z pieniedzmi
 		else if(object instanceof Money){
-			setPoints(points + 10);
+			setPoints(getPoints() + ((Money) object).getPoints());
+		}
+		//kolizja gracza z upgradem
+		else if(object instanceof Upgrade){
+			
 		}
 	}
 	

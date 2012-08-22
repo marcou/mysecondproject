@@ -91,14 +91,22 @@ public class GameView extends SurfaceView{
     	Asteroid a1 = new Asteroid(this,flyingObjects, 10, 		10, 	5, 		90, 	10, 	10);
     	Asteroid a2 = new Asteroid(this,flyingObjects, 50, 		500, 	0, 		0, 		10, 	10);
     	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	10, 	10);
-    	Asteroid a4 = new Asteroid(this,flyingObjects, 450, 	10, 	2, 		20, 	10, 	10);
-    	Money m1 	= new Money	(this,	flyingObjects, 240, 	700, 	0, 		0, 		50, 	10);
+    	
+    	Upgrade  u1 = new Upgrade(this,flyingObjects, 400, 		10, 	2, 		20, 	10, 	10);
+    	
+    	Money m1 	= new Money	(this,	flyingObjects, 245, 	700, 	0, 		0, 		50, 	10);
+    	Money m2 	= new Money	(this,	flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
+    	Money m3 	= new Money	(this,	flyingObjects, 240, 	500, 	0, 		0, 		50, 	10);
+    	Money m4 	= new Money	(this,	flyingObjects, 240, 	450, 	0, 		0, 		50, 	10);
     	
     	flyingObjects.add(a1);
     	flyingObjects.add(a2);
     	flyingObjects.add(a3);
-    	flyingObjects.add(a4);
+    	flyingObjects.add(u1);
     	flyingObjects.add(m1);
+    	flyingObjects.add(m2);
+    	//flyingObjects.add(m3);
+    	//flyingObjects.add(m4);
     	
     	FlyingObject fo1 = 							//x		y		speed	angle	mass	radius
     	new FlyingObject	(this, flyingObjects,	20, 	10, 	12.0, 	30, 	20, 	10);
@@ -146,6 +154,7 @@ public class GameView extends SurfaceView{
     	
     	earth.onDraw(canvas);
     	player.onDraw(canvas);
+    	
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
     		//rysowanie obiektow
     		flyingObjects.get(i).onDraw(canvas);
@@ -157,17 +166,17 @@ public class GameView extends SurfaceView{
     		for(int j = i - 1; j >= 0; j--){
     			if(flyingObjects.get(i).checkCollision(flyingObjects.get(j).getX(), flyingObjects.get(j).getY(), flyingObjects.get(j).getRadius())){
     				//rozwiazanie kolizji
-    				flyingObjects.get(i).resolveCollision();
-    				flyingObjects.get(j).resolveCollision();
+    				//FlyingObject temp = flyingObjects.get(i);
+    				flyingObjects.get(j).resolveCollision(flyingObjects.get(i));
+    				flyingObjects.get(i).resolveCollision(flyingObjects.get(j));
     			}
-    			
-    		}
-    		//sprawdzenie kolizji gracza z obiektami latajacymi
-    		if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius())){
-    			player.resolveCollision(flyingObjects.get(i));
-    			flyingObjects.get(i).resolveCollision();
     		}
     	}
+    	//sprawdzenie kolizji gracza z obiektami latajacymi
+//		if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius())){
+//			player.resolveCollision(flyingObjects.get(i));
+//			flyingObjects.get(i).resolveCollision(null);
+//		}
     	resolveGravity();
     }
     

@@ -6,29 +6,30 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class Asteroid extends FlyingObject {
-	
+public class Upgrade extends FlyingObject {
+
 	private Paint paint;
 	
-	public Asteroid(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle,
+	public Upgrade(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle,
 			int mass, int radius) {
 		super(view, objects, x, y, speed, angle, mass, radius);
 		
 		this.paint = new Paint();
-		paint.setColor(Color.RED);
+		paint.setColor(Color.GREEN);
 	}
+	
 	@Override
 	public void resolveCollision(FlyingObject object){
-		//kolizja asteroidy z inna asteroida lub graczem
+		//kolizja upgradeu z asteroida lub graczem
 		if(object instanceof Asteroid || object == null){
-			super.setLife(0);
-			((Asteroid) object).setLife(0);
+			super.getObjects().remove(this);
 		}
-		//kolizja asteroidy z pieniedzmi
+		//kolizja upgradeu z pieniedzmi
 		else if(object instanceof Money){
-			//nic sie nie dzieje
+			
 		}
 	}
+	
 	@Override
 	public void onDraw(Canvas canvas){
 		//super.update();

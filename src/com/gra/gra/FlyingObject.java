@@ -47,6 +47,8 @@ public class FlyingObject {
 	
 	private Paint paint;
 	
+	private int life = 1;
+	
 	public FlyingObject(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle, int mass, int radius){
 		this.view = view;
 		this.objects = objects;
@@ -65,7 +67,17 @@ public class FlyingObject {
 	}
 	
 	public void onDraw(Canvas canvas){
+		update();
 		canvas.drawCircle(x, y, radius, paint);
+	}
+	
+	//tu odbywa sie animacja sprajta i walenie konia
+	public void update(){
+		//sprawdzamy czy obiekt "zyje"
+		if(life < 1){
+			//jesli nie to go usuwamy
+			objects.remove(this);
+		}
 	}
 	
 	public void set_earth(float x, float y, int radius){
@@ -157,7 +169,7 @@ public class FlyingObject {
 	}
 	
 	
-	public void resolveCollision(){
+	public void resolveCollision(FlyingObject object){
 		//=====================================================================================================
 		//metoda abstrakcyja - bedzie roziwazywana w ramach konkretnych obiektow dziedziczacych po FlyingObject
 		//=====================================================================================================
@@ -281,6 +293,14 @@ public class FlyingObject {
 
 	public void setObjects(List<FlyingObject> objects) {
 		this.objects = objects;
+	}
+
+	public int getLife() {
+		return life;
+	}
+	
+	public void setLife(int life) {
+		this.life = life;
 	}
 	
 }
