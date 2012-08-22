@@ -233,8 +233,16 @@ public class GameView extends SurfaceView{
         	}
     	 }
         
-        else if(event.getAction()==MotionEvent.ACTION_POINTER_1_DOWN) {
+        else if(event.getAction()==MotionEvent.ACTION_POINTER_2_DOWN) {
         	Log.d(VIEW_LOG_TAG, "SECOND pointer down");
+        	float xx = event.getX(1);
+        	float yy = event.getY(1);
+        	if(yy > 400){
+        		if(player.isOn_ground()){
+        			player.jump();
+        			Log.d(VIEW_LOG_TAG, "Jump pressed");
+        		}
+        }
         }
         
         else if(event.getAction()==MotionEvent.ACTION_UP){
@@ -246,13 +254,14 @@ public class GameView extends SurfaceView{
     		 //
     	 }
     	 
-        else if(event.getAction()==MotionEvent.ACTION_POINTER_1_UP) {
+        else if(event.getAction()==MotionEvent.ACTION_POINTER_2_UP) {
          	Log.d(VIEW_LOG_TAG, "SECOND pointer UP");
          }
         
         else if (event.getAction()==MotionEvent.ACTION_MOVE) {
         	
         }
+        
         
         else {
         	Log.d(VIEW_LOG_TAG,"Sth else Action " + Integer.toString(event.getAction()));
