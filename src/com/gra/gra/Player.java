@@ -34,6 +34,8 @@ public class Player {
 	private int earth_radius;	//promien okregu po jakim ma siê poruszaæ nasz obiekt
 	private boolean on_ground = true;	//czy dotyka ziemi
 	
+	private boolean is_moving = false;
+	
 	private Paint paint;
 	
 	private long points = 100;		//punkty gracza

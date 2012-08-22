@@ -42,8 +42,10 @@ public class GameView extends SurfaceView{
 	
 	private Paint paint;
 	
-	private long coolDown = 100;	//co ile mozna kliknac w ekran
+	private long coolDown = 0;	//co ile mozna kliknac w ekran
 	private long lastClick;	//czas ostatniego klikniecia
+	private boolean playermoving = false;
+	private boolean clockwisedirection;
 	
     public GameView(Context context) {
         super(context);
@@ -172,6 +174,11 @@ public class GameView extends SurfaceView{
     			}
     		}
     	}
+    	
+    	if (playermoving) {
+    		movePlayer();
+    	}
+    	
     	//sprawdzenie kolizji gracza z obiektami latajacymi
 //		if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius())){
 //			player.resolveCollision(flyingObjects.get(i));
@@ -199,80 +206,70 @@ public class GameView extends SurfaceView{
     @Override
     public boolean onTouchEvent(MotionEvent event) {
     	
+    	//Log.d(VIEW_LOG_TAG, "Pointer Num:" + Integer.toString(event.getPointerId(0)));
+    	
     	float x = event.getX();
         float y = event.getY();
         if(event.getAction()==MotionEvent.ACTION_DOWN){
+        	Log.d(VIEW_LOG_TAG, "Touch DOWN");
         	if(y > 400){
         		if(player.isOn_ground()){
         			player.jump();
+        			Log.d(VIEW_LOG_TAG, "Jump pressed");
         		}
         	}
         	else{
+        		playermoving = true;
 	        	if(x < 240){
-		        	player.move(false);
+		        	//player.move(false);
+	        		clockwisedirection = false;
+		        	Log.d(VIEW_LOG_TAG, "less than");
 	        	}
 	        	if(x > 240){
-		        	player.move(true);
+	        		clockwisedirection = true;
+		        	//player.move(true);
+		        	Log.d(VIEW_LOG_TAG, "more than");
 	        	}
         	}
     	 }
-    	 if(event.getAction()==MotionEvent.ACTION_UP){
+        
+        else if(event.getAction()==MotionEvent.ACTION_POINTER_1_DOWN) {
+        	Log.d(VIEW_LOG_TAG, "SECOND pointer down");
+        }
+        
+        else if(event.getAction()==MotionEvent.ACTION_UP){
+    		 Log.d(VIEW_LOG_TAG, "Touch UP");
+    		 if (y<400) {
+    			 playermoving = false;
+    			 Log.d(VIEW_LOG_TAG, "Player stopped");
+    		 }
     		 //
     	 }
+    	 
+        else if(event.getAction()==MotionEvent.ACTION_POINTER_1_UP) {
+         	Log.d(VIEW_LOG_TAG, "SECOND pointer UP");
+         }
+        
+        else if (event.getAction()==MotionEvent.ACTION_MOVE) {
+        	
+        }
+        
+        else {
+        	Log.d(VIEW_LOG_TAG,"Sth else Action " + Integer.toString(event.getAction()));
+        	Log.d(VIEW_LOG_TAG, "Sth else Index" + Integer.toString(event.getActionIndex()));
+        	 
+        }
+    	 
     		return super.onTouchEvent(event);		
     	}
     	
-    	/*
-    	if(System.currentTimeMillis() - lastClick > coolDown) {
-    		lastClick = System.currentTimeMillis();
-	    	float x = event.getX();
-	        float y = event.getY();
-	        Random rand = new Random();
-	        
-	        //Log.d("onTouchEvent", "EVENT : " + event.getAction());
-	        if(event.getAction() == MotionEvent.ACTION_DOWN){
-	             //record the start time
-	        	if(x < 240){
-		        	player.move(false);
-		        }
-	        	if(x > 240){
-		        	player.move(true);
-	        	}
-	             startTime = event.getEventTime();
 
-	             Log.d("LC", "IN DOWN");
-	          }else if(event.getAction() == MotionEvent.ACTION_UP){
-	             //record the end time
-	             endTime = event.getEventTime();
-	             Log.d("LC", "IN UP");
-	          }else if(event.getAction() == MotionEvent.ACTION_MOVE){
-	              Log.d("LC", "IN move");
-	              if(x < 240){
-			        	player.move(false);
-	              }
-		        	if(x > 240){
-			        	player.move(true);
-		        	}
-	              endTime=0;
-	          }
-	          //verify
-	          if(endTime - startTime >= 10){
-	              Log.d("LC", "time touched greater than 10ms");
-		              if(x < 240){
-				        	player.move(false);
-		              }
-			        	if(x > 240){
-				        	player.move(true);
-			        	}
-	        	startTime=0; 
-	        	endTime=0;
-	        	return false; //notify that you handled this event (do not propagate)
-	          }
-    		}
-        return true;//propogate to enable drag
-
+    public void movePlayer() {
+    	player.move(clockwisedirection);
     }
-    */
+    
+    
+    
     public void resolveCollision(Ball ball1, Ball ball2){
     	/*
     	 * kolizje 2D moja wersja :/
