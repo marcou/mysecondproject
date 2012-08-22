@@ -122,7 +122,7 @@ public class Player {
 	public void resolveGravity(double gravity, int mass, int radius){
 		//ZREZYGNOWALEM Z GRAWITACJI ZALEZNEJ OD ODLEGLOSCI BO TA KURWA WYLATUJE W KOSMOS
 		this.earth_radius = radius;
-		double distance = (Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2));
+		//double distance = (Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2));
 		double power = gravity;//(gravity * mass * this.mass)/(distance);	//wzor na sile grawitacji
 		//Log.d("grawitacja", "sila grawitacji : " + power);
 		//jesli sila wyrzutu jest mniejsza od grawitacji
@@ -178,7 +178,10 @@ public class Player {
 
 	public void resolveCollision(FlyingObject object) {
 		if(object instanceof Asteroid){
-			setPoints(0);
+			setPoints(points - 1);
+		}
+		else if(object instanceof Money){
+			setPoints(points + 10);
 		}
 	}
 	

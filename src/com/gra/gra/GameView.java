@@ -87,24 +87,33 @@ public class GameView extends SurfaceView{
     	player = new Player	(this, 		240, 	290, 	1, 		10, 	270);
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY(earth.getY() - earth.getRadius() - player.getRadius());
+    													//x		y		speed	angle	mass	radius
+    	Asteroid a1 = new Asteroid(this,flyingObjects, 10, 		10, 	5, 		90, 	10, 	10);
+    	Asteroid a2 = new Asteroid(this,flyingObjects, 50, 		500, 	0, 		0, 		10, 	10);
+    	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	10, 	10);
+    	Asteroid a4 = new Asteroid(this,flyingObjects, 450, 	10, 	2, 		20, 	10, 	10);
+    	Money m1 	= new Money	(this,	flyingObjects, 240, 	700, 	0, 		0, 		50, 	10);
     	
-    	Asteroid a1 = new Asteroid(this, 10, 10, 0, 0, 10, 10);
     	flyingObjects.add(a1);
+    	flyingObjects.add(a2);
+    	flyingObjects.add(a3);
+    	flyingObjects.add(a4);
+    	flyingObjects.add(m1);
     	
-    	FlyingObject fo1 = 				//x		y		speed	angle	mass	radius
-    	new FlyingObject	(this, 		20, 	10, 	2.0, 	30, 	20, 	10);
+    	FlyingObject fo1 = 							//x		y		speed	angle	mass	radius
+    	new FlyingObject	(this, flyingObjects,	20, 	10, 	12.0, 	30, 	20, 	10);
     	//flyingObjects.add(fo1);
     	
-    	FlyingObject fo2 = 				//x		y		speed	angle	mass	radius
-    	   new FlyingObject	(this, 		210, 	700, 	4.0, 	90, 	20, 	10);
+    	FlyingObject fo2 = 							//x		y		speed	angle	mass	radius
+    	   new FlyingObject	(this, flyingObjects, 	210, 	700, 	14.0, 	90, 	20, 	10);
     	//flyingObjects.add(fo2);
     	
-    	FlyingObject fo3 = 				//x		y		speed	angle	mass	radius
-    	   new FlyingObject	(this, 		430, 	200, 	3.0, 	0, 		20, 	10);   	    	
+    	FlyingObject fo3 = 							//x		y		speed	angle	mass	radius
+    	   new FlyingObject	(this, flyingObjects,	430, 	200, 	13.0, 	0, 		20, 	10);   	    	
     	//flyingObjects.add(fo3);
     	
-    	FlyingObject fo4 = 				//x		y		speed	angle	mass	radius
-    	   new FlyingObject	(this, 		430, 	600, 	3.0, 	130, 	20, 	10);
+    	FlyingObject fo4 = 							//x		y		speed	angle	mass	radius
+    	   new FlyingObject	(this, flyingObjects,	430, 	600, 	13.0, 	130, 	20, 	10);
     	//flyingObjects.add(fo4);
     	
     	for(int i = 0; i < flyingObjects.size(); i++){
@@ -156,6 +165,7 @@ public class GameView extends SurfaceView{
     		//sprawdzenie kolizji gracza z obiektami latajacymi
     		if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius())){
     			player.resolveCollision(flyingObjects.get(i));
+    			flyingObjects.get(i).resolveCollision();
     		}
     	}
     	resolveGravity();

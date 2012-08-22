@@ -1,5 +1,8 @@
 package com.gra.gra;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -21,7 +24,9 @@ import android.util.Log;
 public class FlyingObject {
 	private GameView view;
 	
-	private static double gravity_const = 6.0;	//stala grawitacji ktora ma sprawidz ze grawitacja 
+	private List<FlyingObject> objects;
+	
+	private static double gravity_const = 4.5;	//stala grawitacji ktora ma sprawidz ze grawitacja 
 												//bedzie bardziej "miodowa". zwiekszenie tego wspolczynnika
 												//zmniejsza grawitacje. Ustaw na 1.0 jesli nie chcesz zeby mial wplyw na cokolwiek
 	private float x;
@@ -42,8 +47,9 @@ public class FlyingObject {
 	
 	private Paint paint;
 	
-	public FlyingObject(GameView view, float x, float y, double speed, int angle, int mass, int radius){
+	public FlyingObject(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle, int mass, int radius){
 		this.view = view;
+		this.objects = objects;
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
@@ -55,7 +61,7 @@ public class FlyingObject {
 		y_speed = Math.sin(Math.toRadians(angle)) * speed;
 		
 		paint = new Paint();
-		paint.setColor(Color.RED);
+		paint.setColor(Color.WHITE);
 	}
 	
 	public void onDraw(Canvas canvas){
@@ -135,8 +141,8 @@ public class FlyingObject {
 		//skladowa Y grawitacji
 		double y_power = Math.sin(Math.toRadians(beta)) * power;
 		
-		x_speed += x_power;
-		y_speed += y_power;
+		x_speed = x_speed + x_power;//* 0.999 + x_power;
+		y_speed = y_speed + y_power;//* 0.999 + y_power;
 		
 		angle = beta;
 		
@@ -267,6 +273,14 @@ public class FlyingObject {
 
 	public void setPaint(Paint paint) {
 		this.paint = paint;
+	}
+
+	public List<FlyingObject> getObjects() {
+		return objects;
+	}
+
+	public void setObjects(List<FlyingObject> objects) {
+		this.objects = objects;
 	}
 	
 }
