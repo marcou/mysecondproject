@@ -73,11 +73,7 @@ public class FlyingObject {
 	
 	//tu odbywa sie animacja sprajta i walenie konia
 	public void update(){
-		//sprawdzamy czy obiekt "zyje"
-		if(life < 1){
-			//jesli nie to go usuwamy
-			objects.remove(this);
-		}
+		
 	}
 	
 	public void set_earth(float x, float y, int radius){

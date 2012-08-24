@@ -19,7 +19,7 @@ public class Money extends FlyingObject {
 		super(view, objects, x, y, speed, angle, mass, radius);
 		
 		Random rnd = new Random();
-		points = 5;//rnd.nextInt(5) + 1;
+		points = rnd.nextInt(5) + 1;
 		//Log.d("money", "punkty : " + points);
 		
 		this.paint = new Paint();
@@ -34,12 +34,31 @@ public class Money extends FlyingObject {
 		}
 		//kolizja miedzy pieniedzmi
 		else if(object instanceof Money){
-			//Log.d("money collision", "punkty : " + ((Money) object).getPoints());
-			points *= ((Money) object).getPoints();
-			((Money) object).setPoints(0);
-			((Money) object).setLife(0);
+			if(checkDistance(object)){
+				points *= ((Money) object).getPoints();
+				((Money) object).setPoints(0);
+				((Money) object).setLife(0);
+			}
+			else{
+				points *= ((Money) object).getPoints();
+				((Money) object).setPoints(points);
+				points = 0;
+				super.setLife(0);
+				
+			}
 			//((Money) object).getObjects().remove(object);
 		}
+	}
+	
+	//metoda sprawdzajaca ktory obiekt jest blizej ziemi - ten obiekt pozostanie a drugi zniknie
+	public boolean checkDistance(FlyingObject object){
+		double distance1 = Math.pow(Math.pow(super.getX() - super.getEarth_x(),2) + Math.pow(super.getY() - super.getEarth_y(),2), 0.5);
+		double distance2 = Math.pow(Math.pow(object.getX() - object.getEarth_x(),2) + Math.pow(object.getY() - object.getEarth_y(),2), 0.5);
+		
+		if(distance1 <= distance2){
+			return true;
+		}
+		else return false;
 	}
 	
 	@Override

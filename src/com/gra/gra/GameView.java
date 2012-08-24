@@ -90,25 +90,31 @@ public class GameView extends SurfaceView{
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY(earth.getY() - earth.getRadius() - player.getRadius());
     													//x		y		speed	angle	mass	radius
-    	Asteroid a1 = new Asteroid(this,flyingObjects, 10, 		10, 	5, 		90, 	10, 	10);
-    	Asteroid a2 = new Asteroid(this,flyingObjects, 50, 		500, 	0, 		0, 		10, 	10);
+    	Asteroid a1 = new Asteroid(this,flyingObjects, 10, 		10, 	1, 		90, 	10, 	10);
+    	Asteroid a2 = new Asteroid(this,flyingObjects, 50, 		500, 	2, 		0, 		10, 	10);
     	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	10, 	10);
-    	
-    	Upgrade  u1 = new Upgrade(this,flyingObjects, 400, 		10, 	2, 		20, 	10, 	10);
     	
     	Money m1 	= new Money	(this,	flyingObjects, 245, 	700, 	0, 		0, 		50, 	10);
     	Money m2 	= new Money	(this,	flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
-    	Money m3 	= new Money	(this,	flyingObjects, 240, 	500, 	0, 		0, 		50, 	10);
-    	Money m4 	= new Money	(this,	flyingObjects, 240, 	450, 	0, 		0, 		50, 	10);
+    	Money m3 	= new Money	(this,	flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
+    	Money m4 	= new Money	(this,	flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
+    													//x		y		speed	angle	upgrade type
+    	Upgrade  u1 = new Upgrade(this,flyingObjects, 100, 		10, 	0, 		0, 		upgradeType.high_gravity);
+    	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		700, 	0, 		0, 		upgradeType.low_gravity);
+    	Upgrade  u3 = new Upgrade(this,flyingObjects, 700, 		400, 	0, 		0, 		upgradeType.speed);
     	
-    	flyingObjects.add(a1);
-    	flyingObjects.add(a2);
-    	flyingObjects.add(a3);
+//    	flyingObjects.add(a1);
+//    	flyingObjects.add(a2);
+//    	flyingObjects.add(a3);
+//    	
+//    	flyingObjects.add(m1);
+//    	flyingObjects.add(m2);
+//    	flyingObjects.add(m3);
+//    	flyingObjects.add(m4);
+    	
     	flyingObjects.add(u1);
-    	flyingObjects.add(m1);
-    	flyingObjects.add(m2);
-    	//flyingObjects.add(m3);
-    	//flyingObjects.add(m4);
+    	flyingObjects.add(u2);
+    	flyingObjects.add(u3);
     	
     	FlyingObject fo1 = 							//x		y		speed	angle	mass	radius
     	new FlyingObject	(this, flyingObjects,	20, 	10, 	12.0, 	30, 	20, 	10);
@@ -143,6 +149,11 @@ public class GameView extends SurfaceView{
     	canvas.drawText("On_Ground : " + player.isOn_ground(), 240, 40, paint);
     	canvas.drawText("Points : " + player.getPoints(), 240, 50, paint);
     	
+    	//tajmery
+    	paint.setColor(Color.YELLOW);
+    	canvas.drawText("Player_timer : " + player.getTimer(), 40, 10, paint);
+    	canvas.drawText("Earth_timer  : " + earth.getTimer(), 40, 40, paint);
+    	
     	//informacje o asteroidzie
 //    	paint.setColor(Color.RED);
 //    	for(int i = flyingObjects.size()-1; i >= 0; i--){
@@ -170,21 +181,42 @@ public class GameView extends SurfaceView{
     				//rozwiazanie kolizji
     				//FlyingObject temp = flyingObjects.get(i);
     				flyingObjects.get(j).resolveCollision(flyingObjects.get(i));
-    				flyingObjects.get(i).resolveCollision(flyingObjects.get(j));
+    				//flyingObjects.get(i).resolveCollision(flyingObjects.get(j));
     			}
     		}
+    		//sprawdzenie kolizji gracza z obiektami latajacymi
+    		if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius())){
+    			player.resolveCollision(flyingObjects.get(i));
+    			//flyingObjects.get(i).resolveCollision(null);
+    		}
+    	}
+    	for(int i = flyingObjects.size()-1; i >= 0; i--){
+			//sprawdzamy czy obiekt "zyje"
+			if(flyingObjects.get(i).getLife() < 1){
+				//jesli nie to go usuwamy
+				flyingObjects.remove(flyingObjects.get(i));
+			}
     	}
     	
     	if (playermoving) {
     		movePlayer();
     	}
-    	
-    	//sprawdzenie kolizji gracza z obiektami latajacymi
-//		if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius())){
-//			player.resolveCollision(flyingObjects.get(i));
-//			flyingObjects.get(i).resolveCollision(null);
-//		}
     	resolveGravity();
+    	//jesli statystyki ziemi zostaly zmienione zassaj je na nowo a nastepnie ustaw flage na false
+    	if(earth.isSuck_my_stats()){
+    		for(int i = flyingObjects.size()-1; i >= 0; i--){
+    			flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    		}
+    	}
+    	if(player.isEarth_stats_changed()){
+    		earth.resetUpgrade();
+    		earth.setUpgrade(player.getEarthTimer(), player.getEarth_radius_multiplier(), player.getEarth_gravity_multiplier());
+    		//wyzerowanie mnoznikow statystyk ziemi
+    		player.setEarth_gravity_multiplier(1.0);
+    		player.setEarth_radius_multiplier(1);
+    		//ustawienie flagi blokujacej odczyt statystyk
+    		player.setEarth_stats_changed(false);
+    	}
     }
     
     public void resolveGravity(){
@@ -242,7 +274,7 @@ public class GameView extends SurfaceView{
         			player.jump();
         			Log.d(VIEW_LOG_TAG, "Jump pressed");
         		}
-        }
+        	}
         }
         
         else if(event.getAction()==MotionEvent.ACTION_UP){

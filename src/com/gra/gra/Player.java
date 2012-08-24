@@ -14,9 +14,25 @@ import android.util.Log;
 public class Player {
 
 	private GameView view;
-
-	private int speed = 3;
-	private double jump_power = 14.5;
+	/*-----------------------------------------------------------------------------------------------------*
+	 * Startowe wartosci do ktorych bedzie sie wracalo po uplynieciu czasu dzialania modyfikatora(upgradeu)*
+	 *-----------------------------------------------------------------------------------------------------*/
+	
+	private int default_multiplier = 1;
+	private int default_radius;
+	private double default_speed;
+	private double default_jump_power;
+	
+	private double earth_gravity_multiplier = 1.0;	//mno¿nik grawitacji
+	private int earth_radius_multiplier = 1;		//mnoznik promienia ziemi  	
+	
+	private long timer = 0;	//czas po ktorym przestaja dzialac upgrady
+	private long earth_timer = 0;
+	
+	private boolean earth_stats_changed = false;
+	
+	private double speed = 5.0;
+	private double jump_power = 20.0;
 	private double current_jump_power;
 	
 	private double x_speed;		//predkosc w plaszczyznie X
@@ -27,7 +43,7 @@ public class Player {
 	
 	private int mass;
 	private int radius;			//promien naszego obiektu
-	private int angle;			//kat - godzina 6 to 90stopni, 12 270
+	private double angle;		//kat - godzina 6 to 90stopni, 12 270
 	
 	private float earth_x;		//pozycja X srodka ziemi
 	private float earth_y;		//pozycja Y srodka ziemi
@@ -39,6 +55,7 @@ public class Player {
 	private Paint paint;
 	
 	private long points = 100;		//punkty gracza
+	private int multiplier = 1;		//mnoznik punktow
 	
 	public Player(GameView view, float x, float y,  int mass, int radius, int degree){
 		this.view = view;
@@ -48,12 +65,28 @@ public class Player {
 		this.mass = mass;
 		this.angle = degree;
 		
+		this.default_jump_power = jump_power;
+		this.default_multiplier = multiplier;
+		this.default_radius = radius;
+		this.default_speed = speed;
+		
 		paint = new Paint();
 		paint.setColor(Color.YELLOW);
 	}
 	
 	public void onDraw(Canvas canvas){
 		canvas.drawCircle(x, y, radius, paint);
+		if(timer > 0){
+			timer--;
+		}
+		else{
+			//zresetowanie dzialania upgradeow
+			timer = 0;
+			this.multiplier = default_multiplier;
+			this.speed = default_speed;
+			this.jump_power = default_jump_power;
+			this.radius = default_radius; 
+		}
 	}
 	
 	public void set_earth(float x, float y, int radius){
@@ -62,10 +95,18 @@ public class Player {
 		this.earth_radius = radius;
 	}
 	
+	public void setUpgrade(long time, int radius, int multiplier, int speed, double jump_power){
+		this.timer = time;
+		this.radius *= radius;
+		this.multiplier *= multiplier;
+		this.speed *= speed;
+		this.jump_power *= jump_power;
+	}
+	
 	//Ruch				zgodnie lub przeciwnie do wskazowek zegara
 	public void move(boolean clockwise){
 		double distance; 	//zmienna przechowujaca dystans kulki od planety (potrzebna do ruchu w powietrzu)
-		
+		int jumping_speed = (int)speed/2 + 1;
 		//zgodnie z ruchem wskazowek zegara
 		if(clockwise){
 			//gracz jest na ziemi
@@ -82,11 +123,11 @@ public class Player {
 			//gracz jest w powietrzu
 			else{
 				
-				if(angle + speed/4 + 1 < 360){
-					this.angle += this.speed/4 + 1;
+				if(angle + jumping_speed < 360){
+					this.angle += jumping_speed;
 				}
-				else if(angle + speed/4 + 1 >= 360){
-					this.angle = angle - 360 + speed/4 + 1;
+				else if(angle + jumping_speed >= 360){
+					this.angle = angle - 360 + jumping_speed;
 				}
 				distance = Math.pow((Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2)),0.5);
 				this.x = (float)(		Math.cos(Math.toRadians(this.angle)) * (distance) + this.earth_x		);
@@ -108,11 +149,11 @@ public class Player {
 			}
 			//gracz jest w powietrzu
 			else{
-				if(angle - speed/4 + 1 > 0){
-					this.angle -= this.speed/4 + 1;
+				if(angle - jumping_speed > 0){
+					this.angle -= jumping_speed;
 				}
-				else if(angle - speed/4 + 1 <= 0){
-					this.angle = angle + 360 - speed/4 + 1;
+				else if(angle - jumping_speed <= 0){
+					this.angle = angle + 360 - jumping_speed;
 				}
 				distance = Math.pow((Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2)),0.5);
 				this.x = (float)(		Math.cos(Math.toRadians(this.angle)) * (distance) + this.earth_x		);
@@ -181,15 +222,31 @@ public class Player {
 	public void resolveCollision(FlyingObject object) {
 		//kolizja gracza z asteroida
 		if(object instanceof Asteroid){
+			((Asteroid) object).setLife(0);
 			setPoints(points - 1);
 		}
 		//kolizja gracza z pieniedzmi
 		else if(object instanceof Money){
-			setPoints(getPoints() + ((Money) object).getPoints());
+			setPoints(getPoints() + ((Money) object).getPoints() * multiplier);
+			((Money) object).setLife(0);
 		}
 		//kolizja gracza z upgradem
 		else if(object instanceof Upgrade){
-			
+			//jesli ktorys modyfikator dotyczy ziemi ustawiamy odpowiednia flage na true
+			if(((Upgrade) object).getEarth_gravity() < 1.0 || ((Upgrade) object).getEarth_gravity() > 1.0 || ((Upgrade) object).getEarth_radius() < 1 || ((Upgrade) object).getEarth_radius() > 1){
+				this.earth_gravity_multiplier = ((Upgrade) object).getEarth_gravity();
+				this.earth_radius_multiplier = ((Upgrade) object).getEarth_radius();
+				this.earth_timer = ((Upgrade) object).getTime();
+				this.earth_stats_changed = true;
+			}
+			//jesli upgrade dotyczy gracza
+			if(((Upgrade) object).getPlayer_jump_power() < 1.0 || ((Upgrade) object).getPlayer_jump_power() > 1.0 || ((Upgrade) object).getPlayer_point_multiplier() < 1 || ((Upgrade) object).getPlayer_point_multiplier() > 1 || ((Upgrade) object).getPlayer_radius() < 1 || ((Upgrade) object).getPlayer_radius() > 1 || ((Upgrade) object).getPlayer_speed() < 1 || ((Upgrade) object).getPlayer_speed() > 1){
+			//zresetowanie poprzednich upgradeow
+			resetUpgrade();
+			//ustawienie nowych upgradeow playerowi
+			setUpgrade(((Upgrade) object).getTime(), ((Upgrade) object).getPlayer_radius(), ((Upgrade) object).getPlayer_point_multiplier(), ((Upgrade) object).getPlayer_speed(), ((Upgrade) object).getPlayer_jump_power());
+			}
+			((Upgrade) object).setLife(0);
 		}
 	}
 	
@@ -241,7 +298,7 @@ public class Player {
 		this.radius = radius;
 	}
 
-	public int getAngle() {
+	public double getAngle() {
 		return angle;
 	}
 
@@ -287,5 +344,46 @@ public class Player {
 
 	public void setPaint(Paint paint) {
 		this.paint = paint;
+	}
+
+	public boolean isEarth_stats_changed() {
+		return earth_stats_changed;
+	}
+
+	public void setEarth_stats_changed(boolean earth_stats_changed) {
+		this.earth_stats_changed = earth_stats_changed;
+	}
+
+	public double getEarth_gravity_multiplier() {
+		return earth_gravity_multiplier;
+	}
+
+	public void setEarth_gravity_multiplier(double earth_gravity_multiplier) {
+		this.earth_gravity_multiplier = earth_gravity_multiplier;
+	}
+
+	public int getEarth_radius_multiplier() {
+		return earth_radius_multiplier;
+	}
+
+	public void setEarth_radius_multiplier(int earth_radius_multiplier) {
+		this.earth_radius_multiplier = earth_radius_multiplier;
+	}
+
+	public long getTimer() {
+		return timer;
+	}
+
+	public void setTimer(long timer) {
+		this.timer = timer;
+	}
+	public void resetUpgrade(){
+		this.multiplier = default_multiplier;
+		this.speed = default_speed;
+		this.jump_power = default_jump_power;
+		this.radius = default_radius; 
+	}
+	public long getEarthTimer(){
+		return this.earth_timer;
 	}
 }

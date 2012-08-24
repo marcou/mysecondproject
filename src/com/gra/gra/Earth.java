@@ -14,6 +14,16 @@ public class Earth {
 	
 	private GameView view;
 	
+	/*-----------------------------------------------------------------------------------------------------*
+	 * Startowe wartosci do ktorych bedzie sie wracalo po uplynieciu czasu dzialania modyfikatora(upgradeu)*
+	 *-----------------------------------------------------------------------------------------------------*/
+	private int default_radius;
+	private double default_gravity;
+	
+	private long timer = 0;	//czas po ktorym przestaja dzialac upgrady
+	
+	private boolean suck_my_stats = false;	//flaga oznaczajaca ze statystyki sie zmienily i trzeba je na nowo zassac
+	
 	private float x;			//pozycja X srodka
 	private float y;			//pozycja Y srodka
 	private int mass;		//masa ziemi
@@ -29,6 +39,9 @@ public class Earth {
 		this.mass = mass;
 		this.radius = radius;
 		this.gravity = gravity;
+		
+		this.default_gravity = gravity;
+		this.default_radius = radius;
 		
 		this.paint = new Paint();
 		paint.setColor(Color.LTGRAY);
@@ -77,5 +90,40 @@ public class Earth {
 	}
 	public void onDraw(Canvas canvas){
 		canvas.drawCircle(x, y, radius, paint);
+		if(timer > 0){
+			timer--;
+		}
+		else{
+			timer = 0;
+			this.gravity = default_gravity;
+			this.radius = default_radius;
+			this.suck_my_stats = true;
+		}
+		
 	}
+	
+	public void setUpgrade(long time, int radius, double gravity){
+		this.timer = time;
+		this.radius *= radius;
+		this.gravity *= gravity;
+		suck_my_stats = true;
+	}
+	public boolean isSuck_my_stats() {
+		return suck_my_stats;
+	}
+	public void setSuck_my_stats(boolean suck_my_stats) {
+		this.suck_my_stats = suck_my_stats;
+	}
+	public void resetUpgrade(){
+		this.gravity = default_gravity;
+		this.radius = default_radius;
+		this.suck_my_stats = true;
+	}
+	public long getTimer() {
+		return timer;
+	}
+	public void setTimer(long timer) {
+		this.timer = timer;
+	}
+	
 }
