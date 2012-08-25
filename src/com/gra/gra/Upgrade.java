@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-enum upgradeType{speed, low_gravity, high_gravity};
+enum upgradeType{speed, low_gravity, high_gravity, tiny_earth, tiny_player, huge_player};
 
 public class Upgrade extends FlyingObject {
 
@@ -22,12 +22,12 @@ public class Upgrade extends FlyingObject {
 	//MODYFIKATORY STATSOW 
 	//przez nie przemnazamy wszystkei statystyki (ustawinie 1.0 nie zmienia ich wcale)
 	private double earth_gravity = 1.0;	// mno¿nik grawitacji
-	private int earth_radius = 1;		
+	private double earth_radius = 1.0;		
 	
 	private double player_jump_power = 1.0;
-	private int player_point_multiplier = 1;
-	private int player_speed = 1;
-	private int player_radius = 1;
+	private double player_point_multiplier = 1;
+	private double player_speed = 1;
+	private double player_radius = 1;
 	
 	
 	public Upgrade(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle, upgradeType type) {
@@ -51,6 +51,21 @@ public class Upgrade extends FlyingObject {
 			this.earth_gravity = 0.3;
 			this.time = 100;
 			this.tag = "LOW GRAVITY";
+			break;
+		case tiny_earth:
+			this.earth_radius = 0.5;
+			this.time = 100;
+			this.tag = "TINY EARTH";
+			break;
+		case huge_player:
+			this.player_radius = 2.0;
+			this.time = 100;
+			this.tag = "HUGE PLAYER";
+			break;
+		case tiny_player:
+			this.player_radius = 0.5;
+			this.time = 100;
+			this.tag = "TINY PLAYER";
 			break;
 		}
 	}
@@ -95,11 +110,11 @@ public class Upgrade extends FlyingObject {
 		this.earth_gravity = earth_gravity;
 	}
 
-	public int getEarth_radius() {
+	public double get_earth_radius() {
 		return earth_radius;
 	}
 
-	public void setEarth_radius(int earth_radius) {
+	public void setEarth_radius(double earth_radius) {
 		this.earth_radius = earth_radius;
 	}
 
@@ -111,27 +126,27 @@ public class Upgrade extends FlyingObject {
 		this.player_jump_power = player_jump_power;
 	}
 
-	public int getPlayer_point_multiplier() {
+	public double getPlayer_point_multiplier() {
 		return player_point_multiplier;
 	}
 
-	public void setPlayer_point_multiplier(int player_point_multiplier) {
+	public void setPlayer_point_multiplier(double player_point_multiplier) {
 		this.player_point_multiplier = player_point_multiplier;
 	}
 
-	public int getPlayer_speed() {
+	public double getPlayer_speed() {
 		return player_speed;
 	}
 
-	public void setPlayer_speed(int player_speed) {
+	public void setPlayer_speed(double player_speed) {
 		this.player_speed = player_speed;
 	}
 
-	public int getPlayer_radius() {
+	public double getPlayer_radius() {
 		return player_radius;
 	}
 
-	public void setPlayer_radius(int player_radius) {
+	public void setPlayer_radius(double player_radius) {
 		this.player_radius = player_radius;
 	}	
 }

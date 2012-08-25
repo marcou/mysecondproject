@@ -88,25 +88,25 @@ public class GameView extends SurfaceView{
     									//x		y		mass	radius	angle
     	player = new Player	(this, 		240, 	290, 	1, 		10, 	270);
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
-    	player.setY(earth.getY() - earth.getRadius() - player.getRadius());
+    	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
     													//x		y		speed	angle	mass	radius
-    	Asteroid a1 = new Asteroid(this,flyingObjects, 10, 		10, 	1, 		90, 	10, 	10);
-    	Asteroid a2 = new Asteroid(this,flyingObjects, 50, 		500, 	2, 		0, 		10, 	10);
-    	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	10, 	10);
+    	Asteroid a1 = new Asteroid(this,flyingObjects, 10, 		10, 	1, 		90, 	5, 		10);
+    	Asteroid a2 = new Asteroid(this,flyingObjects, 50, 		500, 	2, 		0, 		5, 		10);
+    	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	5, 		10);
     	
     	Money m1 	= new Money	(this,	flyingObjects, 245, 	700, 	0, 		0, 		50, 	10);
     	Money m2 	= new Money	(this,	flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
     	Money m3 	= new Money	(this,	flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
     	Money m4 	= new Money	(this,	flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
     													//x		y		speed	angle	upgrade type
-    	Upgrade  u1 = new Upgrade(this,flyingObjects, 100, 		10, 	0, 		0, 		upgradeType.high_gravity);
-    	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		700, 	0, 		0, 		upgradeType.low_gravity);
-    	Upgrade  u3 = new Upgrade(this,flyingObjects, 700, 		400, 	0, 		0, 		upgradeType.speed);
+    	Upgrade  u1 = new Upgrade(this,flyingObjects, 400, 		200, 	0, 		0, 		upgradeType.tiny_earth);
+    	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		600, 	0, 		0, 		upgradeType.tiny_player);
+    	Upgrade  u3 = new Upgrade(this,flyingObjects, 400, 		200, 	0, 		0, 		upgradeType.huge_player);
     	
-//    	flyingObjects.add(a1);
-//    	flyingObjects.add(a2);
-//    	flyingObjects.add(a3);
-//    	
+    	flyingObjects.add(a1);
+    	flyingObjects.add(a2);
+    	flyingObjects.add(a3);
+    	
 //    	flyingObjects.add(m1);
 //    	flyingObjects.add(m2);
 //    	flyingObjects.add(m3);
@@ -216,6 +216,13 @@ public class GameView extends SurfaceView{
     		player.setEarth_radius_multiplier(1);
     		//ustawienie flagi blokujacej odczyt statystyk
     		player.setEarth_stats_changed(false);
+    		
+    		//nadanie zaktualizowanych statystyk ziemi obiektom latajacym
+    		for(int i = flyingObjects.size()-1; i >= 0; i--){
+    			flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    		}
+    		//nadanie zaktualizowanych statystyk ziemi playerowi
+    		player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	}
     }
     

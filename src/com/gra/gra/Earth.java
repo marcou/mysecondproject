@@ -102,7 +102,7 @@ public class Earth {
 		
 	}
 	
-	public void setUpgrade(long time, int radius, double gravity){
+	public void setUpgrade(long time, double radius, double gravity){
 		this.timer = time;
 		this.radius *= radius;
 		this.gravity *= gravity;

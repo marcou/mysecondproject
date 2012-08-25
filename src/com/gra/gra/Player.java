@@ -24,7 +24,7 @@ public class Player {
 	private double default_jump_power;
 	
 	private double earth_gravity_multiplier = 1.0;	//mno¿nik grawitacji
-	private int earth_radius_multiplier = 1;		//mnoznik promienia ziemi  	
+	private double earth_radius_multiplier = 1;		//mnoznik promienia ziemi  	
 	
 	private long timer = 0;	//czas po ktorym przestaja dzialac upgrady
 	private long earth_timer = 0;
@@ -42,7 +42,7 @@ public class Player {
 	private float y;
 	
 	private int mass;
-	private int radius;			//promien naszego obiektu
+	private double radius;			//promien naszego obiektu
 	private double angle;		//kat - godzina 6 to 90stopni, 12 270
 	
 	private float earth_x;		//pozycja X srodka ziemi
@@ -75,7 +75,7 @@ public class Player {
 	}
 	
 	public void onDraw(Canvas canvas){
-		canvas.drawCircle(x, y, radius, paint);
+		canvas.drawCircle(x, y, (float) radius, paint);
 		if(timer > 0){
 			timer--;
 		}
@@ -95,7 +95,7 @@ public class Player {
 		this.earth_radius = radius;
 	}
 	
-	public void setUpgrade(long time, int radius, int multiplier, int speed, double jump_power){
+	public void setUpgrade(long time, double radius, double multiplier, double speed, double jump_power){
 		this.timer = time;
 		this.radius *= radius;
 		this.multiplier *= multiplier;
@@ -235,7 +235,7 @@ public class Player {
 			//jesli ktorys modyfikator dotyczy ziemi ustawiamy odpowiednia flage na true
 			if(((Upgrade) object).getEarth_gravity() < 1.0 || ((Upgrade) object).getEarth_gravity() > 1.0 || ((Upgrade) object).getEarth_radius() < 1 || ((Upgrade) object).getEarth_radius() > 1){
 				this.earth_gravity_multiplier = ((Upgrade) object).getEarth_gravity();
-				this.earth_radius_multiplier = ((Upgrade) object).getEarth_radius();
+				this.earth_radius_multiplier = ((Upgrade) object).get_earth_radius();
 				this.earth_timer = ((Upgrade) object).getTime();
 				this.earth_stats_changed = true;
 			}
@@ -290,11 +290,11 @@ public class Player {
 		this.mass = mass;
 	}
 
-	public int getRadius() {
+	public double getRadius() {
 		return radius;
 	}
 
-	public void setRadius(int radius) {
+	public void setRadius(double radius) {
 		this.radius = radius;
 	}
 
@@ -362,11 +362,11 @@ public class Player {
 		this.earth_gravity_multiplier = earth_gravity_multiplier;
 	}
 
-	public int getEarth_radius_multiplier() {
+	public double getEarth_radius_multiplier() {
 		return earth_radius_multiplier;
 	}
 
-	public void setEarth_radius_multiplier(int earth_radius_multiplier) {
+	public void setEarth_radius_multiplier(double earth_radius_multiplier) {
 		this.earth_radius_multiplier = earth_radius_multiplier;
 	}
 
