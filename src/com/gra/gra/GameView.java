@@ -48,6 +48,8 @@ public class GameView extends SurfaceView{
 	private boolean playermoving = false;
 	private boolean clockwisedirection;
 	
+	private boolean DEBUG_MODE = false;
+	
     public GameView(Context context) {
         super(context);
         setFocusable(true);
@@ -144,7 +146,10 @@ public class GameView extends SurfaceView{
     	world_timer--;
     	
     	//skala do testowania generatora (generuje obiekty poza ekranem)
-    	canvas.scale(0.7f, 0.7f, 240, 400);
+    	if (DEBUG_MODE) 
+    		{
+    		canvas.scale(0.7f, 0.7f, 240, 400);
+    		}
     	
     	//rysowanie tla
     	paint.setColor(Color.BLACK);
