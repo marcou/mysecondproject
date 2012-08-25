@@ -17,18 +17,20 @@ public class Player {
 	/*-----------------------------------------------------------------------------------------------------*
 	 * Startowe wartosci do ktorych bedzie sie wracalo po uplynieciu czasu dzialania modyfikatora(upgradeu)*
 	 *-----------------------------------------------------------------------------------------------------*/
-	
 	private int default_multiplier = 1;
 	private int default_radius;
 	private double default_speed;
 	private double default_jump_power;
 	
+	//mnozniki (upgradeowe) do ziemi
 	private double earth_gravity_multiplier = 1.0;	//mno¿nik grawitacji
 	private double earth_radius_multiplier = 1;		//mnoznik promienia ziemi  	
 	
+	//tajmery logiczne dla playera i ziemi
 	private long timer = 0;	//czas po ktorym przestaja dzialac upgrady
 	private long earth_timer = 0;
 	
+	//flaga ktorej ustawienie na true sprawia ze zmienuly sie statystyki ziemi
 	private boolean earth_stats_changed = false;
 	
 	private double speed = 5.0;
@@ -42,7 +44,7 @@ public class Player {
 	private float y;
 	
 	private int mass;
-	private double radius;			//promien naszego obiektu
+	private double radius;		//promien naszego obiektu
 	private double angle;		//kat - godzina 6 to 90stopni, 12 270
 	
 	private float earth_x;		//pozycja X srodka ziemi
@@ -54,8 +56,12 @@ public class Player {
 	
 	private Paint paint;
 	
-	private long points = 100;		//punkty gracza
+	private long points = 0;		//punkty gracza
 	private int multiplier = 1;		//mnoznik punktow
+	
+	private boolean armagedon = false;
+	
+	private int life = 3;			//zycie gracza MAX = 3 smierc przy Life = 0
 	
 	public Player(GameView view, float x, float y,  int mass, int radius, int degree){
 		this.view = view;
@@ -224,6 +230,7 @@ public class Player {
 		if(object instanceof Asteroid){
 			((Asteroid) object).setLife(0);
 			setPoints(points - 1);
+			setLife(getLife()-1);
 		}
 		//kolizja gracza z pieniedzmi
 		else if(object instanceof Money){
@@ -240,11 +247,18 @@ public class Player {
 				this.earth_stats_changed = true;
 			}
 			//jesli upgrade dotyczy gracza
-			if(((Upgrade) object).getPlayer_jump_power() < 1.0 || ((Upgrade) object).getPlayer_jump_power() > 1.0 || ((Upgrade) object).getPlayer_point_multiplier() < 1 || ((Upgrade) object).getPlayer_point_multiplier() > 1 || ((Upgrade) object).getPlayer_radius() < 1 || ((Upgrade) object).getPlayer_radius() > 1 || ((Upgrade) object).getPlayer_speed() < 1 || ((Upgrade) object).getPlayer_speed() > 1){
-			//zresetowanie poprzednich upgradeow
-			resetUpgrade();
-			//ustawienie nowych upgradeow playerowi
-			setUpgrade(((Upgrade) object).getTime(), ((Upgrade) object).getPlayer_radius(), ((Upgrade) object).getPlayer_point_multiplier(), ((Upgrade) object).getPlayer_speed(), ((Upgrade) object).getPlayer_jump_power());
+			if(((Upgrade) object).getPlayer_jump_power() < 1.0 || ((Upgrade) object).getPlayer_jump_power() > 1.0 
+					|| ((Upgrade) object).getPlayer_point_multiplier() < 1 || ((Upgrade) object).getPlayer_point_multiplier() > 1 
+					|| ((Upgrade) object).getPlayer_radius() < 1 || ((Upgrade) object).getPlayer_radius() > 1 
+					|| ((Upgrade) object).getPlayer_speed() < 1 || ((Upgrade) object).getPlayer_speed() > 1){
+				//zresetowanie poprzednich upgradeow
+				resetUpgrade();
+				//ustawienie nowych upgradeow playerowi
+				setUpgrade(((Upgrade) object).getTime(), ((Upgrade) object).getPlayer_radius(), ((Upgrade) object).getPlayer_point_multiplier(), ((Upgrade) object).getPlayer_speed(), ((Upgrade) object).getPlayer_jump_power());
+			}
+			//jesli upgrade jest typu armagedon
+			if(((Upgrade) object).isArmagedon()){
+				armagedon = true;
 			}
 			((Upgrade) object).setLife(0);
 		}
@@ -386,4 +400,19 @@ public class Player {
 	public long getEarthTimer(){
 		return this.earth_timer;
 	}
+	public int getLife(){
+		return this.life;
+	}
+	public void setLife(int life){
+		this.life = life;
+	}
+
+	public boolean isArmagedon() {
+		return armagedon;
+	}
+
+	public void setArmagedon(boolean armagedon) {
+		this.armagedon = armagedon;
+	}
+	
 }

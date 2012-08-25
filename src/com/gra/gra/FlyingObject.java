@@ -49,6 +49,8 @@ public class FlyingObject {
 	
 	private int life = 1;
 	
+	private int life_timer = 10;	//po jakim czasie od uderzenia w ziemie obiekt zniknie
+	
 	public FlyingObject(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle, int mass, int radius){
 		this.view = view;
 		this.objects = objects;
@@ -297,6 +299,14 @@ public class FlyingObject {
 	
 	public void setLife(int life) {
 		this.life = life;
+	}
+
+	public int getLife_timer() {
+		return life_timer;
+	}
+
+	public void setLife_timer(int life_timer) {
+		this.life_timer = life_timer;
 	}
 	
 }

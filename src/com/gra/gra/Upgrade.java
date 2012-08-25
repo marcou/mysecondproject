@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-enum upgradeType{speed, low_gravity, high_gravity, tiny_earth, tiny_player, huge_player};
+enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player};
 
 public class Upgrade extends FlyingObject {
 
@@ -28,7 +28,7 @@ public class Upgrade extends FlyingObject {
 	private double player_point_multiplier = 1;
 	private double player_speed = 1;
 	private double player_radius = 1;
-	
+	private boolean armagedon; 
 	
 	public Upgrade(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle, upgradeType type) {
 		super(view, objects, x, y, speed, angle, mass, radius);
@@ -43,19 +43,14 @@ public class Upgrade extends FlyingObject {
 			this.tag = "SPEED";
 			break;
 		case high_gravity:
-			this.earth_gravity = 3.0;
+			this.earth_gravity = 2.0;
 			this.time = 100;
 			this.tag = "HIGH GRAVITY";
 			break;
 		case low_gravity:
-			this.earth_gravity = 0.3;
+			this.earth_gravity = 0.5;
 			this.time = 100;
 			this.tag = "LOW GRAVITY";
-			break;
-		case tiny_earth:
-			this.earth_radius = 0.5;
-			this.time = 100;
-			this.tag = "TINY EARTH";
 			break;
 		case huge_player:
 			this.player_radius = 2.0;
@@ -84,11 +79,21 @@ public class Upgrade extends FlyingObject {
 	
 	@Override
 	public void onDraw(Canvas canvas){
-		//super.update();
+		update();
 		canvas.drawText(this.tag, super.getX() - super.getRadius(), super.getY() - super.getRadius() - 16, paint);
 		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
 	}
 
+	public void update(){
+		//jesli obiekt dotyka ziemi usun go po czasie "life_timer"
+		if(super.isOn_ground()){
+			super.setLife_timer(super.getLife_timer() - 1);
+			if(super.getLife_timer() < 0){
+				super.setLife(0);
+			}
+		}
+	}
+	
 	public long getTime() {
 		return time;
 	}
@@ -148,5 +153,14 @@ public class Upgrade extends FlyingObject {
 
 	public void setPlayer_radius(double player_radius) {
 		this.player_radius = player_radius;
+	}
+
+	public boolean isArmagedon() {
+		return armagedon;
+	}
+
+	public void setArmagedon(boolean armagedon) {
+		this.armagedon = armagedon;
 	}	
+	
 }

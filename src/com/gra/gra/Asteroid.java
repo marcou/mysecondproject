@@ -31,7 +31,16 @@ public class Asteroid extends FlyingObject {
 	}
 	@Override
 	public void onDraw(Canvas canvas){
-		//super.update();
+		update();
 		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+	}
+	public void update(){
+		//jesli obiekt dotyka ziemi usun go po czasie "life_timer"
+		if(super.isOn_ground()){
+			super.setLife_timer(super.getLife_timer() - 1);
+			if(super.getLife_timer() < 0){
+				super.setLife(0);
+			}
+		}
 	}
 }
