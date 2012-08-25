@@ -12,5 +12,8 @@
 bin/
 gen/
 
+# generated properties files
+*.properties
+
 # Local configuration file (sdk path, etc)
 local.properties
