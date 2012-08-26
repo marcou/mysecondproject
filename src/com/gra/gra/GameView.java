@@ -25,14 +25,16 @@ import android.widget.Button;
 
 public class GameView extends SurfaceView{
 	
+	private Generator generator;		//generator obiektow latajacych
+	
 	private int default_world_timer = 20;
 	private int world_timer = default_world_timer;	//timer swiata, po tym czasie (logicznym) odpalany jest generator
 	
 	//Pole gry (wieksze od ekranu) na ktorym generuje sie obiekty tak zeby gracz ich nie widzial (nie moga sie przeca nagle pojawiac)
-	private int area_x = - 100;
-	private int area_y = - 100;
-	private int area_w = 580;
-	private int area_h = 900;
+	private int area_x = - 200;
+	private int area_y = - 200;
+	private int area_w = 680;
+	private int area_h = 1000;
 	
 	private GameLoopThread thread;
 	
@@ -72,6 +74,7 @@ public class GameView extends SurfaceView{
                //@Override
                public void surfaceCreated(SurfaceHolder holder) {
             	   createSprites();
+            	   createGenerator();
             	   thread.setRunning(true);
             	   thread.start();
 	            }
@@ -81,15 +84,20 @@ public class GameView extends SurfaceView{
 	            }
         }); 
     }
+    public void createGenerator(){
+    	this.generator = new Generator(this);
+    	generator.setBounds(area_x, area_y, area_w, area_h);
+    }
+    
     public void createSprites(){
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
     	Log.d("START PROGRAMU", "=============================================");
     	paint = new Paint();
     	paint.setColor(Color.BLACK);	//x		y		mass	radius	gravity
-    	earth = new Earth	(this, 		240, 	400, 	400, 	100, 	2.8);
+    	earth = new Earth	(this, 		240, 	400, 	2000, 	60, 	2.8);
     									//x		y		mass	radius	angle
-    	player = new Player	(this, 		240, 	290, 	1, 		10, 	270);
+    	player = new Player	(this, 		240, 	290, 	1, 		5, 	270);
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
     													//x		y		speed	angle	mass	radius
@@ -144,11 +152,11 @@ public class GameView extends SurfaceView{
     public void onDraw(Canvas canvas) {
     	//odliczanie tajmera
     	world_timer--;
-    	
+    	canvas.save();
     	//skala do testowania generatora (generuje obiekty poza ekranem)
     	if (DEBUG_MODE) 
     		{
-    		canvas.scale(0.7f, 0.7f, 240, 400);
+    		canvas.scale(0.5f, 0.5f, 240, 400);
     		}
     	
     	//rysowanie tla
@@ -160,7 +168,7 @@ public class GameView extends SurfaceView{
     	
     	paint.setStyle(Paint.Style.STROKE);
     	
-    	canvas.drawRect(0, 0, 480, 800, paint);
+    	canvas.drawRect(-1, -1, 480, 800, paint);
     	
     	//czerwony prostokat reprezentuje obszar gry
     	paint.setColor(Color.RED);
@@ -168,6 +176,7 @@ public class GameView extends SurfaceView{
     	
     	paint.setStyle(Paint.Style.FILL_AND_STROKE);
     	
+    	canvas.restore();
     	//informacje o graczu
     	paint.setColor(Color.GREEN);
     	canvas.drawText("X : " + player.getX(), 240, 10, paint);
@@ -182,6 +191,11 @@ public class GameView extends SurfaceView{
     	canvas.drawText("Player_timer : " + player.getTimer(), 40, 10, paint);
     	canvas.drawText("Earth_timer  : " + earth.getTimer(), 40, 30, paint);
     	canvas.drawText("World_timer  : " + world_timer, 40, 50, paint);
+    	
+    	if (DEBUG_MODE) 
+		{
+		canvas.scale(0.5f, 0.5f, 240, 400);
+		}
     	
     	//informacje o asteroidzie
 //    	paint.setColor(Color.RED);
@@ -241,10 +255,19 @@ public class GameView extends SurfaceView{
     	
     	if(world_timer <= 0){
     		resetTimer();
-    		generator(player.getPoints(), player.isArmagedon());
-    		//jesli gracz odpalil generator z armagedonem wylacz playerowi armagedon
+    		//dodaj graczowi punkty za generacje (przezycie kolejnych x sekund)
+    		player.setPoints(player.getPoints() + 1);
+    		
+    		List<FlyingObject> temp = generator.generate(player.getPoints(), player.isArmagedon(), player.isMoney_rain());
+    		for(int i = 0; i < temp.size(); i++){
+    			flyingObjects.add(temp.get(i));
+    		}
+    		//jesli gracz odpalil generator z armagedonem lub money_rainem wylacz je
 	    	if(player.isArmagedon()){
 	    		player.setArmagedon(false);
+	    	}
+	    	if(player.isMoney_rain()){
+	    		player.setMoney_rain(false);
 	    	}
 
     	}
@@ -371,177 +394,7 @@ public class GameView extends SurfaceView{
     public void movePlayer() {
     	player.move(clockwisedirection);
     }
-    //==================================	GENERATOR	=====================================
-    //metoda generujaca latajace obiekty, pierwszy argument to punkty od ktorych jest
-    //zalezna intensywnosc "opadow", poziom wrogow, liczba i wartosc monet itd itp drugi
-    //argument jest rowny false chyba ze gracz podniesie upgrade "armagedon" ktory wlacza
-    //maksymalny mozliwy (zalezny od punktow) opad wrogow
-    //=======================================================================================
-    public void generator(long points, boolean armagedon){
-    	//dodawanie 1 punktu co kazda generacje
-    	player.setPoints(player.getPoints() + 1);
-    	
-    	//progi punktowe wedlug ktorych ustawiane sa fale wrogow
-    	int threshold_1 = 10;
-    	int threshold_2 = 100;
-    	int threshold_3 = 500;
-    	int threshold_4 = 1000;
-    	int threshold_5 = 10000;
-    	int threshold_6 = 500000;
-    	int threshold_7 = 10000000;
-    	
-    	Random rand = new Random();
-    	
-    	int asteroid_count = 0;	//liczba asteroid
-    	int money_count = 0;	//liczba kasy
-    	int upgrade_count = 0;	//liczba upgradeow
-    	
-    	int asteroid_difficulty = 0;	//zmienna wplywajaca na wypuszczanie wiekszych asteroid
-    									//przedzial wartosci :
-    									//			od 0 (same male - zadnych duzych i ogromnych) 
-    									//			do 100 (same ogromne)
-    	
-    	int money_value = 0;			//zmienna wplywajaca na wartosc pieneidzy wypuszczanych w kosmos
-    									//przedzial wartosci :
-    									//			od 1 do miljon (maxymalna wartosc jaka moga miec monety)
-    	
-    	
-    	if(points < threshold_1){
-    		asteroid_count = (int) (points/5 + 1);
-    		money_count = (int) (points/3 + 2);
-    		upgrade_count = 0;
-    		
-    		asteroid_difficulty = 0;
-    		money_value = 1;
-    	}
-    	else if(points <threshold_2){
-    		asteroid_count = (int) (points/7 + 1);
-    		money_count = (int) (points/6 + 1);
-    		upgrade_count = 1;
-    		
-    		asteroid_difficulty = 2;
-    		money_value = 1;
-    	}
-    	else if(points <threshold_3){
-    		
-    	}
-    	else if(points <threshold_4){
-    		
-    	}
-    	else if(points <threshold_5){
-    		
-    	}
-    	else if(points <threshold_6){
-    		
-    	}
-    	else if(points <threshold_7){
-    		
-    	}
-    	else{
-    		
-    	}
-//    	asteroid_count = rand.nextInt(asteroid_count);
-//    	money_count = rand.nextInt(money_count);
-//    	upgrade_count = rand.nextInt(upgrade_count);
-    	
-    	int interval = 0;
-		
-		int x = 0;
-		int y = 0;
-    	
-    	for(int i = 0; i < asteroid_count; i++){
-    		
-    		interval = rand.nextInt(4);
-    		
-    		switch(interval){
-    		case 0:
-    			x = - rand.nextInt(80);
-    			y = rand.nextInt(880);
-    			break;
-    		case 1:
-    			x = rand.nextInt(560);
-    			y = 800 + rand.nextInt(80);
-    			break;
-    		case 2:
-    			x = 480 + rand.nextInt(80);
-    			y = rand.nextInt(800);
-    			break;
-    		case 3:
-    			x = rand.nextInt(560);
-    			y = -rand.nextInt(80);
-    			break;
-    		}
-    		Asteroid asteroid = new Asteroid(this, flyingObjects, x, y, rand.nextInt(4), rand.nextInt(360), 20, 10);
-    		flyingObjects.add(asteroid);
-    	}
-    	for(int i = 0; i < money_count; i++){
-    		interval = rand.nextInt(4);
-    		
-    		switch(interval){
-    		case 0:
-    			x = - rand.nextInt(80);
-    			y = rand.nextInt(880);
-    			break;
-    		case 1:
-    			x = rand.nextInt(560);
-    			y = 800 + rand.nextInt(80);
-    			break;
-    		case 2:
-    			x = 480 + rand.nextInt(80);
-    			y = rand.nextInt(800);
-    			break;
-    		case 3:
-    			x = rand.nextInt(560);
-    			y = -rand.nextInt(80);
-    			break;
-    		}
-    		Money money = new Money(this, flyingObjects, x, y, rand.nextInt(4), rand.nextInt(360), 10, 10);
-    		flyingObjects.add(money);
-    	}
-		for(int i = 0; i < upgrade_count; i++){
-			interval = rand.nextInt(4);
-    		
-    		switch(interval){
-    		case 0:
-    			x = - rand.nextInt(80);
-    			y = rand.nextInt(880);
-    			break;
-    		case 1:
-    			x = 480 + rand.nextInt(80);
-    			y = rand.nextInt(880);
-    			break;
-    		case 2:
-    			x = rand.nextInt(560);
-    			y = - rand.nextInt(80);
-    			break;
-    		case 3:
-    			x = rand.nextInt(560);
-    			y = 800 + rand.nextInt(80);
-    			break;
-    		}
-    		interval = rand.nextInt(5);
-    		upgradeType type = upgradeType.speed;
-    		switch(interval){
-    		case 0:
-    			type = upgradeType.high_gravity;
-    			break;
-    		case 1:
-    			type = upgradeType.huge_player;
-    			break;
-    		case 2:
-    			type = upgradeType.low_gravity;
-    			break;
-    		case 3:
-    			type = upgradeType.speed;
-    			break;
-    		case 4:
-    			type = upgradeType.tiny_player;
-    			break;
-    		}
-    		Upgrade upgrade = new Upgrade(this, flyingObjects, x, y, rand.nextInt(4), rand.nextInt(360),type );
-    		flyingObjects.add(upgrade);
-		}
-    }
+    
     
     public boolean checkVissible(FlyingObject object){
     	if(object.getX() + object.getRadius() > 0 && object.getX() - object.getRadius() < 480 && object.getY() + object.getRadius() > 0 && object.getY() - object.getRadius() < 800){

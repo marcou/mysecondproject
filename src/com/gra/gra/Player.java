@@ -60,6 +60,7 @@ public class Player {
 	private int multiplier = 1;		//mnoznik punktow
 	
 	private boolean armagedon = false;
+	private boolean money_rain = false;
 	
 	private int life = 3;			//zycie gracza MAX = 3 smierc przy Life = 0
 	
@@ -260,6 +261,9 @@ public class Player {
 			if(((Upgrade) object).isArmagedon()){
 				armagedon = true;
 			}
+			if(((Upgrade) object).isMoney_rain()){
+				money_rain = true;
+			}
 			((Upgrade) object).setLife(0);
 		}
 	}
@@ -413,6 +417,14 @@ public class Player {
 
 	public void setArmagedon(boolean armagedon) {
 		this.armagedon = armagedon;
+	}
+
+	public boolean isMoney_rain() {
+		return money_rain;
+	}
+
+	public void setMoney_rain(boolean money_rain) {
+		this.money_rain = money_rain;
 	}
 	
 }

@@ -51,7 +51,7 @@ public class FlyingObject {
 	
 	private int life_timer = 10;	//po jakim czasie od uderzenia w ziemie obiekt zniknie
 	
-	public FlyingObject(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle, int mass, int radius){
+	public FlyingObject(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle, int mass, int radius){
 		this.view = view;
 		this.objects = objects;
 		this.x = x;
@@ -105,6 +105,7 @@ public class FlyingObject {
 		this.earth_radius = radius;
 		double distance = (Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2));//odleglosc do kwadratu
 		double power = (gravity * mass * this.mass)/(distance * gravity_const);	//wzor na sile grawitacji
+		
 		//obliczamy kat beta (miedzy prosta wyznaczona przez srodek obiektu i ziemie a prosta predkosci obiektu
 		
 		distance = Math.pow(distance, 0.5);	//prawdziwa odleglosc
@@ -151,8 +152,14 @@ public class FlyingObject {
 		//skladowa Y grawitacji
 		double y_power = Math.sin(Math.toRadians(beta)) * power;
 		
-		x_speed = x_speed + x_power;//* 0.999 + x_power;
-		y_speed = y_speed + y_power;//* 0.999 + y_power;
+		//wersja bez wytracania predkosci
+		
+		//x_speed += x_power;
+		//y_speed += y_power;
+		
+		//wersja z wytracaniem predkosci
+		x_speed = x_speed * 0.999 + x_power;//+=x_speed + x_power;//*= 0.999 + x_power;
+		y_speed = y_speed * 0.999 + y_power;//+=y_speed + y_power;//*= 0.999 + y_power;
 		
 		angle = beta;
 		

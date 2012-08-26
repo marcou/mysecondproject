@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player};
+enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain};
 
 public class Upgrade extends FlyingObject {
 
@@ -17,7 +17,7 @@ public class Upgrade extends FlyingObject {
 	private long time;	//czas przez jaki upgrade dziala
 	
 	private static int mass = 20;
-	private static int radius = 10;
+	private static int radius = 5;
 	
 	//MODYFIKATORY STATSOW 
 	//przez nie przemnazamy wszystkei statystyki (ustawinie 1.0 nie zmienia ich wcale)
@@ -29,8 +29,9 @@ public class Upgrade extends FlyingObject {
 	private double player_speed = 1;
 	private double player_radius = 1;
 	private boolean armagedon; 
+	private boolean money_rain;
 	
-	public Upgrade(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle, upgradeType type) {
+	public Upgrade(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle, upgradeType type) {
 		super(view, objects, x, y, speed, angle, mass, radius);
 		
 		this.paint = new Paint();
@@ -61,6 +62,14 @@ public class Upgrade extends FlyingObject {
 			this.player_radius = 0.5;
 			this.time = 100;
 			this.tag = "TINY PLAYER";
+			break;
+		case armagedon:
+			this.armagedon = true;
+			this.time = 100;
+			break;
+		case money_rain:
+			this.money_rain = true;
+			this.time = 100;
 			break;
 		}
 	}
@@ -161,6 +170,14 @@ public class Upgrade extends FlyingObject {
 
 	public void setArmagedon(boolean armagedon) {
 		this.armagedon = armagedon;
+	}
+
+	public boolean isMoney_rain() {
+		return money_rain;
+	}
+
+	public void setMoney_rain(boolean money_rain) {
+		this.money_rain = money_rain;
 	}	
 	
 }

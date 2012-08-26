@@ -14,12 +14,15 @@ public class Money extends FlyingObject {
 	
 	private int points;	//liczba punktow ktora daje ten obiekt
 	
-	public Money(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle,
+	public Money(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius) {
 		super(view, objects, x, y, speed, angle, mass, radius);
 		
 		Random rnd = new Random();
-		points = rnd.nextInt(5) + 1;
+		points = rnd.nextInt(mass/2) + mass/2;
+		if(points < 1){
+			points = 1;
+		}
 		//Log.d("money", "punkty : " + points);
 		
 		this.paint = new Paint();

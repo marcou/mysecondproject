@@ -10,7 +10,7 @@ public class Asteroid extends FlyingObject {
 	
 	private Paint paint;
 	
-	public Asteroid(GameView view, List<FlyingObject> objects, float x, float y, double speed, int angle,
+	public Asteroid(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius) {
 		super(view, objects, x, y, speed, angle, mass, radius);
 		
@@ -26,7 +26,7 @@ public class Asteroid extends FlyingObject {
 		}
 		//kolizja asteroidy z pieniedzmi
 		else if(object instanceof Money){
-			//nic sie nie dzieje
+			((Money) object).setLife(0);
 		}
 	}
 	@Override
