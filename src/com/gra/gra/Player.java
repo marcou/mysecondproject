@@ -21,14 +21,17 @@ public class Player {
 	private int default_radius;
 	private double default_speed;
 	private double default_jump_power;
+	private double default_sucking_range = 25.0;
 	
 	//mnozniki (upgradeowe) do ziemi
 	private double earth_gravity_multiplier = 1.0;	//mno¿nik grawitacji
 	private double earth_radius_multiplier = 1;		//mnoznik promienia ziemi  	
 	
-	//tajmery logiczne dla playera i ziemi
+	//tajmery logiczne dla playera, ziemi, armagedonu i deszczu pieniedzy
 	private long timer = 0;	//czas po ktorym przestaja dzialac upgrady
 	private long earth_timer = 0;
+	private long armagedon_timer = 0;
+	private long money_rain_timer = 0;
 	
 	//flaga ktorej ustawienie na true sprawia ze zmienuly sie statystyki ziemi
 	private boolean earth_stats_changed = false;
@@ -64,6 +67,8 @@ public class Player {
 	
 	private int life = 3;			//zycie gracza MAX = 3 smierc przy Life = 0
 	
+	private double sucking_range;	//ile od gracza moze znajdowac sie moneta zeby ja zassal
+	
 	public Player(GameView view, float x, float y,  int mass, int radius, int degree){
 		this.view = view;
 		this.x = x;
@@ -76,6 +81,7 @@ public class Player {
 		this.default_multiplier = multiplier;
 		this.default_radius = radius;
 		this.default_speed = speed;
+		this.sucking_range = default_sucking_range;
 		
 		paint = new Paint();
 		paint.setColor(Color.YELLOW);
@@ -92,7 +98,8 @@ public class Player {
 			this.multiplier = default_multiplier;
 			this.speed = default_speed;
 			this.jump_power = default_jump_power;
-			this.radius = default_radius; 
+			this.radius = default_radius;
+			this.sucking_range = default_sucking_range;
 		}
 	}
 	
@@ -102,12 +109,13 @@ public class Player {
 		this.earth_radius = radius;
 	}
 	
-	public void setUpgrade(long time, double radius, double multiplier, double speed, double jump_power){
+	public void setUpgrade(long time, double radius, double multiplier, double speed, double jump_power, double sucking_range){
 		this.timer = time;
 		this.radius *= radius;
 		this.multiplier *= multiplier;
 		this.speed *= speed;
 		this.jump_power *= jump_power;
+		this.sucking_range *= sucking_range;
 	}
 	
 	//Ruch				zgodnie lub przeciwnie do wskazowek zegara
@@ -219,8 +227,12 @@ public class Player {
 		}
 	}
 	
-	public boolean checkCollision(float x, float y, int radius) {
-		if(Math.pow(Math.pow(x - this.x,2) + Math.pow(y - this.y,2),0.5) <= this.radius + radius){
+	public boolean checkCollision(float x, float y, int radius, boolean money) {
+		double distance = this.radius + radius;
+		if(money){
+			distance += this.sucking_range;
+		}
+		if(Math.pow(Math.pow(x - this.x,2) + Math.pow(y - this.y,2),0.5) <= distance){
 			return true;
 		}
 		return false;
@@ -251,18 +263,21 @@ public class Player {
 			if(((Upgrade) object).getPlayer_jump_power() < 1.0 || ((Upgrade) object).getPlayer_jump_power() > 1.0 
 					|| ((Upgrade) object).getPlayer_point_multiplier() < 1 || ((Upgrade) object).getPlayer_point_multiplier() > 1 
 					|| ((Upgrade) object).getPlayer_radius() < 1 || ((Upgrade) object).getPlayer_radius() > 1 
-					|| ((Upgrade) object).getPlayer_speed() < 1 || ((Upgrade) object).getPlayer_speed() > 1){
+					|| ((Upgrade) object).getPlayer_speed() < 1 || ((Upgrade) object).getPlayer_speed() > 1
+					|| ((Upgrade) object).getPlayer_sucking_range() < 1 || ((Upgrade) object).getPlayer_sucking_range() > 1){
 				//zresetowanie poprzednich upgradeow
 				resetUpgrade();
 				//ustawienie nowych upgradeow playerowi
-				setUpgrade(((Upgrade) object).getTime(), ((Upgrade) object).getPlayer_radius(), ((Upgrade) object).getPlayer_point_multiplier(), ((Upgrade) object).getPlayer_speed(), ((Upgrade) object).getPlayer_jump_power());
+				setUpgrade(((Upgrade) object).getTime(), ((Upgrade) object).getPlayer_radius(), ((Upgrade) object).getPlayer_point_multiplier(), ((Upgrade) object).getPlayer_speed(), ((Upgrade) object).getPlayer_jump_power(), ((Upgrade) object).getPlayer_sucking_range());
 			}
 			//jesli upgrade jest typu armagedon
 			if(((Upgrade) object).isArmagedon()){
 				armagedon = true;
+				armagedon_timer = ((Upgrade) object).getTime();
 			}
 			if(((Upgrade) object).isMoney_rain()){
 				money_rain = true;
+				money_rain_timer = ((Upgrade) object).getTime();
 			}
 			((Upgrade) object).setLife(0);
 		}
@@ -425,6 +440,22 @@ public class Player {
 
 	public void setMoney_rain(boolean money_rain) {
 		this.money_rain = money_rain;
+	}
+
+	public long getArmagedon_timer() {
+		return armagedon_timer;
+	}
+
+	public void setArmagedon_timer(long armagedon_timer) {
+		this.armagedon_timer = armagedon_timer;
+	}
+
+	public long getMoney_rain_timer() {
+		return money_rain_timer;
+	}
+
+	public void setMoney_rain_timer(long money_rain_timer) {
+		this.money_rain_timer = money_rain_timer;
 	}
 	
 }

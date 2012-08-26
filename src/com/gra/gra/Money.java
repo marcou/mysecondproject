@@ -10,6 +10,8 @@ import android.util.Log;
 
 public class Money extends FlyingObject {
 
+	private int life_timer = 20;
+	
 	private Paint paint;
 	
 	private int points;	//liczba punktow ktora daje ten obiekt
@@ -17,6 +19,8 @@ public class Money extends FlyingObject {
 	public Money(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius) {
 		super(view, objects, x, y, speed, angle, mass, radius);
+		
+		super.setLife_timer(life_timer);
 		
 		Random rnd = new Random();
 		points = rnd.nextInt(mass/2) + mass/2;

@@ -27,7 +27,7 @@ public class GameView extends SurfaceView{
 	
 	private Generator generator;		//generator obiektow latajacych
 	
-	private int default_world_timer = 20;
+	private int default_world_timer = 40;
 	private int world_timer = default_world_timer;	//timer swiata, po tym czasie (logicznym) odpalany jest generator
 	
 	//Pole gry (wieksze od ekranu) na ktorym generuje sie obiekty tak zeby gracz ich nie widzial (nie moga sie przeca nagle pojawiac)
@@ -97,7 +97,7 @@ public class GameView extends SurfaceView{
     	paint.setColor(Color.BLACK);	//x		y		mass	radius	gravity
     	earth = new Earth	(this, 		240, 	400, 	2000, 	60, 	2.8);
     									//x		y		mass	radius	angle
-    	player = new Player	(this, 		240, 	290, 	1, 		5, 	270);
+    	player = new Player	(this, 		240, 	290, 	1, 		10, 	270);
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
     													//x		y		speed	angle	mass	radius
@@ -110,9 +110,9 @@ public class GameView extends SurfaceView{
     	Money m3 	= new Money	(this,	flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
     	Money m4 	= new Money	(this,	flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
     													//x		y		speed	angle	upgrade type
-    	Upgrade  u1 = new Upgrade(this,flyingObjects, 400, 		200, 	0, 		0, 		upgradeType.speed);
-    	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		600, 	0, 		0, 		upgradeType.tiny_player);
-    	Upgrade  u3 = new Upgrade(this,flyingObjects, 20, 		200, 	0, 		0, 		upgradeType.huge_player);
+    	Upgrade  u1 = new Upgrade(this,flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.armagedon);
+    	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
+    	Upgrade  u3 = new Upgrade(this,flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.money_rain);
     	
 //    	flyingObjects.add(a1);
 //    	flyingObjects.add(a2);
@@ -123,26 +123,10 @@ public class GameView extends SurfaceView{
 //    	flyingObjects.add(m3);
 //    	flyingObjects.add(m4);
 //    	
-//    	flyingObjects.add(u1);
-//    	flyingObjects.add(u2);
-//    	flyingObjects.add(u3);
-    	
-    	FlyingObject fo1 = 							//x		y		speed	angle	mass	radius
-    	new FlyingObject	(this, flyingObjects,	20, 	10, 	12.0, 	30, 	20, 	10);
-    	//flyingObjects.add(fo1);
-    	
-    	FlyingObject fo2 = 							//x		y		speed	angle	mass	radius
-    	   new FlyingObject	(this, flyingObjects, 	210, 	700, 	14.0, 	90, 	20, 	10);
-    	//flyingObjects.add(fo2);
-    	
-    	FlyingObject fo3 = 							//x		y		speed	angle	mass	radius
-    	   new FlyingObject	(this, flyingObjects,	430, 	200, 	13.0, 	0, 		20, 	10);   	    	
-    	//flyingObjects.add(fo3);
-    	
-    	FlyingObject fo4 = 							//x		y		speed	angle	mass	radius
-    	   new FlyingObject	(this, flyingObjects,	430, 	600, 	13.0, 	130, 	20, 	10);
-    	//flyingObjects.add(fo4);
-    	
+    	flyingObjects.add(u1);
+    	flyingObjects.add(u2);
+    	flyingObjects.add(u3);
+ 
     	for(int i = 0; i < flyingObjects.size(); i++){
     		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	}
@@ -185,6 +169,8 @@ public class GameView extends SurfaceView{
     	canvas.drawText("On_Ground : " + player.isOn_ground(), 240, 40, paint);
     	canvas.drawText("Points : " + player.getPoints(), 240, 50, paint);
     	canvas.drawText("Life : " + player.getLife(), 240, 60, paint);
+    	canvas.drawText("ARMAGEDON TIMER : " + player.getArmagedon_timer(), 240, 70, paint);
+    	canvas.drawText("MONEY RAIN TIMER : " + player.getMoney_rain_timer(), 240, 80, paint);
     	
     	//tajmery
     	paint.setColor(Color.YELLOW);
@@ -196,15 +182,6 @@ public class GameView extends SurfaceView{
 		{
 		canvas.scale(0.5f, 0.5f, 240, 400);
 		}
-    	
-    	//informacje o asteroidzie
-//    	paint.setColor(Color.RED);
-//    	for(int i = flyingObjects.size()-1; i >= 0; i--){
-//    		canvas.drawText("X : " + flyingObjects.get(i).getX(), i * 120, 10, paint);
-//        	canvas.drawText("Y : " + flyingObjects.get(i).getY(), i * 120, 20, paint);
-//        	canvas.drawText("Angle : " + (int)flyingObjects.get(i).getAngle(), i * 120, 30, paint);
-//        	canvas.drawText("On_Ground : " + flyingObjects.get(i).isOn_ground(), i * 120, 40, paint);
-//    	}
 
     	paint.setColor(Color.BLACK);
     	
@@ -229,16 +206,23 @@ public class GameView extends SurfaceView{
     		for(int j = i - 1; j >= 0; j--){
     			if(flyingObjects.get(i).checkCollision(flyingObjects.get(j).getX(), flyingObjects.get(j).getY(), flyingObjects.get(j).getRadius())){
     				//rozwiazanie kolizji
-    				//FlyingObject temp = flyingObjects.get(i);
     				flyingObjects.get(j).resolveCollision(flyingObjects.get(i));
-    				//flyingObjects.get(i).resolveCollision(flyingObjects.get(j));
     			}
     		}
     		//sprawdzenie kolizji gracza z obiektami latajacymi
-    		if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius())){
-    			player.resolveCollision(flyingObjects.get(i));
-    			//flyingObjects.get(i).resolveCollision(null);
+    		if(flyingObjects.get(i) instanceof Money){
+    			//jesli obiekt to moneta to wtedy mozna byc troche dalej od obiektu a i tak go zebrac
+    			if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), true)){
+        			player.resolveCollision(flyingObjects.get(i));
+        		}
     		}
+    		else{
+    			//z kazdym innym obiektem kolizja przebiega normalnie
+    			if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), false)){
+        			player.resolveCollision(flyingObjects.get(i));
+        		}
+    		}
+    		
     	}
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
 			//sprawdzamy czy obiekt "zyje"
@@ -253,10 +237,13 @@ public class GameView extends SurfaceView{
     	}
     	resolveGravity();
     	
+    	/************************************************************************************
+    	 * 							GENERATOR TU JEST ODPALANY								*
+    	 ************************************************************************************/
     	if(world_timer <= 0){
     		resetTimer();
     		//dodaj graczowi punkty za generacje (przezycie kolejnych x sekund)
-    		player.setPoints(player.getPoints() + 1);
+    		//player.setPoints(player.getPoints() + 1);
     		
     		List<FlyingObject> temp = generator.generate(player.getPoints(), player.isArmagedon(), player.isMoney_rain());
     		for(int i = 0; i < temp.size(); i++){
@@ -264,10 +251,18 @@ public class GameView extends SurfaceView{
     		}
     		//jesli gracz odpalil generator z armagedonem lub money_rainem wylacz je
 	    	if(player.isArmagedon()){
-	    		player.setArmagedon(false);
+	    		player.setArmagedon_timer(player.getArmagedon_timer() - 1);
+	    		if(player.getArmagedon_timer() <= 0){
+	    			player.setArmagedon_timer(0);
+	    			player.setArmagedon(false);
+	    		}
 	    	}
 	    	if(player.isMoney_rain()){
-	    		player.setMoney_rain(false);
+	    		player.setMoney_rain_timer(player.getMoney_rain_timer() -1);
+	    		if(player.getMoney_rain_timer() <= 0){
+	    			player.setMoney_rain_timer(0);
+	    			player.setMoney_rain(false);
+	    		}
 	    	}
 
     	}

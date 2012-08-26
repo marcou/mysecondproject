@@ -108,14 +108,14 @@ public class Generator {
     	}
     	
     	if(armagedon && money_rain){
-    		asteroid_count = (int) Math.pow(asteroid_count + 2, 2);
-    		money_count = (int) Math.pow(money_count + 2, 2);
+    		asteroid_count = (asteroid_count + 1) * 2;
+    		money_count = (money_count + 1) * 2;
     	}
     	else if(money_rain){
-    		money_count = (int) Math.pow(money_count + 2, 2);
+    		money_count = (money_count + 1) * 2;
     	}
     	else if(armagedon){
-    		asteroid_count = (int) Math.pow(asteroid_count + 2, 2);
+    		asteroid_count = (asteroid_count + 1) * 2;
     	}
     	else{
     		if(asteroid_count > 2){
@@ -145,7 +145,7 @@ public class Generator {
     	}
     	for(int i = 0; i < money_count; i++){
     		prop = calculateProperties();
-    		Money money = new Money(view, objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), money_count + 1, 5);
+    		Money money = new Money(view, objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), money_value + 1, 5);
     		objects.add(money);
     	}
 		for(int i = 0; i < upgrade_count; i++){
@@ -161,7 +161,7 @@ public class Generator {
     	int interval;
     	Random rand = new Random();
     	
-    	interval = rand.nextInt(5);
+    	interval = rand.nextInt(8);
 		upgradeType type = upgradeType.speed;
 		switch(interval){
 		case 0:
@@ -178,6 +178,15 @@ public class Generator {
 			break;
 		case 4:
 			type = upgradeType.tiny_player;
+			break;
+		case 5:
+			type = upgradeType.ultra_suck;
+			break;
+		case 6:
+			type = upgradeType.armagedon;
+			break;
+		case 7:
+			type = upgradeType.money_rain;
 			break;
 		}
 		return type;

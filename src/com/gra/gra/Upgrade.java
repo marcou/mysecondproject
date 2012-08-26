@@ -6,10 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain};
+enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain, ultra_suck};
 
 public class Upgrade extends FlyingObject {
 
+	private int life_timer = 80;
+	
 	private String tag;
 	
 	private Paint paint;
@@ -28,6 +30,8 @@ public class Upgrade extends FlyingObject {
 	private double player_point_multiplier = 1;
 	private double player_speed = 1;
 	private double player_radius = 1;
+	private double player_sucking_range =1;
+	
 	private boolean armagedon; 
 	private boolean money_rain;
 	
@@ -36,6 +40,8 @@ public class Upgrade extends FlyingObject {
 		
 		this.paint = new Paint();
 		paint.setColor(Color.GREEN);
+		
+		super.setLife_timer(life_timer);
 		
 		switch(type){
 		case speed:
@@ -63,17 +69,25 @@ public class Upgrade extends FlyingObject {
 			this.time = 100;
 			this.tag = "TINY PLAYER";
 			break;
+		case ultra_suck:
+			this.player_sucking_range = 4;
+			this.time = 100;
+			this.tag = "ULTRA SUCK";
+			break;
+		//time w przypadku armagedonu i money_rain oznacza przez ile generacji (generacja co jakis czas) bedzie dzialal ten upgrade
 		case armagedon:
 			this.armagedon = true;
-			this.time = 100;
+			this.time = 3;
+			this.tag = "ARMAGEDON";
 			break;
 		case money_rain:
 			this.money_rain = true;
-			this.time = 100;
+			this.time = 3;
+			this.tag = "MONEY RAIN";
 			break;
 		}
 	}
-	
+
 	@Override
 	public void resolveCollision(FlyingObject object){
 		//kolizja upgradeu z asteroida lub graczem
@@ -179,5 +193,12 @@ public class Upgrade extends FlyingObject {
 	public void setMoney_rain(boolean money_rain) {
 		this.money_rain = money_rain;
 	}	
-	
+
+	public double getPlayer_sucking_range() {
+		return player_sucking_range;
+	}
+
+	public void setPlayer_sucking_range(double player_sucking_range) {
+		this.player_sucking_range = player_sucking_range;
+	}
 }
