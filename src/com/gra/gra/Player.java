@@ -21,7 +21,7 @@ public class Player {
 	private int default_radius;
 	private double default_speed;
 	private double default_jump_power;
-	private double default_sucking_range = 25.0;
+	private double default_sucking_range = 5.0;
 	
 	//mnozniki (upgradeowe) do ziemi
 	private double earth_gravity_multiplier = 1.0;	//mno¿nik grawitacji
