@@ -95,9 +95,9 @@ public class GameView extends SurfaceView{
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
     	
-    	Asteroid a1 = new Asteroid(this,flyingObjects, -50,		850, 	1, 		90, 	5, 		10);
-    	Asteroid a2 = new Asteroid(this,flyingObjects, -200, 	500, 	2, 		0, 		5, 		10);
-    	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	5, 		10);
+    	Asteroid a1 = new Asteroid(this,flyingObjects, -50,		850, 	1, 		90, 	5, 		10,		1);
+    	Asteroid a2 = new Asteroid(this,flyingObjects, -200, 	500, 	2, 		0, 		5, 		10,		1);
+    	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	5, 		10,		1);
     	
     	Money m1 = new Money	(this,	flyingObjects, -100, 	-100, 	1, 		0, 		50, 	10);
     	Money m2 = new Money	(this,	flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);

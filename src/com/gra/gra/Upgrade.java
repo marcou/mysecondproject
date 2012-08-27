@@ -91,7 +91,7 @@ public class Upgrade extends FlyingObject {
 	@Override
 	public void resolveCollision(FlyingObject object){
 		//kolizja upgradeu z asteroida lub graczem
-		if(object instanceof Asteroid || object == null){
+		if(object instanceof Asteroid){
 			super.getObjects().remove(this);
 		}
 		//kolizja upgradeu z pieniedzmi

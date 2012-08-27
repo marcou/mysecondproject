@@ -36,7 +36,7 @@ public class Money extends FlyingObject {
 	@Override
 	public void resolveCollision(FlyingObject object){
 		//kolizja pieniedzy z asteroida lub graczem
-		if(object instanceof Asteroid || object == null){
+		if(object instanceof Asteroid){
 			super.setLife(0);
 		}
 		//kolizja miedzy pieniedzmi

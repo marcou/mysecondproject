@@ -50,10 +50,10 @@ public class Generator {
     	int money_count = 0;	//liczba kasy
     	int upgrade_count = 0;	//liczba upgradeow
     	
-    	int asteroid_difficulty = 0;	//zmienna wplywajaca na wypuszczanie wiekszych asteroid
+    	int asteroid_difficulty = 1;	//zmienna wplywajaca na wypuszczanie wiekszych asteroid
     									//przedzial wartosci :
     									//			od 0 (same male - zadnych duzych i ogromnych) 
-    									//			do 100 (same ogromne)
+    									//			do 10 (same ogromne i duze)
     	
     	int money_value = 1;			//zmienna wplywajaca na wartosc pieneidzy wypuszczanych w kosmos
     									//przedzial wartosci :
@@ -65,7 +65,7 @@ public class Generator {
     		money_count = 6;
     		upgrade_count = 0;
     		
-    		asteroid_difficulty = 0;
+    		asteroid_difficulty = 1;
     		money_value = 1;
     	}
     	else if(points <threshold_2){
@@ -81,7 +81,7 @@ public class Generator {
     		money_count = 4;
     		upgrade_count = 1;
     		
-    		asteroid_difficulty = 1;
+    		asteroid_difficulty = 2;
     		money_value = 4;
     	}
     	else if(points <threshold_4){
@@ -89,20 +89,40 @@ public class Generator {
     		money_count = 3;
     		upgrade_count = 2;
     		
-    		asteroid_difficulty = 2;
+    		asteroid_difficulty = 3;
     		money_value = 6;
     	}
     	else if(points <threshold_5){
+    		asteroid_count = 4;
+    		money_count = 2;
+    		upgrade_count = 2;
     		
+    		asteroid_difficulty = 4;
+    		money_value = 8;
     	}
     	else if(points <threshold_6){
+    		asteroid_count = 4;
+    		money_count = 2;
+    		upgrade_count = 2;
     		
+    		asteroid_difficulty = 5;
+    		money_value = 10;
     	}
     	else if(points <threshold_7){
+    		asteroid_count = 4;
+    		money_count = 2;
+    		upgrade_count = 2;
     		
+    		asteroid_difficulty = 7;
+    		money_value = 12;
     	}
     	else{
+    		asteroid_count = 5;
+    		money_count = 2;
+    		upgrade_count = 2;
     		
+    		asteroid_difficulty = 10;
+    		money_value = 20;
     	}
     	
     	if(armagedon && money_rain){
@@ -136,9 +156,12 @@ public class Generator {
 		//wlasciwosci obiektow
 		Properties prop;
 		
+		int asteroid_size = 1;
+		
     	for(int i = 0; i < asteroid_count; i++){
     		prop = calculateProperties();
-    		Asteroid asteroid = new Asteroid(view, objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5);
+    		asteroid_size = generateSize(asteroid_difficulty);
+    		Asteroid asteroid = new Asteroid(view, objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, asteroid_size);
     		objects.add(asteroid);
     	}
     	for(int i = 0; i < money_count; i++){
@@ -297,5 +320,45 @@ public class Generator {
     	this.area_y = y + 60;
     	this.area_w = w - 60;
     	this.area_h = h - 60;
+    }
+    
+    public int generateSize(int difficulty){
+    	Random rand = new Random();
+    	int size = 1;
+    	switch(rand.nextInt(difficulty) + (int)(difficulty/5)){
+    	case 0:
+    		size = 1;
+    		break;
+    	case 1:
+    		size = 1;
+    		break;
+    	case 2:
+    		size = 1;
+    		break;
+    	case 3:
+    		size = 2;
+    		break;
+    	case 4:
+    		size = 2;
+    		break;
+    	case 5:
+    		size = 2;
+    		break;
+    	case 6:
+    		size = 2;
+    		break;
+    	case 7:
+    		size = 2;
+    		break;
+    	case 8:
+    		size = 3;
+    		break;
+    	case 9:
+    	case 10:
+    	case 11:
+    		size = 3;
+    		break;
+    	}
+    	return size;
     }
 }
