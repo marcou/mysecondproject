@@ -2,6 +2,7 @@ package com.gra.menu;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -31,4 +32,14 @@ public class Options extends Activity {
         setContentView(view);
         view.requestFocus();
     }
+    
+	protected void onStop() 
+    {
+        super.onStop();
+        Log.d("GameActivity", "MYonStop is called");
+        finish();
+    }
+    
+    
+    
 }

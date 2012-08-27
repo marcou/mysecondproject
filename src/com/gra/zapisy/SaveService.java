@@ -13,6 +13,10 @@ import android.content.Context;
 
 
 
+/**
+ * @author Maciej
+ * i/o zapisu
+ */
 public class SaveService {
 
 	private static final String SAVE_FILENAME = "SaveFile.ser";
