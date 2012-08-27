@@ -6,10 +6,11 @@ import java.util.Random;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 public class Money extends FlyingObject {
 
-	private int life_timer = 20;
+	private int life_timer = 200;
 	
 	private Paint paint;
 	
@@ -17,7 +18,7 @@ public class Money extends FlyingObject {
 	
 	public Money(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius) {
-		super(view, objects, x, y, speed, angle, mass, radius);
+		super(view, objects, x, y, speed, angle, 40, radius);
 		
 		super.setLife_timer(life_timer);
 		
@@ -82,6 +83,33 @@ public class Money extends FlyingObject {
 				super.setLife(0);
 			}
 		}
+	}
+	
+	//przyciaganie monety przez gracza
+	public void resolvePlayerGravity(float x, float y, double angle) {
+		
+		double gravity = 5000;	//stala grawirtacji potrzebna do "miodnosci"
+		double distance = (Math.pow(super.getX() - x,2) + Math.pow(super.getY() - y,2));//odleglosc do kwadratu
+		double power = gravity/(distance);	//wzor na sile grawitacji
+		
+		//ruch monety zalezny od kata
+		if(angle < super.getAngle()){
+			power = -power;
+		}
+		else if(angle == super.getAngle()){
+			return;
+		}
+		//przy przejsciu 0 - 360 metoda nie dziala bo moneta majaca kat 359 powinna byc przyciagana do gracza ze stopniem 1 a jest odpychana
+		//dlatego to sprawdzenie powinno sprawic ze wszystko bedzie smigac
+		if(Math.abs(angle - super.getAngle()) > 180){
+			power = -power;
+		}
+//		//jelsi na przeciwnych polowach to odwroc kierunek
+//		if(super.getY() > super.getEarth_y() && y < super.getEarth_y() ){
+//			//power = -power;
+//		}
+		super.moveOnGround((int)power);
+		
 	}
 	
 	public int getPoints(){

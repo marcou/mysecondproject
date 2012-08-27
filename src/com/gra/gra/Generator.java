@@ -37,12 +37,12 @@ public class Generator {
     	
     	//progi punktowe wedlug ktorych ustawiane sa fale wrogow
     	int threshold_1 = 10;
-    	int threshold_2 = 500;
-    	int threshold_3 = 2500;
-    	int threshold_4 = 12500;
-    	int threshold_5 = 600000;
-    	int threshold_6 = 1000000;
-    	int threshold_7 = 10000000;
+    	int threshold_2 = 50;
+    	int threshold_3 = 250;
+    	int threshold_4 = 1250;
+    	int threshold_5 = 6000;
+    	int threshold_6 = 10000;
+    	int threshold_7 = 1000000;
     	
     	Random rand = new Random();
     	
@@ -73,24 +73,24 @@ public class Generator {
     		money_count = 5;
     		upgrade_count = 0;
     		
-    		asteroid_difficulty = 0;
-    		money_value = 1;
+    		asteroid_difficulty = 1;
+    		money_value = 2;
     	}
     	else if(points <threshold_3){
     		asteroid_count = 2;
     		money_count = 4;
     		upgrade_count = 1;
     		
-    		asteroid_difficulty = 0;
-    		money_value = 2;
+    		asteroid_difficulty = 1;
+    		money_value = 4;
     	}
     	else if(points <threshold_4){
     		asteroid_count = 3;
     		money_count = 3;
     		upgrade_count = 2;
     		
-    		asteroid_difficulty = 0;
-    		money_value = 4;
+    		asteroid_difficulty = 2;
+    		money_value = 6;
     	}
     	else if(points <threshold_5){
     		

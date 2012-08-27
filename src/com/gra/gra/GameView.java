@@ -44,7 +44,7 @@ public class GameView extends SurfaceView{
 	private boolean playermoving = false;
 	private boolean clockwisedirection;
 	
-	private boolean DEBUG_MODE = false;
+	private boolean DEBUG_MODE = true;
 	
     public GameView(Context context) {
         super(context);
@@ -89,19 +89,20 @@ public class GameView extends SurfaceView{
     	Log.d("START PROGRAMU", "=============================================");
     	paint = new Paint();
     	paint.setColor(Color.BLACK);	//x		y		mass	radius	gravity
-    	earth = new Earth	(this, 		240, 	400, 	2000, 	60, 	2.8);
+    	earth = new Earth	(this, 		240, 	400, 	2000, 	75, 	2.8);
     									//x		y		mass	radius	angle
     	player = new Player	(this, 		240, 	290, 	1, 		10, 	270);
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
-    													new Asteroid(this,flyingObjects, -50,		850, 	1, 		90, 	5, 		10);
-    	new Asteroid(this,flyingObjects, -200, 	500, 	2, 		0, 		5, 		10);
-    	new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	5, 		10);
     	
-    	new Money	(this,	flyingObjects, 245, 	700, 	0, 		0, 		50, 	10);
-    	new Money	(this,	flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
-    	new Money	(this,	flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
-    	new Money	(this,	flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
+    	Asteroid a1 = new Asteroid(this,flyingObjects, -50,		850, 	1, 		90, 	5, 		10);
+    	Asteroid a2 = new Asteroid(this,flyingObjects, -200, 	500, 	2, 		0, 		5, 		10);
+    	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	5, 		10);
+    	
+    	Money m1 = new Money	(this,	flyingObjects, -100, 	-100, 	1, 		0, 		50, 	10);
+    	Money m2 = new Money	(this,	flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
+    	Money m3 = new Money	(this,	flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
+    	Money m4 = new Money	(this,	flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
     													//x		y		speed	angle	upgrade type
     	Upgrade  u1 = new Upgrade(this,flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.armagedon);
     	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
@@ -111,13 +112,13 @@ public class GameView extends SurfaceView{
 //    	flyingObjects.add(a2);
 //    	flyingObjects.add(a3);
 //    	
-//    	flyingObjects.add(m1);
+    	flyingObjects.add(m1);
 //    	flyingObjects.add(m2);
 //    	flyingObjects.add(m3);
 //    	flyingObjects.add(m4);
 //    	
-    	flyingObjects.add(u1);
-    	flyingObjects.add(u2);
+//    	flyingObjects.add(u1);
+//    	flyingObjects.add(u2);
     	flyingObjects.add(u3);
  
     	for(int i = 0; i < flyingObjects.size(); i++){
@@ -202,11 +203,20 @@ public class GameView extends SurfaceView{
     				flyingObjects.get(j).resolveCollision(flyingObjects.get(i));
     			}
     		}
-    		//sprawdzenie kolizji gracza z obiektami latajacymi
-    		if(flyingObjects.get(i) instanceof Money){
-    			//jesli obiekt to moneta to wtedy mozna byc troche dalej od obiektu a i tak go zebrac
+    		/****************************************************
+    		 * sprawdzenie kolizji gracza z obiektami latajacymi*
+    		 ****************************************************/
+    		//sprawdzanie kolizji z pieniedzmi
+    		if(flyingObjects.get(i) instanceof Money && flyingObjects.get(i).isOn_ground()){
+    			//jesli obiekt to moneta to gracz przyciaga ja do siebie jesli jest na ziemi
     			if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), true)){
-        			player.resolveCollision(flyingObjects.get(i));
+    				if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), false)){
+    					player.resolveCollision(flyingObjects.get(i));
+    				}
+    				((Money) flyingObjects.get(i)).resolvePlayerGravity(player.getX(), player.getY(), player.getAngle());
+    				if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), false)){
+    					player.resolveCollision(flyingObjects.get(i));
+    				}
         		}
     		}
     		else{

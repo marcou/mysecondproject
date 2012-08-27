@@ -81,6 +81,19 @@ public abstract class FlyingObject {
 		
 	}
 	
+	//metoda obslugujaca ruch na ziemi - turlanie sie albo przyciaganie do gracza monet
+	public void moveOnGround(int speed){
+		angle += speed;
+		if(angle >= 360){
+			this.angle = angle - 360;
+		}
+		else if(angle <= 0){
+			this.angle = 360 + angle;
+		}
+		this.x = (float) (		Math.cos(Math.toRadians(angle)) * (this.radius + this.earth_radius) + this.earth_x		);
+		this.y = (float) (		Math.sin(Math.toRadians(angle)) * (this.radius + this.earth_radius) + this.earth_y		);
+	}
+	
 	//metoda obslugujaca ruch obiektu
 	public void move(){
 		//zmieniamy pozycje x i y o odpowiednie przesuniecia x_speed, y_speed
@@ -94,6 +107,7 @@ public abstract class FlyingObject {
 			on_ground = true;
 			this.x = (float) (		Math.cos(Math.toRadians(landing_angle)) * (this.radius + this.earth_radius) + this.earth_x		);
 			this.y = (float) (		Math.sin(Math.toRadians(landing_angle)) * (this.radius + this.earth_radius) + this.earth_y		);
+			angle = landing_angle;
 		}
 	}
 	
