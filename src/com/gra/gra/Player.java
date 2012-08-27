@@ -3,7 +3,6 @@ package com.gra.gra;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 /**
  * 
@@ -54,8 +53,6 @@ public class Player {
 	private float earth_y;		//pozycja Y srodka ziemi
 	private int earth_radius;	//promien okregu po jakim ma siê poruszaæ nasz obiekt
 	private boolean on_ground = true;	//czy dotyka ziemi
-	
-	private boolean is_moving = false;
 	
 	private Paint paint;
 	

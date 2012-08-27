@@ -1,19 +1,17 @@
 package com.gra.gra;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 /**
  * 
  * @author Szpada 
  *
- *	Klasa reprezentujaca wszystkie obiekty latajace - monety, asteroidy i upgrady. W tym
- *	miejscu bedzie skodzony ich ruch i reakcja na grawitacje natomiast juz poszczegolne obiekty beda
+ *	Superklasa reprezentujaca wszystkie obiekty latajace - monety, asteroidy i upgrady. W tym
+ *	miejscu bedzie skodzony ich ruch i reakcja na grawitacje natomiast juz poszczegolne klasy beda
  *	dziedziczyly po niej i mialy jakies swoje specjalne wlasciwosci.
  *
  *	Kolizja z graczem wspolna dla wszystkich ale rozwiazywana indywidualnie wedlug klas :
@@ -21,7 +19,7 @@ import android.util.Log;
  *	moneta - zwiekszanie punktow gracza.
  *	upgrade - zmiana wlasciwosci gracza, ziemi i innych gowien.
  */
-public class FlyingObject {
+public abstract class FlyingObject {
 	private GameView view;
 	
 	private List<FlyingObject> objects;
@@ -74,9 +72,7 @@ public class FlyingObject {
 	}
 	
 	//tu odbywa sie animacja sprajta i walenie konia
-	public void update(){
-		
-	}
+	public abstract void update();
 	
 	public void set_earth(float x, float y, int radius){
 		this.earth_x = x;
@@ -174,11 +170,11 @@ public class FlyingObject {
 	}
 	
 	
-	public void resolveCollision(FlyingObject object){
-		//=====================================================================================================
-		//metoda abstrakcyja - bedzie roziwazywana w ramach konkretnych obiektow dziedziczacych po FlyingObject
-		//=====================================================================================================
-	}
+	public abstract void resolveCollision(FlyingObject object); 	
+	//=====================================================================================================
+	//metoda abstrakcyja - bedzie roziwazywana w ramach konkretnych obiektow dziedziczacych po FlyingObject
+	//=====================================================================================================
+
 
 	public GameView getView() {
 		return view;

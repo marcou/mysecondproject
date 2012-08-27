@@ -2,7 +2,6 @@ package com.gra.gra;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,9 +11,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.view.View.OnTouchListener;
-import android.widget.Button;
 /**
  * 
  * @author Szpada
@@ -45,8 +41,6 @@ public class GameView extends SurfaceView{
 	
 	private Paint paint;
 	
-	private long coolDown = 0;	//co ile mozna kliknac w ekran
-	private long lastClick;	//czas ostatniego klikniecia
 	private boolean playermoving = false;
 	private boolean clockwisedirection;
 	
@@ -100,15 +94,14 @@ public class GameView extends SurfaceView{
     	player = new Player	(this, 		240, 	290, 	1, 		10, 	270);
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
-    													//x		y		speed	angle	mass	radius
-    	Asteroid a1 = new Asteroid(this,flyingObjects, -50,		850, 	1, 		90, 	5, 		10);
-    	Asteroid a2 = new Asteroid(this,flyingObjects, -200, 	500, 	2, 		0, 		5, 		10);
-    	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	5, 		10);
+    													new Asteroid(this,flyingObjects, -50,		850, 	1, 		90, 	5, 		10);
+    	new Asteroid(this,flyingObjects, -200, 	500, 	2, 		0, 		5, 		10);
+    	new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	5, 		10);
     	
-    	Money m1 	= new Money	(this,	flyingObjects, 245, 	700, 	0, 		0, 		50, 	10);
-    	Money m2 	= new Money	(this,	flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
-    	Money m3 	= new Money	(this,	flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
-    	Money m4 	= new Money	(this,	flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
+    	new Money	(this,	flyingObjects, 245, 	700, 	0, 		0, 		50, 	10);
+    	new Money	(this,	flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
+    	new Money	(this,	flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
+    	new Money	(this,	flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
     													//x		y		speed	angle	upgrade type
     	Upgrade  u1 = new Upgrade(this,flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.armagedon);
     	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
@@ -348,7 +341,7 @@ public class GameView extends SurfaceView{
         
         else if(event.getAction()==MotionEvent.ACTION_POINTER_2_DOWN) {
         	Log.d(VIEW_LOG_TAG, "SECOND pointer down");
-        	float xx = event.getX(1);
+        	event.getX(1);
         	float yy = event.getY(1);
         	if(yy > 400){
         		if(player.isOn_ground()){

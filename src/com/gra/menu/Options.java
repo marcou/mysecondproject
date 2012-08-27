@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.gra.R;
 import com.gra.gra.GameView;
-import com.gra.kreator.PlayerCreatorView;
 
 public class Options extends Activity {
 	//PlayerCreatorView view;

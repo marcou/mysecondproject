@@ -6,7 +6,6 @@ import java.util.Random;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 public class Money extends FlyingObject {
 
