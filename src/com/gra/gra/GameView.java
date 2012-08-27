@@ -42,6 +42,7 @@ public class GameView extends SurfaceView{
 	private Paint paint;
 	
 	private boolean playermoving = false;
+	private boolean playerjumping = false;
 	private boolean clockwisedirection;
 	
 	private boolean DEBUG_MODE = true;
@@ -331,6 +332,7 @@ public class GameView extends SurfaceView{
         	if(y > 400){
         		if(player.isOn_ground()){
         			player.jump();
+        			playerjumping = true;
         			Log.d(VIEW_LOG_TAG, "Jump pressed");
         		}
         	}
@@ -356,6 +358,7 @@ public class GameView extends SurfaceView{
         	if(yy > 400){
         		if(player.isOn_ground()){
         			player.jump();
+        			playerjumping = true;
         			Log.d(VIEW_LOG_TAG, "Jump pressed");
         		}
         	}
@@ -367,14 +370,23 @@ public class GameView extends SurfaceView{
     			 playermoving = false;
     			 Log.d(VIEW_LOG_TAG, "Player stopped");
     		 }
+    		 else {
+    			 playerjumping = false;
+    		 }
     		 //
     	 }
     	 
         else if(event.getAction()==MotionEvent.ACTION_POINTER_2_UP) {
          	Log.d(VIEW_LOG_TAG, "SECOND pointer UP");
+         	float yy = event.getY(1);
+        	if (yy>400) {
+        		playerjumping = false;
+        	}
+         	
          }
         
         else if (event.getAction()==MotionEvent.ACTION_MOVE) {
+        	
         	
         }
         
