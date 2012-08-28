@@ -13,11 +13,15 @@ public class Asteroid extends FlyingObject {
 	
 	private int size = 1;
 	
+	private int basic_radius;
+	
 	public Asteroid(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius, int size) {
 		super(view, objects, x, y, speed, angle, mass, radius * size);
 		
 		this.size = size;
+		
+		basic_radius = radius;
 		
 		this.paint = new Paint();
 		paint.setColor(Color.RED);
@@ -30,6 +34,12 @@ public class Asteroid extends FlyingObject {
 			setSize(getSize() - 1);
 			((Asteroid) object).setSize(((Asteroid) object).getSize() - 1);
 			
+			if(getSize() > 0){
+				super.setRadius(basic_radius * getSize());
+			}
+			if(((Asteroid) object).getSize() > 0){
+				((Asteroid) object).setRadius(((Asteroid) object).getBasic_radius() * ((Asteroid) object).getSize());
+			}
 			Random rand = new Random();
 			super.setAngle(super.getAngle() - 180);//rand.nextInt(90) - 90);
 			((Asteroid) object).setAngle(((Asteroid) object).getAngle() - 180);//rand.nextInt(90) - 90);
@@ -66,4 +76,11 @@ public class Asteroid extends FlyingObject {
 	public void setSize(int size) {
 		this.size = size;
 	}
+	public int getBasic_radius() {
+		return basic_radius;
+	}
+	public void setBasic_radius(int basic_radius) {
+		this.basic_radius = basic_radius;
+	}
+	
 }
