@@ -56,7 +56,7 @@ public class Player {
 	
 	private Paint paint;
 	
-	private long points = 0;		//punkty gracza
+	private long points = 1000001;		//punkty gracza
 	private int multiplier = 1;		//mnoznik punktow
 	
 	private boolean armagedon = false;

@@ -31,8 +31,12 @@ public class Asteroid extends FlyingObject {
 			((Asteroid) object).setSize(((Asteroid) object).getSize() - 1);
 			
 			Random rand = new Random();
-			super.setAngle(super.getAngle() - rand.nextInt(90) - 90);
-			((Asteroid) object).setAngle(((Asteroid) object).getAngle() - rand.nextInt(90) - 90);
+			super.setAngle(super.getAngle() - 180);//rand.nextInt(90) - 90);
+			((Asteroid) object).setAngle(((Asteroid) object).getAngle() - 180);//rand.nextInt(90) - 90);
+		}
+		//kolizja z upgradeami
+		else if(object instanceof Upgrade){
+			((Upgrade) object).setLife(0);
 		}
 		//kolizja asteroidy z pieniedzmi
 		else if(object instanceof Money){
