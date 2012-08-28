@@ -3,6 +3,9 @@ package com.gra.gra;
 import java.util.List;
 import java.util.Random;
 
+import com.gra.R;
+
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -31,6 +34,8 @@ public class Money extends FlyingObject {
 		
 		this.paint = new Paint();
 		paint.setColor(Color.CYAN);
+		
+		super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.gemstone), 1, 1);
 	}
 	
 	@Override
@@ -69,11 +74,11 @@ public class Money extends FlyingObject {
 		else return false;
 	}
 	
-	@Override
-	public void onDraw(Canvas canvas){
-		update();
-		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
-	}
+//	@Override
+//	public void onDraw(Canvas canvas){
+//		update();
+//		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+//	}
 	
 	public void update(){
 		//jesli obiekt dotyka ziemi usun go po czasie "life_timer"

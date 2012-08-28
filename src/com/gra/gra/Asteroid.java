@@ -3,6 +3,9 @@ package com.gra.gra;
 import java.util.List;
 import java.util.Random;
 
+import com.gra.R;
+
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,6 +28,8 @@ public class Asteroid extends FlyingObject {
 		
 		this.paint = new Paint();
 		paint.setColor(Color.RED);
+		
+		super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.asteroids), 4, 4);
 	}
 	@Override
 	public void resolveCollision(FlyingObject object){
@@ -53,11 +58,11 @@ public class Asteroid extends FlyingObject {
 			((Money) object).setLife(0);
 		}
 	}
-	@Override
-	public void onDraw(Canvas canvas){
-		update();
-		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
-	}
+//	@Override
+//	public void onDraw(Canvas canvas){
+//		update();
+//		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+//	}
 	public void update(){
 		//jesli obiekt dotyka ziemi usun go po czasie "life_timer"
 		if(super.isOn_ground()){

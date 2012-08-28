@@ -2,6 +2,9 @@ package com.gra.gra;
 
 import java.util.List;
 
+import com.gra.R;
+
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -40,6 +43,8 @@ public class Upgrade extends FlyingObject {
 		
 		this.paint = new Paint();
 		paint.setColor(Color.GREEN);
+		
+		super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.package_upgrade), 1, 1);
 		
 		super.setLife_timer(life_timer);
 		
@@ -100,12 +105,12 @@ public class Upgrade extends FlyingObject {
 		}
 	}
 	
-	@Override
-	public void onDraw(Canvas canvas){
-		update();
-		canvas.drawText(this.tag, super.getX() - super.getRadius(), super.getY() - super.getRadius() - 16, paint);
-		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
-	}
+//	@Override
+//	public void onDraw(Canvas canvas){
+//		update();
+//		canvas.drawText(this.tag, super.getX() - super.getRadius(), super.getY() - super.getRadius() - 16, paint);
+//		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+//	}
 
 	public void update(){
 		//jesli obiekt dotyka ziemi usun go po czasie "life_timer"

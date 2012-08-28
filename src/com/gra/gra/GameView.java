@@ -45,7 +45,7 @@ public class GameView extends SurfaceView{
 	private boolean playerjumping = false;
 	private boolean clockwisedirection;
 	
-	private boolean DEBUG_MODE = true;
+	private boolean DEBUG_MODE = false;
 	
     public GameView(Context context) {
         super(context);

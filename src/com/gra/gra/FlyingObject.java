@@ -2,9 +2,11 @@ package com.gra.gra;
 
 import java.util.List;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 /**
  * 
@@ -49,6 +51,18 @@ public abstract class FlyingObject {
 	
 	private int life_timer = 10;	//po jakim czasie od uderzenia w ziemie obiekt zniknie
 	
+	//dane potrzebne do wysweitlania bitmapy
+	private int width;
+	private int height;
+	
+	private int columns = 0;
+	private int rows = 0;
+	
+	private Bitmap bmp;
+	
+	private int currentFrame = 0;
+	private int frames;
+	
 	public FlyingObject(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle, int mass, int radius){
 		this.view = view;
 		this.objects = objects;
@@ -68,7 +82,24 @@ public abstract class FlyingObject {
 	
 	public void onDraw(Canvas canvas){
 		update();
-		canvas.drawCircle(x, y, radius, paint);
+		
+		int srcX = 0;
+    	int srcY = 0;
+    	int row;
+    	
+    	srcX = (currentFrame % (this.columns)) * this.width;
+        row = currentFrame / (this.rows + 1);
+        srcY = row * this.height;
+        
+        Rect src = new Rect(srcX, srcY, srcX + this.width, srcY + this.height);
+		Rect dst = new Rect((int)x - width/2, (int)y - width * 2/5, (int)x + width /2, (int)y + width * 2/5);
+		canvas.drawBitmap(bmp, src, dst, paint);
+		
+		currentFrame++;
+		
+		if(this.currentFrame > this.frames){
+			currentFrame = 0;
+		}
 	}
 	
 	//tu odbywa sie animacja sprajta i walenie konia
@@ -324,6 +355,14 @@ public abstract class FlyingObject {
 
 	public void setLife_timer(int life_timer) {
 		this.life_timer = life_timer;
+	}
+	public void setBmpData(Bitmap bmp, int columns, int rows){
+		this.bmp = bmp;
+		this.width = bmp.getWidth()/columns;
+		this.height = bmp.getHeight()/rows;
+		this.columns = columns;
+		this.rows = rows;
+		this.frames = (columns * rows) -1;
 	}
 	
 }
