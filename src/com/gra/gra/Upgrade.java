@@ -9,7 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain, ultra_suck};
+enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain, ultra_suck, x2, x3, x4};
 
 public class Upgrade extends FlyingObject {
 
@@ -38,6 +38,8 @@ public class Upgrade extends FlyingObject {
 	private boolean armagedon; 
 	private boolean money_rain;
 	
+	private upgradeType type;
+	
 	public Upgrade(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle, upgradeType type) {
 		super(view, objects, x, y, speed, angle, mass, radius);
 		
@@ -47,6 +49,8 @@ public class Upgrade extends FlyingObject {
 		super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.package_upgrade), 1, 1);
 		
 		super.setLife_timer(life_timer);
+		
+		this.type = type;
 		
 		switch(type){
 		case speed:
@@ -89,6 +93,21 @@ public class Upgrade extends FlyingObject {
 			this.money_rain = true;
 			this.time = 3;
 			this.tag = "MONEY RAIN";
+			break;
+		case x2:
+			this.player_point_multiplier = 2;
+			this.time = 100;
+			this.tag = "X2";
+			break;
+		case x3:
+			this.player_point_multiplier = 3;
+			this.time = 100;
+			this.tag = "X3";
+			break;
+		case x4:
+			this.player_point_multiplier = 4;
+			this.time = 100;
+			this.tag = "X4";
 			break;
 		}
 	}

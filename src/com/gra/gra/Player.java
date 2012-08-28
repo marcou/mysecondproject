@@ -66,6 +66,12 @@ public class Player {
 	
 	private double sucking_range;	//ile od gracza moze znajdowac sie moneta zeby ja zassal
 	
+	private int currentFrame;
+	
+	public Player(GameView view){
+		this.view = view;
+	}
+	
 	public Player(GameView view, float x, float y,  int mass, int radius, int degree){
 		this.view = view;
 		this.x = x;
@@ -455,4 +461,27 @@ public class Player {
 		this.money_rain_timer = money_rain_timer;
 	}
 	
+	public Unit PlayerToUnit(){
+		return new Unit(this.x, this.y, (int)this.angle, this.speed, this.mass, (int) this.radius, this.currentFrame, this.earth_gravity_multiplier, this.earth_radius_multiplier,this.timer, this.earth_timer, this.armagedon_timer, this.money_rain_timer, this.earth_stats_changed, this.current_jump_power, this.on_ground, this.points, this.multiplier, this.armagedon, this.money_rain, this.life, this.sucking_range);
+	}
+	public void UnitToPlayer(Unit u){
+		this.angle = u.getAngle();
+		this.armagedon = u.isArmagedon();
+		this.armagedon_timer = u.getArmagedon_timer();
+		this.current_jump_power = u.getCurrent_jump_power();
+		this.currentFrame = u.getCurrentFrame();
+		this.earth_gravity_multiplier = u.getEarth_gravity_multiplier();
+		this.earth_timer = u.getEarth_timer();
+		this.life = u.getLife();
+		this.money_rain = u.isMoney_rain();
+		this.money_rain_timer = u.getMoney_rain_timer();
+		this.multiplier = u.getMultiplier();
+		this.on_ground = u.isOn_ground();
+		this.points = u.getPoints();
+		this.speed = u.getSpeed();
+		this.sucking_range = u.getSucking_range();
+		this.timer = u.getTimer();
+		this.x = u.getX();
+		this.y = u.getY();
+	}
 }

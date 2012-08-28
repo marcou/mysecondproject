@@ -182,7 +182,7 @@ public class Generator {
     	int interval;
     	Random rand = new Random();
     	
-    	interval = rand.nextInt(8);
+    	interval = rand.nextInt(11);
 		upgradeType type = upgradeType.speed;
 		switch(interval){
 		case 0:
@@ -208,6 +208,15 @@ public class Generator {
 			break;
 		case 7:
 			type = upgradeType.money_rain;
+			break;
+		case 8:
+			type = upgradeType.x2;
+			break;
+		case 9:
+			type = upgradeType.x3;
+			break;
+		case 10:
+			type = upgradeType.x4;
 			break;
 		}
 		return type;
