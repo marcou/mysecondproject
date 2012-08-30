@@ -17,7 +17,7 @@ public class GroundEnemy extends FlyingObject{
 
 	private Paint paint;
 	
-	private int speed = 2;
+	private int speed;
 	
 	public GroundEnemy(GameView view, List<FlyingObject> objects, float x,
 			float y, double speed, double angle, int mass, int radius) {

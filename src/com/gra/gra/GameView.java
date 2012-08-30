@@ -21,6 +21,9 @@ import android.view.SurfaceView;
 
 public class GameView extends SurfaceView{
 	
+	private float w_factor;
+	private float h_factor;
+	
 	private Generator generator;		//generator obiektow latajacych
 	
 	private int default_world_timer = 40;
@@ -45,10 +48,14 @@ public class GameView extends SurfaceView{
 	private boolean playerjumping = false;
 	private boolean clockwisedirection;
 	
-	private boolean DEBUG_MODE = true;
+	private boolean DEBUG_MODE = false;
 	
-    public GameView(Context context) {
+    public GameView(Context context, double w_factor, double h_factor) {
         super(context);
+        
+        this.h_factor = (float)h_factor;
+	   	this.w_factor = (float)w_factor;
+        
         setFocusable(true);
         setFocusableInTouchMode(true);
         setLongClickable(true);
@@ -109,7 +116,7 @@ public class GameView extends SurfaceView{
     	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
     	Upgrade  u3 = new Upgrade(this,flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.low_gravity);
     	
-    	GroundEnemy e1  = new GroundEnemy(this, flyingObjects, 0, 0, 2, 90, 1, 10);
+    	GroundEnemy e1  = new GroundEnemy(this, flyingObjects, 0, 0, 3, 90, 1, 10);
     	
 //    	flyingObjects.add(a1);
 //    	flyingObjects.add(a2);
@@ -133,6 +140,8 @@ public class GameView extends SurfaceView{
     
     @Override
     public void onDraw(Canvas canvas) {
+    	//SKALOWANIE
+    	canvas.scale(this.w_factor, this.h_factor);
     	//odliczanie tajmera
     	world_timer--;
     	canvas.save();
@@ -140,7 +149,7 @@ public class GameView extends SurfaceView{
     	if (DEBUG_MODE) 
     		{
     		canvas.scale(0.5f, 0.5f, 240, 400);
-    		}
+    	}
     	
     	//rysowanie tla
     	paint.setColor(Color.BLACK);
@@ -220,14 +229,22 @@ public class GameView extends SurfaceView{
     		if(flyingObjects.get(i) instanceof Money && flyingObjects.get(i).isOn_ground()){
     			//jesli obiekt to moneta to gracz przyciaga ja do siebie jesli jest na ziemi
     			if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), true)){
+    				//jesi obiekt styka sie z naszym obiektem to go zasysamy
     				if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), false)){
     					player.resolveCollision(flyingObjects.get(i));
     				}
     				((Money) flyingObjects.get(i)).resolvePlayerGravity(player.getX(), player.getY(), player.getAngle());
+    				//sprawdzamy czy po przemieszczdeniu monety obiekt przypadkiem siê nie styka z naszym obiektem, jesli tak to go zasysamy
     				if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), false)){
     					player.resolveCollision(flyingObjects.get(i));
     				}
         		}
+    		}
+    		//zasysanie monety w locie
+    		else if(flyingObjects.get(i) instanceof Money && !flyingObjects.get(i).isOn_ground()){
+    			if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), false)){
+					player.resolveCollision(flyingObjects.get(i));
+				}
     		}
     		else{
     			//z kazdym innym obiektem kolizja przebiega normalnie
@@ -336,6 +353,10 @@ public class GameView extends SurfaceView{
     	
     	float x = event.getX();
         float y = event.getY();
+        //SKALOWANIE
+        x = x / this.w_factor;
+        y = y / this.h_factor;
+        
         if(event.getAction()==MotionEvent.ACTION_DOWN){
         	Log.d(VIEW_LOG_TAG, "Touch DOWN");
         	if(y > 400){

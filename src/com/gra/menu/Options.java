@@ -2,6 +2,7 @@ package com.gra.menu;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,7 +29,16 @@ public class Options extends Activity {
 //        view = new PlayerCreatorView(this);
 //        setContentView(view);
 //        view.requestFocus();
-        view = new GameView(this);
+        
+        //SKALOWANIE
+        DisplayMetrics displaymetrics = new DisplayMetrics(); 
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics); 
+        int height = displaymetrics.heightPixels; 
+        int width = displaymetrics.widthPixels;
+        double h_factor = height/800.0;
+        double w_factor = width/480.0;
+        
+        view = new GameView(this,w_factor, h_factor);
         setContentView(view);
         view.requestFocus();
     }

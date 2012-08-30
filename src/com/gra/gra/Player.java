@@ -149,7 +149,7 @@ public class Player {
 	//Ruch				zgodnie lub przeciwnie do wskazowek zegara
 	public void move(boolean clockwise){
 		double distance; 	//zmienna przechowujaca dystans kulki od planety (potrzebna do ruchu w powietrzu)
-		int jumping_speed = (int)speed/2 + 1;
+		int jumping_speed = (int)speed;//(int)speed/2 + 1;
 		//zgodnie z ruchem wskazowek zegara
 		if(clockwise){
 			//gracz jest na ziemi
