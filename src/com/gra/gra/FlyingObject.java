@@ -188,10 +188,11 @@ public abstract class FlyingObject {
 		}
 		beta = landing_angle;
 		
+		
 		//skladowa X grawitacji
-		double x_power = Math.cos(Math.toRadians(beta)) * power;
+		double x_power = Math.cos(Math.toRadians(beta)) * power/2;	//-> dwukrotne spowolnienie (za szybko chodzi)
 		//skladowa Y grawitacji
-		double y_power = Math.sin(Math.toRadians(beta)) * power;
+		double y_power = Math.sin(Math.toRadians(beta)) * power/2;
 		
 		//wersja bez wytracania predkosci
 		

@@ -86,7 +86,7 @@ public class GameView extends SurfaceView{
 	            }
         }); 
     }
-    public void createGenerator(){
+	public void createGenerator(){
     	this.generator = new Generator(this);
     	generator.setBounds(area_x, area_y, area_w, area_h);
     }
