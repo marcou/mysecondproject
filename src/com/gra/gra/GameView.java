@@ -124,7 +124,7 @@ public class GameView extends SurfaceView{
 //    	flyingObjects.add(u2);
     	flyingObjects.add(u3);
     	
-//    	flyingObjects.add(e1);
+    	flyingObjects.add(e1);
  
     	for(int i = 0; i < flyingObjects.size(); i++){
     		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
