@@ -9,7 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain, ultra_suck, x2, x3, x4};
+enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain, ultra_suck, x2, x3, x4, immortality};
 
 public class Upgrade extends FlyingObject {
 
@@ -34,6 +34,7 @@ public class Upgrade extends FlyingObject {
 	private double player_speed = 1;
 	private double player_radius = 1;
 	private double player_sucking_range =1;
+	private boolean player_immortality = false;
 	
 	private boolean armagedon; 
 	private boolean money_rain;
@@ -109,6 +110,10 @@ public class Upgrade extends FlyingObject {
 			this.time = 100;
 			this.tag = "X4";
 			break;
+		case immortality:
+			this.player_immortality = true;
+			this.time = 80;
+			this.tag = "IMMORTALITY";
 		}
 	}
 
@@ -124,12 +129,12 @@ public class Upgrade extends FlyingObject {
 		}
 	}
 	
-//	@Override
-//	public void onDraw(Canvas canvas){
-//		update();
-//		canvas.drawText(this.tag, super.getX() - super.getRadius(), super.getY() - super.getRadius() - 16, paint);
-//		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
-//	}
+	@Override
+	public void onDraw(Canvas canvas){
+		update();
+		canvas.drawText(this.tag, super.getX() - super.getRadius(), super.getY() - super.getRadius() - 16, paint);
+		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+	}
 
 	public void update(){
 		//jesli obiekt dotyka ziemi usun go po czasie "life_timer"
@@ -225,4 +230,13 @@ public class Upgrade extends FlyingObject {
 	public void setPlayer_sucking_range(double player_sucking_range) {
 		this.player_sucking_range = player_sucking_range;
 	}
+
+	public boolean isPlayer_immortality() {
+		return player_immortality;
+	}
+
+	public void setPlayer_immortality(boolean player_immortality) {
+		this.player_immortality = player_immortality;
+	}
+	
 }

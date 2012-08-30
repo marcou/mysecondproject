@@ -74,11 +74,11 @@ public class Money extends FlyingObject {
 		else return false;
 	}
 	
-//	@Override
-//	public void onDraw(Canvas canvas){
-//		update();
-//		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
-//	}
+	@Override
+	public void onDraw(Canvas canvas){
+		update();
+		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+	}
 	
 	public void update(){
 		//jesli obiekt dotyka ziemi usun go po czasie "life_timer"

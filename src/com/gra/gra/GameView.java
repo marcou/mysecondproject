@@ -45,7 +45,7 @@ public class GameView extends SurfaceView{
 	private boolean playerjumping = false;
 	private boolean clockwisedirection;
 	
-	private boolean DEBUG_MODE = false;
+	private boolean DEBUG_MODE = true;
 	
     public GameView(Context context) {
         super(context);
@@ -107,7 +107,9 @@ public class GameView extends SurfaceView{
     													//x		y		speed	angle	upgrade type
     	Upgrade  u1 = new Upgrade(this,flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.armagedon);
     	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
-    	Upgrade  u3 = new Upgrade(this,flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.money_rain);
+    	Upgrade  u3 = new Upgrade(this,flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.low_gravity);
+    	
+    	GroundEnemy e1  = new GroundEnemy(this, flyingObjects, 0, 0, 2, 90, 1, 10);
     	
 //    	flyingObjects.add(a1);
 //    	flyingObjects.add(a2);
@@ -121,6 +123,8 @@ public class GameView extends SurfaceView{
 //    	flyingObjects.add(u1);
 //    	flyingObjects.add(u2);
     	flyingObjects.add(u3);
+    	
+//    	flyingObjects.add(e1);
  
     	for(int i = 0; i < flyingObjects.size(); i++){
     		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
@@ -166,12 +170,14 @@ public class GameView extends SurfaceView{
     	canvas.drawText("Life : " + player.getLife(), 240, 60, paint);
     	canvas.drawText("ARMAGEDON TIMER : " + player.getArmagedon_timer(), 240, 70, paint);
     	canvas.drawText("MONEY RAIN TIMER : " + player.getMoney_rain_timer(), 240, 80, paint);
+    	canvas.drawText("Immortality : " + player.isImmortal(), 240, 90, paint);
     	
     	//tajmery
     	paint.setColor(Color.YELLOW);
     	canvas.drawText("Player_timer : " + player.getTimer(), 40, 10, paint);
     	canvas.drawText("Earth_timer  : " + earth.getTimer(), 40, 30, paint);
     	canvas.drawText("World_timer  : " + world_timer, 40, 50, paint);
+    	canvas.drawText("Immortality_timer  : " + player.getImmortality_timer(), 40, 70, paint);
     	
     	if (DEBUG_MODE) 
 		{
@@ -188,11 +194,14 @@ public class GameView extends SurfaceView{
     		if(flyingObjects.get(i).getSpeed() == 0.0 && !checkVissible(flyingObjects.get(i))){
     			flyingObjects.get(i).setLife(0);
     		}
+    		//jesli obiekt wylecial poza obszar gry
     		if(!checkIfInArea(flyingObjects.get(i))){
     			flyingObjects.get(i).setLife(0);
     		}
-    		//rysowanie obiektow
-    		flyingObjects.get(i).onDraw(canvas);
+    		//rysowanie obiektow (tylko tych widocznych - ekran)
+    		if(checkVissible(flyingObjects.get(i))){
+    			flyingObjects.get(i).onDraw(canvas);
+    		}
     		//przesuwanie obiektow
     		if(!flyingObjects.get(i).isOn_ground()){
     			flyingObjects.get(i).resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());

@@ -181,8 +181,7 @@ public class Generator {
     public upgradeType calculateType(){
     	int interval;
     	Random rand = new Random();
-    	
-    	interval = rand.nextInt(11);
+    	interval = rand.nextInt(12);
 		upgradeType type = upgradeType.speed;
 		switch(interval){
 		case 0:
@@ -217,6 +216,9 @@ public class Generator {
 			break;
 		case 10:
 			type = upgradeType.x4;
+			break;
+		case 11:
+			type = upgradeType.immortality;
 			break;
 		}
 		return type;

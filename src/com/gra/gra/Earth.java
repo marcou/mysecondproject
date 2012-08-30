@@ -115,19 +115,20 @@ public class Earth {
 		this.paint = paint;
 	}
 	public void onDraw(Canvas canvas){
-		update();
-		
-		int srcX = 0;
-    	int srcY = 0;
-    	int row;
-    	
-    	srcX = (currentFrame % (this.columns)) * this.width;
-        row = currentFrame / (this.rows + 1);
-        srcY = row * this.height;
-        
-        Rect src = new Rect(srcX, srcY, srcX + this.width, srcY + this.height);
-		Rect dst = new Rect((int)x - width/2, (int)y - width * 2/5, (int)x + width /2, (int)y + width * 2/5);
-		canvas.drawBitmap(bmp, src, dst, paint);
+		canvas.drawCircle(x, y, radius, paint);
+//		update();
+//		
+//		int srcX = 0;
+//    	int srcY = 0;
+//    	int row;
+//    	
+//    	srcX = (currentFrame % (this.columns)) * this.width;
+//        row = currentFrame / (this.rows + 1);
+//        srcY = row * this.height;
+//        
+//        Rect src = new Rect(srcX, srcY, srcX + this.width, srcY + this.height);
+//		Rect dst = new Rect((int)x - width/2, (int)y - width * 2/5, (int)x + width /2, (int)y + width * 2/5);
+//		canvas.drawBitmap(bmp, src, dst, paint);
 		
 		if(timer > 0){
 			timer--;
@@ -138,7 +139,7 @@ public class Earth {
 			this.radius = default_radius;
 			this.suck_my_stats = true;
 		}
-		currentFrame++;
+//		currentFrame++;
 	}
 	
 	public void update(){

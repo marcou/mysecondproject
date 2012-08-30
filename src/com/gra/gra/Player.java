@@ -31,6 +31,7 @@ public class Player {
 	private long earth_timer = 0;
 	private long armagedon_timer = 0;
 	private long money_rain_timer = 0;
+	private long immortality_timer = 0;
 	
 	//flaga ktorej ustawienie na true sprawia ze zmienuly sie statystyki ziemi
 	private boolean earth_stats_changed = false;
@@ -56,7 +57,7 @@ public class Player {
 	
 	private Paint paint;
 	
-	private long points = 1000001;		//punkty gracza
+	private long points = 0;		//punkty gracza
 	private int multiplier = 1;		//mnoznik punktow
 	
 	private boolean armagedon = false;
@@ -67,6 +68,8 @@ public class Player {
 	private double sucking_range;	//ile od gracza moze znajdowac sie moneta zeby ja zassal
 	
 	private int currentFrame;
+	
+	private boolean immortal = false;
 	
 	public Player(GameView view){
 		this.view = view;
@@ -91,7 +94,15 @@ public class Player {
 	}
 	
 	public void onDraw(Canvas canvas){
+		if(immortal){
+			paint.setColor(Color.BLUE);
+		}
+		else{
+			paint.setColor(Color.YELLOW);
+		}
 		canvas.drawCircle(x, y, (float) radius, paint);
+		
+		//dekrementacja tajmerow
 		if(timer > 0){
 			timer--;
 		}
@@ -103,6 +114,16 @@ public class Player {
 			this.jump_power = default_jump_power;
 			this.radius = default_radius;
 			this.sucking_range = default_sucking_range;
+//			if(immortality_timer <= 0){
+//				this.immortal = false;
+//			}
+		}
+		if(immortality_timer > 0){
+			immortality_timer--;
+		}
+		else{
+			immortality_timer = 0;
+			immortal = false;
 		}
 	}
 	
@@ -112,13 +133,17 @@ public class Player {
 		this.earth_radius = radius;
 	}
 	
-	public void setUpgrade(long time, double radius, double multiplier, double speed, double jump_power, double sucking_range){
+	public void setUpgrade(long time, double radius, double multiplier, double speed, double jump_power, double sucking_range, boolean immortality){
 		this.timer = time;
+		if(immortality){
+			this.immortality_timer = time;
+		}
 		this.radius *= radius;
 		this.multiplier *= multiplier;
 		this.speed *= speed;
 		this.jump_power *= jump_power;
 		this.sucking_range *= sucking_range;
+		this.immortal = immortality;
 	}
 	
 	//Ruch				zgodnie lub przeciwnie do wskazowek zegara
@@ -245,8 +270,10 @@ public class Player {
 		//kolizja gracza z asteroida
 		if(object instanceof Asteroid){
 			((Asteroid) object).setLife(0);
-			setPoints(points - 1);
-			setLife(getLife()-1);
+			if(!immortal){
+				setLife(getLife()-1);
+				immortal(40);
+			}
 		}
 		//kolizja gracza z pieniedzmi
 		else if(object instanceof Money){
@@ -267,11 +294,12 @@ public class Player {
 					|| ((Upgrade) object).getPlayer_point_multiplier() < 1 || ((Upgrade) object).getPlayer_point_multiplier() > 1 
 					|| ((Upgrade) object).getPlayer_radius() < 1 || ((Upgrade) object).getPlayer_radius() > 1 
 					|| ((Upgrade) object).getPlayer_speed() < 1 || ((Upgrade) object).getPlayer_speed() > 1
-					|| ((Upgrade) object).getPlayer_sucking_range() < 1 || ((Upgrade) object).getPlayer_sucking_range() > 1){
+					|| ((Upgrade) object).getPlayer_sucking_range() < 1 || ((Upgrade) object).getPlayer_sucking_range() > 1
+					|| ((Upgrade) object).isPlayer_immortality()){
 				//zresetowanie poprzednich upgradeow
 				resetUpgrade();
 				//ustawienie nowych upgradeow playerowi
-				setUpgrade(((Upgrade) object).getTime(), ((Upgrade) object).getPlayer_radius(), ((Upgrade) object).getPlayer_point_multiplier(), ((Upgrade) object).getPlayer_speed(), ((Upgrade) object).getPlayer_jump_power(), ((Upgrade) object).getPlayer_sucking_range());
+				setUpgrade(((Upgrade) object).getTime(), ((Upgrade) object).getPlayer_radius(), ((Upgrade) object).getPlayer_point_multiplier(), ((Upgrade) object).getPlayer_speed(), ((Upgrade) object).getPlayer_jump_power(), ((Upgrade) object).getPlayer_sucking_range(), ((Upgrade) object).isPlayer_immortality());
 			}
 			//jesli upgrade jest typu armagedon
 			if(((Upgrade) object).isArmagedon()){
@@ -284,6 +312,18 @@ public class Player {
 			}
 			((Upgrade) object).setLife(0);
 		}
+		//kolizja z kolcem wystajacym z ziemi
+		else if(object instanceof GroundEnemy){
+			if(!immortal){
+				setLife(getLife()-1);
+				immortal(40);
+			}
+		}
+	}
+	
+	public void immortal(long time){
+		this.immortal = true;
+		this.immortality_timer = time;
 	}
 	
 	public void setPoints(long points){
@@ -461,6 +501,22 @@ public class Player {
 		this.money_rain_timer = money_rain_timer;
 	}
 	
+	public long getImmortality_timer() {
+		return immortality_timer;
+	}
+
+	public void setImmortality_timer(long immortality_timer) {
+		this.immortality_timer = immortality_timer;
+	}
+
+	public boolean isImmortal() {
+		return immortal;
+	}
+
+	public void setImmortal(boolean immortal) {
+		this.immortal = immortal;
+	}
+
 	public Unit PlayerToUnit(){
 		return new Unit(this.x, this.y, (int)this.angle, this.speed, this.mass, (int) this.radius, this.currentFrame, this.earth_gravity_multiplier, this.earth_radius_multiplier,this.timer, this.earth_timer, this.armagedon_timer, this.money_rain_timer, this.earth_stats_changed, this.current_jump_power, this.on_ground, this.points, this.multiplier, this.armagedon, this.money_rain, this.life, this.sucking_range);
 	}
