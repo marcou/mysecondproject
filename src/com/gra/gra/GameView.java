@@ -290,7 +290,12 @@ public class GameView extends SurfaceView{
     	earth.update();
     	player.onDraw(canvas);
     	
-    	
+    	//rysowanie dymu
+    	for(int i = temps.size()-1; i >=0; i--){
+    		if(temps.get(i).getType() == tempType.smoke){
+    			drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
+    		}
+    	}
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
     		//jesli obiekt sie zatrzymal (i jest poza ekranem) to go usun
     		if(flyingObjects.get(i).getSpeed() == 0.0 && !checkVissible(flyingObjects.get(i))){
@@ -387,12 +392,9 @@ public class GameView extends SurfaceView{
     		}
     		
     	}
-    	//rysowanie temp spritow
+    	//rysowanie wybuchow
     	for(int i = temps.size()-1; i >=0; i--){
-    		if(temps.get(i).getType() == tempType.smoke){
-    			drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
-    		}
-    		else if(temps.get(i).getType() == tempType.explosion){
+    		if(temps.get(i).getType() == tempType.explosion){
     			drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), ex_columns, ex_rows, explosion_bmp.getWidth()/ex_columns, explosion_bmp.getHeight()/ex_rows, temps.get(i).getCurrentFrame(), explosion_bmp, 0, false);
     		}
     		temps.get(i).update();
