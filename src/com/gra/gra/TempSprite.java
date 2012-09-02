@@ -2,15 +2,6 @@ package com.gra.gra;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Random;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Rect;
-
-import com.gra.R;
-
 
 /**
  * @author Maciej
@@ -26,7 +17,7 @@ public class TempSprite implements Serializable{
        private List<TempSprite> temps;
 
        private int currentFrame = 0;
-       private int frames;
+       private int frames = 15;
        
        private GameView view;
  
@@ -41,12 +32,13 @@ public class TempSprite implements Serializable{
        }
 
        public void update() {
-    	   if(--currentFrame >= frames){
+    	   if(currentFrame >= frames){
     		   currentFrame = 0;
     	   }
            if (--currentLife < 1) {
         	   temps.remove(this);
            }
+           currentFrame++;
        }
 
 	public float getX() {

@@ -182,6 +182,8 @@ public class GameView extends SurfaceView{
     	
     	flyingObjects.add(e1);
  
+    	temps.add(new TempSprite(temps, this, 0, 0, 0, 1, 16));
+    	
     	for(int i = 0; i < flyingObjects.size(); i++){
     		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
     		
@@ -214,7 +216,7 @@ public class GameView extends SurfaceView{
     	}
     	
     	//rysowanie tla
-    	paint.setColor(Color.BLACK);
+    	paint.setColor(Color.WHITE);
     	//wersja bez grafiki
     	canvas.drawRect(-1000, -1000, 4800, 8000, this.paint);
     	//wersja z grafika
@@ -273,7 +275,9 @@ public class GameView extends SurfaceView{
     	
     	//rysowanie dymu
     	for(int i = temps.size()-1; i >=0; i--){
+    		Log.d("TEMP SPRITE", "frame : " + temps.get(i).getCurrentFrame());
     		drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
+    		drawSprite(canvas, 240,  400, s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
     		temps.get(i).update();
     	}
     	
@@ -317,9 +321,9 @@ public class GameView extends SurfaceView{
     		if(!flyingObjects.get(i).isOn_ground()){
     			flyingObjects.get(i).resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
     			//narysuj warkocz za asteroida
-    			if(flyingObjects.get(i) instanceof Asteroid){
-    				temps.add(new TempSprite(temps, this, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getAngle(), asteroid_bmp.getWidth()/a_columns, smoke_bmp.getWidth()/s_columns));
-    			}
+//    			if(flyingObjects.get(i) instanceof Asteroid){
+//    				temps.add(new TempSprite(temps, this, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getAngle(), asteroid_bmp.getWidth()/a_columns, smoke_bmp.getWidth()/s_columns));
+//    			}
     		}
     		//sprawdzenie kolizji miedzy obiektami latajacymi
     		for(int j = i - 1; j >= 0; j--){
