@@ -606,7 +606,8 @@ public class GameView extends SurfaceView{
     	int srcY = 0;
     	int row;
     	srcX = (currentFrame % (columns)) * width;
-        row = currentFrame / (rows + 1);
+        //row = currentFrame / (rows + 1);
+    	row = currentFrame / (rows);
         srcY = row * height;
         
     	Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
@@ -639,7 +640,7 @@ public class GameView extends SurfaceView{
     	}
     	else{
     		srcX = (info_current_frame % (info_columns)) * (info_bmp.getWidth()/info_columns);
-    		row = info_current_frame / (info_rows + 1);
+    		row = info_current_frame / (info_rows);
     		srcY = row * (info_bmp.getHeight()/info_rows);
     	}
     	Rect src = new Rect(srcX, srcY, srcX + info_bmp.getWidth()/info_columns, srcY + info_bmp.getHeight()/info_rows);
