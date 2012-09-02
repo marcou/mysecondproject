@@ -1,6 +1,9 @@
 package com.gra.zapisy;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import com.gra.gra.FlyingObject;
 
 /**
  * @author Maciej
@@ -8,10 +11,11 @@ import java.io.Serializable;
  */
 public class SaveContainer implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7850045340800714344L;
+	
+	ArrayList<FlyingObject> objects = new ArrayList<FlyingObject>();
+	
+	private static final long serialVersionUID = 1L;
+	
 	
 	//musi zawierac pozycje playera, aktualne pointy i pozycje razem z wektoroma predkosci wszystkich kuleczek
 
