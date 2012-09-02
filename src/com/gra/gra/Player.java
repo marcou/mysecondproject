@@ -71,7 +71,6 @@ public class Player {
 	
 	
 	public Player(float x, float y,  int mass, int radius, int degree){
-		//this.view = view;
 		this.x = x;
 		this.y = y;
 		this.radius = radius;
@@ -109,9 +108,6 @@ public class Player {
 			this.jump_power = default_jump_power;
 			this.radius = default_radius;
 			this.sucking_range = default_sucking_range;
-//			if(immortality_timer <= 0){
-//				this.immortal = false;
-//			}
 		}
 		if(immortality_timer > 0){
 			immortality_timer--;
@@ -201,17 +197,12 @@ public class Player {
 	}
 	
 	public void resolveGravity(double gravity, int mass, int radius){
-		//ZREZYGNOWALEM Z GRAWITACJI ZALEZNEJ OD ODLEGLOSCI BO TA KURWA WYLATUJE W KOSMOS
+		//ZREZYGNOWALEM Z GRAWITACJI ZALEZNEJ OD ODLEGLOSCI BO PLAYER WYLATUJE W KOSMOS
 		this.earth_radius = radius;
-		//double distance = (Math.pow(this.earth_x - this.x,2) + Math.pow(this.earth_y - this.y,2));
-		double power = gravity;//(gravity * mass * this.mass)/(distance);	//wzor na sile grawitacji
-		//Log.d("grawitacja", "sila grawitacji : " + power);
+		double power = gravity;
 		//jesli sila wyrzutu jest mniejsza od grawitacji
-		//Log.d("grawitacja", "sila podskoku : " + current_jump_power);
 		if(current_jump_power <= 0){
 			current_jump_power -= power;
-			//power = power + current_jump_power;
-			//current_jump_power = 0;
 			//spadamy z sila power - current_jump_power
 			resolvePower(-current_jump_power, false);
 		}
@@ -236,8 +227,6 @@ public class Player {
 			x_speed = -x_speed;
 			y_speed = -y_speed;
 		}
-		//Log.d("resolvePower", "X speed : " + x_speed);
-		//Log.d("resolvePower", "Y speed : " + y_speed);
 		
 		this.x += x_speed;
 		this.y += y_speed;
