@@ -220,7 +220,7 @@ public class GameView extends SurfaceView{
     	//wersja bez grafiki
     	canvas.drawRect(-1000, -1000, 4800, 8000, this.paint);
     	//wersja z grafika
-    	drawBackground(canvas);
+    	//drawBackground(canvas);
     	
     	//zolty prostokat reprezentuje obszar ekranu
     	paint.setColor(Color.YELLOW);
@@ -319,11 +319,15 @@ public class GameView extends SurfaceView{
     		}
     		//przesuwanie obiektow
     		if(!flyingObjects.get(i).isOn_ground()){
+    			float temp_x = flyingObjects.get(i).getX();
+    			float temp_y = flyingObjects.get(i).getY();
+    			
     			flyingObjects.get(i).resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
     			//narysuj warkocz za asteroida
-//    			if(flyingObjects.get(i) instanceof Asteroid){
-//    				temps.add(new TempSprite(temps, this, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getAngle(), asteroid_bmp.getWidth()/a_columns, smoke_bmp.getWidth()/s_columns));
-//    			}
+    			if(flyingObjects.get(i) instanceof Asteroid){
+    				//temps.add(new TempSprite(temps, this, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getAngle(), asteroid_bmp.getWidth()/a_columns, smoke_bmp.getWidth()/s_columns));
+    				temps.add(new TempSprite(temps, this, temp_x, temp_y));
+    			}
     		}
     		//sprawdzenie kolizji miedzy obiektami latajacymi
     		for(int j = i - 1; j >= 0; j--){

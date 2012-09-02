@@ -30,6 +30,16 @@ public class TempSprite implements Serializable{
 		   
 		   this.currentLife = life;
        }
+       
+       public TempSprite(List<TempSprite> temps, GameView view, float x,float y) {
+    	   this.view = view;
+		   this.temps = temps;
+		   
+		   this.x = x;
+		   this.y = y;
+		   
+		   this.currentLife = life;
+       }
 
        public void update() {
     	   if(currentFrame >= frames){
