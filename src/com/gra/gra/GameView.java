@@ -659,6 +659,9 @@ public class GameView extends SurfaceView{
     }
     
     public void showInfo(upgradeType type){
+    	//wyzerowanie frame-a i life-a
+    	info_current_frame = 0;
+    	info_life = default_info_life;
     	switch(type){
     	case armagedon:
     		this.info = true;
