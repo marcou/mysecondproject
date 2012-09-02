@@ -84,6 +84,10 @@ public class GameView extends SurfaceView{
 	private int s_columns = 4;
 	private int s_rows = 4;
 	
+	private Bitmap explosion_bmp;
+	private int ex_columns = 4;
+	private int ex_rows = 4;
+	
 	private Bitmap background_bmp;
 	private int background_x = 0;
 	
@@ -153,6 +157,7 @@ public class GameView extends SurfaceView{
     	smoke_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.dym);
     	info_speed = BitmapFactory.decodeResource(this.getResources(), R.drawable.upspeed);
     	info_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.upspeed);
+    	explosion_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.explosion);
     	
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
@@ -285,15 +290,9 @@ public class GameView extends SurfaceView{
     	earth.update();
     	player.onDraw(canvas);
     	
-    	//rysowanie dymu
-    	for(int i = temps.size()-1; i >=0; i--){
-    		Log.d("TEMP SPRITE", "frame : " + temps.get(i).getCurrentFrame());
-    		drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
-    		temps.get(i).update();
-    	}
     	
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
-    		//jesli obiekt sie zatrzymal (wali konia poza ekranem) to go usun
+    		//jesli obiekt sie zatrzymal (i jest poza ekranem) to go usun
     		if(flyingObjects.get(i).getSpeed() == 0.0 && !checkVissible(flyingObjects.get(i))){
     			flyingObjects.get(i).setLife(0);
     		}
@@ -337,12 +336,16 @@ public class GameView extends SurfaceView{
     			//narysuj warkocz za asteroida jesli jest ona widoczna
     			if(flyingObjects.get(i) instanceof Asteroid && checkVissible(flyingObjects.get(i))){
     				//temps.add(new TempSprite(temps, this, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getAngle(), asteroid_bmp.getWidth()/a_columns, smoke_bmp.getWidth()/s_columns));
-    				temps.add(new TempSprite(temps, this, temp_x, temp_y));
+    				temps.add(new TempSprite(temps, temp_x, temp_y, tempType.smoke));
     			}
     		}
     		//sprawdzenie kolizji miedzy obiektami latajacymi
     		for(int j = i - 1; j >= 0; j--){
     			if(flyingObjects.get(i).checkCollision(flyingObjects.get(j).getX(), flyingObjects.get(j).getY(), flyingObjects.get(j).getRadius())){
+    				//jesli koliduja ze soba 2 asteroidy to dodaj wybuch
+    				if(flyingObjects.get(i) instanceof Asteroid && flyingObjects.get(j) instanceof Asteroid){
+    					temps.add(new TempSprite(temps,flyingObjects.get(j).getX() - (flyingObjects.get(j).getX() - flyingObjects.get(i).getX())/2, flyingObjects.get(j).getY() - (flyingObjects.get(j).getY() - flyingObjects.get(i).getY())/2, tempType.explosion));
+    				}
     				//rozwiazanie kolizji
     				flyingObjects.get(j).resolveCollision(flyingObjects.get(i));
     			}
@@ -383,6 +386,16 @@ public class GameView extends SurfaceView{
         		}
     		}
     		
+    	}
+    	//rysowanie temp spritow
+    	for(int i = temps.size()-1; i >=0; i--){
+    		if(temps.get(i).getType() == tempType.smoke){
+    			drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
+    		}
+    		else if(temps.get(i).getType() == tempType.explosion){
+    			drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), ex_columns, ex_rows, explosion_bmp.getWidth()/ex_columns, explosion_bmp.getHeight()/ex_rows, temps.get(i).getCurrentFrame(), explosion_bmp, 0, false);
+    		}
+    		temps.get(i).update();
     	}
     	//rysowanie info (jesli takie isntieje)
     	if(info){

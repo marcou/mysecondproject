@@ -114,7 +114,7 @@ public class Generator {
     		money_value = 64;
     	}
     	else{
-    		asteroid_count = 5;
+    		asteroid_count = 50;
     		money_count = 2;
     		upgrade_count = 2;
     		

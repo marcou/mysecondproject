@@ -8,6 +8,8 @@ import java.util.List;
  * bonusy wyswietlajace sie na ekranie - np. extra mana, extra cosie
  */
 
+enum tempType{smoke, explosion}
+
 public class TempSprite implements Serializable{
        private float x;
        private float y;
@@ -18,22 +20,23 @@ public class TempSprite implements Serializable{
 
        private int currentFrame = 0;
        private int frames = 15;
-       
-       private GameView view;
  
-       public TempSprite(List<TempSprite> temps, GameView view, float x,float y, double angle, int radius, int temp_sprite_size) {
-    	   this.view = view;
-		   this.temps = temps;
-		   
-		   this.x = (float)(Math.cos(Math.toRadians(angle)) * (radius + temp_sprite_size) + x);
-		   this.y = (float)(Math.sin(Math.toRadians(angle)) * (radius + temp_sprite_size) + y);
-		   
-		   this.currentLife = life;
-       }
+       private tempType type;
        
-       public TempSprite(List<TempSprite> temps, GameView view, float x,float y) {
-    	   this.view = view;
+//       public TempSprite(List<TempSprite> temps, float x,float y, double angle, int radius, int temp_sprite_size) {
+//		   this.temps = temps;
+//		   
+//		   this.x = (float)(Math.cos(Math.toRadians(angle)) * (radius + temp_sprite_size) + x);
+//		   this.y = (float)(Math.sin(Math.toRadians(angle)) * (radius + temp_sprite_size) + y);
+//		   
+//		   this.currentLife = life;
+//       }
+       
+       public TempSprite(List<TempSprite> temps, float x,float y, tempType type) {
 		   this.temps = temps;
+		   
+		   this.type = type;
+		   
 		   
 		   this.x = x;
 		   this.y = y;
@@ -107,12 +110,12 @@ public class TempSprite implements Serializable{
 		this.frames = frames;
 	}
 
-	public GameView getView() {
-		return view;
+	public tempType getType() {
+		return type;
 	}
 
-	public void setView(GameView view) {
-		this.view = view;
-	}
-       
+	public void setType(tempType type) {
+		this.type = type;
+	} 
+	
 }
