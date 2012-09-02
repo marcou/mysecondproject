@@ -35,7 +35,7 @@ public class Earth {
 	private Bitmap bmp;
 	
 	private int currentFrame = 0;
-	private int frames;
+	private int frames = 0;	//zmienic kiedy bedzie juz animowana kula ziemska
 	
 	private Paint paint;
 	
@@ -121,7 +121,7 @@ public class Earth {
 			this.radius = default_radius;
 			this.suck_my_stats = true;
 		}
-		currentFrame++;
+		//currentFrame++; odkomentowac jak bedzie wiecej klatek
 	}
 	
 	public void setUpgrade(long time, double radius, double gravity){

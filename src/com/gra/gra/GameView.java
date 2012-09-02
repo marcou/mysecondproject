@@ -659,12 +659,56 @@ public class GameView extends SurfaceView{
     }
     
     public void showInfo(upgradeType type){
-    	//switch(type){
-    	//case speed:
+    	switch(type){
+    	case armagedon:
     		this.info = true;
     		this.info_bmp = info_speed;
-    		//break;
-    	//}
+    		break;
+    	case high_gravity:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case huge_player:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case immortality:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case low_gravity:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case money_rain:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case speed:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case tiny_player:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case ultra_suck:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case x2:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case x3:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	case x4:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		break;
+    	}
     }
     
 
