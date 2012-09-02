@@ -16,9 +16,6 @@ import android.graphics.Rect;
  * Klasa opisuj¹ca ziemie (okr¹g³y obiekt posiadaj¹cy grawitacje, po jego powierzchni porusza siê gracz)
  */
 public class Earth {
-	
-	private GameView view;
-	
 	/*-----------------------------------------------------------------------------------------------------*
 	 * Startowe wartosci do ktorych bedzie sie wracalo po uplynieciu czasu dzialania modyfikatora(upgradeu)*
 	 *-----------------------------------------------------------------------------------------------------*/
@@ -43,8 +40,7 @@ public class Earth {
 	private Paint paint;
 	
 	
-	public Earth(GameView view, float x, float y, int mass, int radius, double gravity){
-		this.view = view;
+	public Earth(float x, float y, int mass, int radius, double gravity){
 		this.x = x;
 		this.y = y;
 		this.mass = mass;
@@ -56,12 +52,6 @@ public class Earth {
 		
 		this.paint = new Paint();
 		paint.setColor(Color.LTGRAY);
-	}
-	public GameView getView() {
-		return view;
-	}
-	public void setView(GameView view) {
-		this.view = view;
 	}
 	public float getX() {
 		return x;

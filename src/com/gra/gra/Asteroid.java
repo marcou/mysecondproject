@@ -18,9 +18,9 @@ public class Asteroid extends FlyingObject {
 	
 	private int basic_radius;
 	
-	public Asteroid(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle,
+	public Asteroid(List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius, int size) {
-		super(view, objects, x, y, speed, angle, mass, radius * size);
+		super( objects, x, y, speed, angle, mass, radius * size);
 		
 		this.size = size;
 		

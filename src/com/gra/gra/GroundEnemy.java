@@ -19,9 +19,9 @@ public class GroundEnemy extends FlyingObject{
 	
 	private int speed;
 	
-	public GroundEnemy(GameView view, List<FlyingObject> objects, float x,
+	public GroundEnemy(List<FlyingObject> objects, float x,
 			float y, double speed, double angle, int mass, int radius) {
-		super(view, objects, x, y, speed, angle, mass, radius);
+		super(objects, x, y, speed, angle, mass, radius);
 		
 		this.speed = (int)speed;
 		

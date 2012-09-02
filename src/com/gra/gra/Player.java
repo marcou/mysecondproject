@@ -11,8 +11,6 @@ import android.graphics.Paint;
  *	gracz a wlasciwie kulka ktora kontroluje gracz
  */
 public class Player {
-
-	private GameView view;
 	/*-----------------------------------------------------------------------------------------------------*
 	 * Startowe wartosci do ktorych bedzie sie wracalo po uplynieciu czasu dzialania modyfikatora(upgradeu)*
 	 *-----------------------------------------------------------------------------------------------------*/
@@ -71,12 +69,9 @@ public class Player {
 	
 	private boolean immortal = false;
 	
-	public Player(GameView view){
-		this.view = view;
-	}
 	
-	public Player(GameView view, float x, float y,  int mass, int radius, int degree){
-		this.view = view;
+	public Player(float x, float y,  int mass, int radius, int degree){
+		//this.view = view;
 		this.x = x;
 		this.y = y;
 		this.radius = radius;
@@ -332,14 +327,6 @@ public class Player {
 	
 	public long getPoints(){
 		return points;
-	}
-	
-	public GameView getView() {
-		return view;
-	}
-
-	public void setView(GameView view) {
-		this.view = view;
 	}
 
 	public float getX() {

@@ -18,10 +18,7 @@ public class Generator {
 	private int area_w;
 	private int area_h;
 	
-	private GameView view;
-	
-	public Generator(GameView view) {
-		this.view = view;
+	public Generator() {
 	}
 	
 	//==================================	GENERATOR	=====================================
@@ -161,18 +158,18 @@ public class Generator {
     	for(int i = 0; i < asteroid_count; i++){
     		prop = calculateProperties();
     		asteroid_size = generateSize(asteroid_difficulty);
-    		Asteroid asteroid = new Asteroid(view, objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, asteroid_size);
+    		Asteroid asteroid = new Asteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, asteroid_size);
     		objects.add(asteroid);
     	}
     	for(int i = 0; i < money_count; i++){
     		prop = calculateProperties();
-    		Money money = new Money(view, objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), money_value + 1, 5);
+    		Money money = new Money(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), money_value + 1, 5);
     		objects.add(money);
     	}
 		for(int i = 0; i < upgrade_count; i++){
 			type = calculateType();
 			prop = calculateProperties();
-    		Upgrade upgrade = new Upgrade(view, objects, prop.getX(), prop.getY(), rand.nextInt(6), prop.getAngle(),type);
+    		Upgrade upgrade = new Upgrade(objects, prop.getX(), prop.getY(), rand.nextInt(6), prop.getAngle(),type);
     		objects.add(upgrade);
 		}
 		return objects;

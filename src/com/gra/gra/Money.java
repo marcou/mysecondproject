@@ -19,9 +19,9 @@ public class Money extends FlyingObject {
 	
 	private int points;	//liczba punktow ktora daje ten obiekt
 	
-	public Money(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle,
+	public Money(List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius) {
-		super(view, objects, x, y, speed, angle, 40, radius);
+		super(objects, x, y, speed, angle, 40, radius);
 		
 		super.setLife_timer(life_timer);
 		
@@ -30,12 +30,6 @@ public class Money extends FlyingObject {
 		if(points < 1){
 			points = 1;
 		}
-		//Ustawiania odpowiednich danych do bitmapy
-		super.setWidth(128);
-		super.setHeight(128);
-		super.setColumns(4);
-		super.setRows(4);
-		super.setFrames(15);
 		
 		this.paint = new Paint();
 		paint.setColor(Color.CYAN);

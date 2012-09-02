@@ -55,7 +55,7 @@ public class GameView extends SurfaceView{
 	private boolean playerjumping = false;
 	private boolean clockwisedirection;
 	
-	private boolean DEBUG_MODE = false;
+	private boolean DEBUG_MODE = true;
 	
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
@@ -125,7 +125,7 @@ public class GameView extends SurfaceView{
         }); 
     }
 	public void createGenerator(){
-    	this.generator = new Generator(this);
+    	this.generator = new Generator();
     	generator.setBounds(area_x, area_y, area_w, area_h);
     }
     
@@ -145,27 +145,28 @@ public class GameView extends SurfaceView{
     	Log.d("==============", "=============================================");
     	Log.d("START PROGRAMU", "=============================================");
     	paint = new Paint();
-    	paint.setColor(Color.BLACK);	//x		y		mass	radius	gravity
-    	earth = new Earth	(this, 		240, 	400, 	2000, 	75, 	2.8);
+    	paint.setColor(Color.BLACK);	
+    						//x		y		mass	radius	gravity
+    	earth = new Earth	(240, 	400, 	2000, 	75, 	2.8);
     									//x		y		mass	radius	angle
-    	player = new Player	(this, 		240, 	290, 	1, 		10, 	270);
+    	player = new Player	(240, 	290, 	1, 		10, 	270);
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
     	
-    	Asteroid a1 = new Asteroid(this,flyingObjects, -50,		850, 	1, 		90, 	5, 		10,		1);
-    	Asteroid a2 = new Asteroid(this,flyingObjects, -200, 	500, 	2, 		0, 		5, 		10,		1);
-    	Asteroid a3 = new Asteroid(this,flyingObjects, 30, 		700, 	1, 		40, 	5, 		10,		1);
+    	Asteroid a1 = new Asteroid(flyingObjects, -50,		850, 	1, 		90, 	5, 		10,		1);
+    	Asteroid a2 = new Asteroid(flyingObjects, -200, 	500, 	2, 		0, 		5, 		10,		1);
+    	Asteroid a3 = new Asteroid(flyingObjects, 30, 		700, 	1, 		40, 	5, 		10,		1);
     	
-    	Money m1 = new Money	(this,	flyingObjects, -100, 	-100, 	1, 		0, 		50, 	10);
-    	Money m2 = new Money	(this,	flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
-    	Money m3 = new Money	(this,	flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
-    	Money m4 = new Money	(this,	flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
+    	Money m1 = new Money	(flyingObjects, -100, 	-100, 	1, 		0, 		50, 	10);
+    	Money m2 = new Money	(flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
+    	Money m3 = new Money	(flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
+    	Money m4 = new Money	(flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
     													//x		y		speed	angle	upgrade type
-    	Upgrade  u1 = new Upgrade(this,flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.armagedon);
-    	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
-    	Upgrade  u3 = new Upgrade(this,flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.low_gravity);
+    	Upgrade  u1 = new Upgrade(flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.armagedon);
+    	Upgrade  u2 = new Upgrade(flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
+    	Upgrade  u3 = new Upgrade(flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.low_gravity);
     	
-    	GroundEnemy e1  = new GroundEnemy(this, flyingObjects, 0, 0, 2, 90, 1, 10);
+    	GroundEnemy e1  = new GroundEnemy(flyingObjects, 0, 0, 2, 90, 1, 10);
     	
 //    	flyingObjects.add(a1);
 //    	flyingObjects.add(a2);
@@ -181,8 +182,6 @@ public class GameView extends SurfaceView{
     	flyingObjects.add(u3);
     	
     	flyingObjects.add(e1);
- 
-    	temps.add(new TempSprite(temps, this, 0, 0, 0, 1, 16));
     	
     	for(int i = 0; i < flyingObjects.size(); i++){
     		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
@@ -220,7 +219,7 @@ public class GameView extends SurfaceView{
     	//wersja bez grafiki
     	canvas.drawRect(-1000, -1000, 4800, 8000, this.paint);
     	//wersja z grafika
-    	//drawBackground(canvas);
+    	drawBackground(canvas);
     	
     	//zolty prostokat reprezentuje obszar ekranu
     	paint.setColor(Color.YELLOW);
@@ -277,7 +276,6 @@ public class GameView extends SurfaceView{
     	for(int i = temps.size()-1; i >=0; i--){
     		Log.d("TEMP SPRITE", "frame : " + temps.get(i).getCurrentFrame());
     		drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
-    		drawSprite(canvas, 240,  400, s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
     		temps.get(i).update();
     	}
     	
@@ -291,7 +289,7 @@ public class GameView extends SurfaceView{
     			flyingObjects.get(i).setLife(0);
     		}
     		//rysowanie obiektow (tylko tych widocznych - ekran)
-    		if(checkVissible(flyingObjects.get(i))){
+    		if(DEBUG_MODE || checkVissible(flyingObjects.get(i))){
     			//rysowanie kulek
     			//flyingObjects.get(i).onDraw(canvas);
     			
@@ -323,8 +321,8 @@ public class GameView extends SurfaceView{
     			float temp_y = flyingObjects.get(i).getY();
     			
     			flyingObjects.get(i).resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
-    			//narysuj warkocz za asteroida
-    			if(flyingObjects.get(i) instanceof Asteroid){
+    			//narysuj warkocz za asteroida jesli jest ona widoczna
+    			if(flyingObjects.get(i) instanceof Asteroid && checkVissible(flyingObjects.get(i))){
     				//temps.add(new TempSprite(temps, this, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getAngle(), asteroid_bmp.getWidth()/a_columns, smoke_bmp.getWidth()/s_columns));
     				temps.add(new TempSprite(temps, this, temp_x, temp_y));
     			}

@@ -41,13 +41,13 @@ public class Upgrade extends FlyingObject {
 	
 	private upgradeType type;
 	
-	public Upgrade(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle, upgradeType type) {
-		super(view, objects, x, y, speed, angle, mass, radius);
+	public Upgrade(List<FlyingObject> objects, float x, float y, double speed, double angle, upgradeType type) {
+		super(objects, x, y, speed, angle, mass, radius);
 		
 		this.paint = new Paint();
 		paint.setColor(Color.GREEN);
 		
-		super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.package_upgrade), 1, 1);
+//		super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.package_upgrade), 1, 1);
 		
 		super.setLife_timer(life_timer);
 		

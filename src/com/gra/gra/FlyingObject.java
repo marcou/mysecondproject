@@ -22,7 +22,6 @@ import android.graphics.Rect;
  *	upgrade - zmiana wlasciwosci gracza, ziemi i innych gowien.
  */
 public abstract class FlyingObject {
-	private GameView view;
 	
 	private List<FlyingObject> objects;
 	
@@ -50,21 +49,15 @@ public abstract class FlyingObject {
 	private int life = 1;
 	
 	private int life_timer = 10;	//po jakim czasie od uderzenia w ziemie obiekt zniknie
-	
-	//dane potrzebne do wysweitlania bitmapy
-	private int width;
-	private int height;
-	
+
 	private int columns = 1;
 	private int rows = 1;
-	
-	private Bitmap bmp;
-	
+
 	private int currentFrame = 0;
 	private int frames;
 	
-	public FlyingObject(GameView view, List<FlyingObject> objects, float x, float y, double speed, double angle, int mass, int radius){
-		this.view = view;
+	public FlyingObject(List<FlyingObject> objects, float x, float y, double speed, double angle, int mass, int radius){
+		//this.view = view;
 		this.objects = objects;
 		this.x = x;
 		this.y = y;
@@ -82,19 +75,6 @@ public abstract class FlyingObject {
 	
 	public void onDraw(Canvas canvas){
 		update();
-		
-		int srcX = 0;
-    	int srcY = 0;
-    	int row;
-    	
-    	srcX = (currentFrame % (this.columns)) * this.width;
-        row = currentFrame / (this.rows + 1);
-        srcY = row * this.height;
-        
-        Rect src = new Rect(srcX, srcY, srcX + this.width, srcY + this.height);
-		Rect dst = new Rect((int)x - width/2, (int)y - width * 2/5, (int)x + width /2, (int)y + width * 2/5);
-		canvas.drawBitmap(bmp, src, dst, paint);
-		
 		currentFrame++;
 		
 		if(this.currentFrame > this.frames){
@@ -220,15 +200,6 @@ public abstract class FlyingObject {
 	//=====================================================================================================
 	//metoda abstrakcyja - bedzie roziwazywana w ramach konkretnych obiektow dziedziczacych po FlyingObject
 	//=====================================================================================================
-
-
-	public GameView getView() {
-		return view;
-	}
-
-	public void setView(GameView view) {
-		this.view = view;
-	}
 
 	public float getX() {
 		return x;
@@ -357,47 +328,7 @@ public abstract class FlyingObject {
 	public void setLife_timer(int life_timer) {
 		this.life_timer = life_timer;
 	}
-	public void setBmpData(Bitmap bmp, int columns, int rows){
-		this.bmp = bmp;
-		this.width = bmp.getWidth()/columns;
-		this.height = bmp.getHeight()/rows;
-		this.columns = columns;
-		this.rows = rows;
-		this.frames = (columns * rows) -1;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public int getColumns() {
-		return columns;
-	}
-
-	public void setColumns(int columns) {
-		this.columns = columns;
-	}
-
-	public int getRows() {
-		return rows;
-	}
-
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
-
+	
 	public int getCurrentFrame() {
 		return currentFrame;
 	}
