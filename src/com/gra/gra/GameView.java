@@ -45,7 +45,9 @@ public class GameView extends SurfaceView{
 	private List<Ball> balls = new ArrayList<Ball>();	//lista kulek
 	private Earth earth;	//ziemia
 	private Player player;	//gracz
-	private List<FlyingObject> flyingObjects = new ArrayList<FlyingObject>();//lista obiektow latajacych 
+	private List<FlyingObject> flyingObjects = new ArrayList<FlyingObject>();//lista obiektow latajacych
+	
+	private List<TempSprite> temps = new ArrayList<TempSprite>();//lista obiektow ktore znikaja po krotkim czasie (dym)
 	
 	private Paint paint;
 	
@@ -77,6 +79,10 @@ public class GameView extends SurfaceView{
 	private Bitmap thorn_bmp;
 	private int t_columns = 1;
 	private int t_rows = 1;
+	
+	private Bitmap smoke_bmp;
+	private int s_columns = 4;
+	private int s_rows = 4;
 	
 	private Bitmap background_bmp;
 	private int background_x = 0;
@@ -133,6 +139,7 @@ public class GameView extends SurfaceView{
     	earth_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.earthcrap);
     	thorn_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.kolce);
     	background_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.gownotlo);
+    	smoke_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.dym);
     	
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
@@ -209,7 +216,7 @@ public class GameView extends SurfaceView{
     	//rysowanie tla
     	paint.setColor(Color.BLACK);
     	//wersja bez grafiki
-    	canvas.drawRect(-1000, -1000, 4800, 8000, this.paint);	//zmienic na canvas.drawRect(0, 0, 480, 800, this.paint);
+    	canvas.drawRect(-1000, -1000, 4800, 8000, this.paint);
     	//wersja z grafika
     	drawBackground(canvas);
     	
@@ -264,6 +271,12 @@ public class GameView extends SurfaceView{
     	earth.update();
     	player.onDraw(canvas);
     	
+    	//rysowanie dymu
+    	for(int i = temps.size()-1; i >=0; i--){
+    		drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
+    		temps.get(i).update();
+    	}
+    	
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
     		//jesli obiekt sie zatrzymal (wali konia poza ekranem) to go usun
     		if(flyingObjects.get(i).getSpeed() == 0.0 && !checkVissible(flyingObjects.get(i))){
@@ -284,18 +297,18 @@ public class GameView extends SurfaceView{
     			 
     			//rysowanie asteroid
     			if(flyingObjects.get(i) instanceof Asteroid){
-    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(), flyingObjects.get(i).isOn_ground());
+    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(), false);
     			}
     			//rysowanie hajsu
     			else if(flyingObjects.get(i) instanceof Money){
-    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  m_columns, m_rows,  money_bmp.getWidth()/m_columns, money_bmp.getHeight()/m_rows,  flyingObjects.get(i).getCurrentFrame(), money_bmp, (float)flyingObjects.get(i).getAngle(), flyingObjects.get(i).isOn_ground());
+    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  m_columns, m_rows,  money_bmp.getWidth()/m_columns, money_bmp.getHeight()/m_rows,  flyingObjects.get(i).getCurrentFrame(), money_bmp, (float)flyingObjects.get(i).getAngle(), false);
     			}
     			//rysowanie upgradeow
     			else if(flyingObjects.get(i) instanceof Upgrade){
-    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  u_columns, u_rows,  money_bmp.getWidth()/u_columns, money_bmp.getHeight()/u_rows,  flyingObjects.get(i).getCurrentFrame(), upgrade_bmp, (float)flyingObjects.get(i).getAngle(), flyingObjects.get(i).isOn_ground());
+    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  u_columns, u_rows,  upgrade_bmp.getWidth()/u_columns, upgrade_bmp.getHeight()/u_rows,  flyingObjects.get(i).getCurrentFrame(), upgrade_bmp, (float)flyingObjects.get(i).getAngle(), false);
     			}
     			else if(flyingObjects.get(i) instanceof GroundEnemy){
-    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  t_columns, t_rows,  thorn_bmp.getWidth()/t_columns, thorn_bmp.getHeight()/t_rows,  flyingObjects.get(i).getCurrentFrame(), thorn_bmp, (float)flyingObjects.get(i).getAngle(), true); //tu na stale true bo obiekt jest na ziemi
+    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  t_columns, t_rows,  thorn_bmp.getWidth()/t_columns, thorn_bmp.getHeight()/t_rows,  flyingObjects.get(i).getCurrentFrame(), thorn_bmp, (float)flyingObjects.get(i).getAngle(), true);
     			}
     			//update (klatki ++)
     			flyingObjects.get(i).update();
@@ -303,6 +316,10 @@ public class GameView extends SurfaceView{
     		//przesuwanie obiektow
     		if(!flyingObjects.get(i).isOn_ground()){
     			flyingObjects.get(i).resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
+    			//narysuj warkocz za asteroida
+    			if(flyingObjects.get(i) instanceof Asteroid){
+    				temps.add(new TempSprite(temps, this, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getAngle(), asteroid_bmp.getWidth()/a_columns, smoke_bmp.getWidth()/s_columns));
+    			}
     		}
     		//sprawdzenie kolizji miedzy obiektami latajacymi
     		for(int j = i - 1; j >= 0; j--){
@@ -553,8 +570,8 @@ public class GameView extends SurfaceView{
     }
     
     //width -> szerokosc bitmapy podzielona przez rows
-    public void drawSprite(Canvas canvas, int x, int y, int columns, int rows, int width, int height, int currentFrame, Bitmap bmp, float angle, boolean on_ground){
-    	if(on_ground){
+    public void drawSprite(Canvas canvas, int x, int y, int columns, int rows, int width, int height, int currentFrame, Bitmap bmp, float angle, boolean thorn){
+    	if(thorn){
     		canvas.save();
     		canvas.rotate(angle, x, y);
     	}
@@ -568,7 +585,7 @@ public class GameView extends SurfaceView{
     	Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
 		Rect dst = new Rect(x - width/2, y - width/2, x + width/2, y + width/2);
 		canvas.drawBitmap(bmp, src, dst, paint);
-		if(on_ground){
+		if(thorn){
 			canvas.restore();
 		}
     }

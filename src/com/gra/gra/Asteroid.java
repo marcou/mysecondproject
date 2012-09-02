@@ -28,8 +28,6 @@ public class Asteroid extends FlyingObject {
 		
 		this.paint = new Paint();
 		paint.setColor(Color.RED);
-		
-		super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.asteroids), 4, 4);
 	}
 	@Override
 	public void resolveCollision(FlyingObject object){
