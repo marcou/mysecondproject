@@ -35,20 +35,12 @@ public class Earth {
 	private int radius; 	//promien ziemi
 	private double gravity;	//stala grawitacyjna
 	
-	//dane potrzebne do wysweitlania bitmapy
-	private int width;
-	private int height;
-	
-	private int columns = 4;
-	private int rows = 3;
-	
 	private Bitmap bmp;
 	
 	private int currentFrame = 0;
 	private int frames;
 	
 	private Paint paint;
-	
 	
 	
 	public Earth(GameView view, float x, float y, int mass, int radius, double gravity){
@@ -64,13 +56,6 @@ public class Earth {
 		
 		this.paint = new Paint();
 		paint.setColor(Color.LTGRAY);
-		
-		this.bmp = BitmapFactory.decodeResource(view.getResources(), R.drawable.earth);
-		
-		this.width = bmp.getWidth()/columns;
-		this.height = bmp.getHeight()/rows;
-		
-		this.frames = 11;//(columns * rows) -1;
 	}
 	public GameView getView() {
 		return view;
@@ -116,7 +101,7 @@ public class Earth {
 	}
 	public void onDraw(Canvas canvas){
 		canvas.drawCircle(x, y, radius, paint);
-//		update();
+		update();
 //		
 //		int srcX = 0;
 //    	int srcY = 0;
@@ -130,6 +115,13 @@ public class Earth {
 //		Rect dst = new Rect((int)x - width/2, (int)y - width * 2/5, (int)x + width /2, (int)y + width * 2/5);
 //		canvas.drawBitmap(bmp, src, dst, paint);
 		
+		
+	}
+	
+	public void update(){
+		if(this.currentFrame > this.frames){
+			currentFrame = 0;
+		}
 		if(timer > 0){
 			timer--;
 		}
@@ -139,13 +131,7 @@ public class Earth {
 			this.radius = default_radius;
 			this.suck_my_stats = true;
 		}
-//		currentFrame++;
-	}
-	
-	public void update(){
-		if(this.currentFrame > this.frames){
-			currentFrame = 0;
-		}
+		currentFrame++;
 	}
 	
 	public void setUpgrade(long time, double radius, double gravity){
@@ -170,6 +156,18 @@ public class Earth {
 	}
 	public void setTimer(long timer) {
 		this.timer = timer;
+	}
+	public int getCurrentFrame() {
+		return currentFrame;
+	}
+	public void setCurrentFrame(int currentFrame) {
+		this.currentFrame = currentFrame;
+	}
+	public int getFrames() {
+		return frames;
+	}
+	public void setFrames(int frames) {
+		this.frames = frames;
 	}
 	
 }

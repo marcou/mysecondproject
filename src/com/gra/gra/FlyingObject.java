@@ -55,8 +55,8 @@ public abstract class FlyingObject {
 	private int width;
 	private int height;
 	
-	private int columns = 0;
-	private int rows = 0;
+	private int columns = 1;
+	private int rows = 1;
 	
 	private Bitmap bmp;
 	
@@ -190,9 +190,9 @@ public abstract class FlyingObject {
 		
 		
 		//skladowa X grawitacji
-		double x_power = Math.cos(Math.toRadians(beta)) * power/2;	//-> dwukrotne spowolnienie (za szybko chodzi)
+		double x_power = Math.cos(Math.toRadians(beta)) * (power/3);	//-> dwukrotne spowolnienie (za szybko chodzi)
 		//skladowa Y grawitacji
-		double y_power = Math.sin(Math.toRadians(beta)) * power/2;
+		double y_power = Math.sin(Math.toRadians(beta)) * (power/3);
 		
 		//wersja bez wytracania predkosci
 		
@@ -364,6 +364,60 @@ public abstract class FlyingObject {
 		this.columns = columns;
 		this.rows = rows;
 		this.frames = (columns * rows) -1;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getColumns() {
+		return columns;
+	}
+
+	public void setColumns(int columns) {
+		this.columns = columns;
+	}
+
+	public int getRows() {
+		return rows;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+
+	public int getCurrentFrame() {
+		return currentFrame;
+	}
+
+	public void setCurrentFrame(int currentFrame) {
+		this.currentFrame = currentFrame;
+	}
+
+	public int getFrames() {
+		return frames;
+	}
+
+	public void setFrames(int frames) {
+		this.frames = frames;
+	}
+
+	public void setBmpData(int a_columns, int a_rows) {
+		this.columns = a_columns;
+		this.rows = a_rows;
+		this.frames = (a_columns * a_rows) - 1;
 	}
 	
 }

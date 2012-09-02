@@ -144,6 +144,11 @@ public class Upgrade extends FlyingObject {
 				super.setLife(0);
 			}
 		}
+		super.setCurrentFrame(super.getCurrentFrame() + 1);
+		
+		if(super.getCurrentFrame() > super.getFrames()){
+			super.setCurrentFrame(0);
+		}
 	}
 	
 	public long getTime() {

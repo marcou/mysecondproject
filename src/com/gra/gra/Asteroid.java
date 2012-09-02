@@ -74,6 +74,12 @@ public class Asteroid extends FlyingObject {
 		if(size < 1){
 			super.setLife(0);
 		}
+		
+		super.setCurrentFrame(super.getCurrentFrame() + 1);
+		
+		if(super.getCurrentFrame() > super.getFrames()){
+			super.setCurrentFrame(0);
+		}
 	}
 	public int getSize() {
 		return size;

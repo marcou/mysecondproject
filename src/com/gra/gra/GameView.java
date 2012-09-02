@@ -3,10 +3,15 @@ package com.gra.gra;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gra.R;
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -26,7 +31,7 @@ public class GameView extends SurfaceView{
 	
 	private Generator generator;		//generator obiektow latajacych
 	
-	private int default_world_timer = 40;
+	private int default_world_timer = 80;
 	private int world_timer = default_world_timer;	//timer swiata, po tym czasie (logicznym) odpalany jest generator
 	
 	//Pole gry (wieksze od ekranu) na ktorym generuje sie obiekty tak zeby gracz ich nie widzial (nie moga sie przeca nagle pojawiac)
@@ -49,6 +54,33 @@ public class GameView extends SurfaceView{
 	private boolean clockwisedirection;
 	
 	private boolean DEBUG_MODE = false;
+	
+	/*
+	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
+	 */
+	private Bitmap asteroid_bmp;
+	private int a_columns = 4;
+	private int a_rows = 4;
+	
+	private Bitmap money_bmp;
+	private int m_columns = 4;
+	private int m_rows = 4;
+	
+	private Bitmap upgrade_bmp;
+	private int u_columns = 1;
+	private int u_rows = 1;
+	
+	private Bitmap earth_bmp;
+	private int e_columns = 1;
+	private int e_rows = 1;
+	
+	private Bitmap thorn_bmp;
+	private int t_columns = 1;
+	private int t_rows = 1;
+	
+	private Bitmap background_bmp;
+	private int background_x = 0;
+	
 	
     public GameView(Context context, double w_factor, double h_factor) {
         super(context);
@@ -92,6 +124,16 @@ public class GameView extends SurfaceView{
     }
     
     public void createSprites(){
+    	/*
+    	 * inicjowanie bitmap
+    	 */
+    	asteroid_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.asteroids);
+    	money_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.gemstone);
+    	upgrade_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.upg);
+    	earth_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.earthcrap);
+    	thorn_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.kolce);
+    	background_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.gownotlo);
+    	
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
     	Log.d("START PROGRAMU", "=============================================");
@@ -116,7 +158,7 @@ public class GameView extends SurfaceView{
     	Upgrade  u2 = new Upgrade(this,flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
     	Upgrade  u3 = new Upgrade(this,flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.low_gravity);
     	
-    	GroundEnemy e1  = new GroundEnemy(this, flyingObjects, 0, 0, 3, 90, 1, 10);
+    	GroundEnemy e1  = new GroundEnemy(this, flyingObjects, 0, 0, 2, 90, 1, 10);
     	
 //    	flyingObjects.add(a1);
 //    	flyingObjects.add(a2);
@@ -135,6 +177,19 @@ public class GameView extends SurfaceView{
  
     	for(int i = 0; i < flyingObjects.size(); i++){
     		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    		
+    		if(flyingObjects.get(i) instanceof Asteroid){
+				flyingObjects.get(i).setBmpData(a_columns, a_rows);
+			}
+			else if(flyingObjects.get(i) instanceof Money){
+				flyingObjects.get(i).setBmpData(m_columns, m_rows);
+			}
+			else if(flyingObjects.get(i) instanceof Upgrade){
+				flyingObjects.get(i).setBmpData(u_columns, u_rows);
+			}
+			else if(flyingObjects.get(i) instanceof GroundEnemy){
+				flyingObjects.get(i).setBmpData(t_columns, t_rows);
+			}
     	}
     }
     
@@ -153,7 +208,10 @@ public class GameView extends SurfaceView{
     	
     	//rysowanie tla
     	paint.setColor(Color.BLACK);
+    	//wersja bez grafiki
     	canvas.drawRect(-1000, -1000, 4800, 8000, this.paint);	//zmienic na canvas.drawRect(0, 0, 480, 800, this.paint);
+    	//wersja z grafika
+    	drawBackground(canvas);
     	
     	//zolty prostokat reprezentuje obszar ekranu
     	paint.setColor(Color.YELLOW);
@@ -195,7 +253,15 @@ public class GameView extends SurfaceView{
 
     	paint.setColor(Color.BLACK);
     	
-    	earth.onDraw(canvas);
+    	/*
+    	 * RYSOWANIE ZIEMI I PLAYER
+    	 */
+    	//wersja bez spriteow
+    	//earth.onDraw(canvas);
+    	//player.onDraw(canvas);
+    	//wersja ze spritami
+    	drawSprite(canvas, (int)earth.getX(), (int)earth.getY(), e_columns, e_rows, earth_bmp.getWidth()/e_columns, earth_bmp.getHeight()/e_rows, earth.getCurrentFrame(), earth_bmp, 0, true);
+    	earth.update();
     	player.onDraw(canvas);
     	
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
@@ -209,7 +275,30 @@ public class GameView extends SurfaceView{
     		}
     		//rysowanie obiektow (tylko tych widocznych - ekran)
     		if(checkVissible(flyingObjects.get(i))){
-    			flyingObjects.get(i).onDraw(canvas);
+    			//rysowanie kulek
+    			//flyingObjects.get(i).onDraw(canvas);
+    			
+    			/*==================
+    			 * rysowanie spritow
+    			 *==================*/
+    			 
+    			//rysowanie asteroid
+    			if(flyingObjects.get(i) instanceof Asteroid){
+    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(), flyingObjects.get(i).isOn_ground());
+    			}
+    			//rysowanie hajsu
+    			else if(flyingObjects.get(i) instanceof Money){
+    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  m_columns, m_rows,  money_bmp.getWidth()/m_columns, money_bmp.getHeight()/m_rows,  flyingObjects.get(i).getCurrentFrame(), money_bmp, (float)flyingObjects.get(i).getAngle(), flyingObjects.get(i).isOn_ground());
+    			}
+    			//rysowanie upgradeow
+    			else if(flyingObjects.get(i) instanceof Upgrade){
+    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  u_columns, u_rows,  money_bmp.getWidth()/u_columns, money_bmp.getHeight()/u_rows,  flyingObjects.get(i).getCurrentFrame(), upgrade_bmp, (float)flyingObjects.get(i).getAngle(), flyingObjects.get(i).isOn_ground());
+    			}
+    			else if(flyingObjects.get(i) instanceof GroundEnemy){
+    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  t_columns, t_rows,  thorn_bmp.getWidth()/t_columns, thorn_bmp.getHeight()/t_rows,  flyingObjects.get(i).getCurrentFrame(), thorn_bmp, (float)flyingObjects.get(i).getAngle(), true); //tu na stale true bo obiekt jest na ziemi
+    			}
+    			//update (klatki ++)
+    			flyingObjects.get(i).update();
     		}
     		//przesuwanie obiektow
     		if(!flyingObjects.get(i).isOn_ground()){
@@ -275,9 +364,22 @@ public class GameView extends SurfaceView{
     		//dodaj graczowi punkty za generacje (przezycie kolejnych x sekund)
     		//player.setPoints(player.getPoints() + 1);
     		
-    		List<FlyingObject> temp = generator.generate(player.getPoints(), player.isArmagedon(), player.isMoney_rain());
-    		for(int i = 0; i < temp.size(); i++){
-    			flyingObjects.add(temp.get(i));
+    		flyingObjects.addAll(generator.generate(player.getPoints(), player.isArmagedon(), player.isMoney_rain()));
+    		//List<FlyingObject> temp = generator.generate(player.getPoints(), player.isArmagedon(), player.isMoney_rain());
+    		
+    		//zaktualizowanie danych
+    		for(int i = 0; i < flyingObjects.size(); i++){
+    			flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    			
+    			if(flyingObjects.get(i) instanceof Asteroid){
+    				flyingObjects.get(i).setBmpData(a_columns, a_rows);
+    			}
+    			else if(flyingObjects.get(i) instanceof Money){
+    				flyingObjects.get(i).setBmpData(m_columns, m_rows);
+    			}
+    			else if(flyingObjects.get(i) instanceof Upgrade){
+    				flyingObjects.get(i).setBmpData(u_columns, u_rows);
+    			}
     		}
     		//jesli gracz odpalil generator z armagedonem lub money_rainem wylacz je
 	    	if(player.isArmagedon()){
@@ -449,6 +551,45 @@ public class GameView extends SurfaceView{
     	}
     	return false;
     }
+    
+    //width -> szerokosc bitmapy podzielona przez rows
+    public void drawSprite(Canvas canvas, int x, int y, int columns, int rows, int width, int height, int currentFrame, Bitmap bmp, float angle, boolean on_ground){
+    	if(on_ground){
+    		canvas.save();
+    		canvas.rotate(angle, x, y);
+    	}
+    	int srcX = 0;
+    	int srcY = 0;
+    	int row;
+    	srcX = (currentFrame % (columns)) * width;
+        row = currentFrame / (rows + 1);
+        srcY = row * height;
+        
+    	Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
+		Rect dst = new Rect(x - width/2, y - width/2, x + width/2, y + width/2);
+		canvas.drawBitmap(bmp, src, dst, paint);
+		if(on_ground){
+			canvas.restore();
+		}
+    }
+    
+    public void drawBackground(Canvas canvas){
+    	Rect src = new Rect(background_x, 0, background_x + 480, 800);
+		Rect dst = new Rect(0, 0, 480, 800);
+		canvas.drawBitmap(background_bmp, src, dst, paint);
+		
+		background_x++;
+		if(background_x + 480 > background_bmp.getWidth()){
+			background_x = 0;
+		}
+    }
+    
+    
+    
+    
+    
+    
+    
     
     /************************************************
      * 	NIE UZYWAM TEGO ALE Z SENTYMENTU ZOSTAWIE	*

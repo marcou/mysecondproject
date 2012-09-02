@@ -30,12 +30,17 @@ public class Money extends FlyingObject {
 		if(points < 1){
 			points = 1;
 		}
-		//Log.d("money", "punkty : " + points);
+		//Ustawiania odpowiednich danych do bitmapy
+		super.setWidth(128);
+		super.setHeight(128);
+		super.setColumns(4);
+		super.setRows(4);
+		super.setFrames(15);
 		
 		this.paint = new Paint();
 		paint.setColor(Color.CYAN);
 		
-		super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.gemstone), 1, 1);
+		//super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.gemstone), 1, 1);
 	}
 	
 	@Override
@@ -87,6 +92,11 @@ public class Money extends FlyingObject {
 			if(super.getLife_timer() < 0){
 				super.setLife(0);
 			}
+		}
+		super.setCurrentFrame(super.getCurrentFrame() + 1);
+		
+		if(super.getCurrentFrame() > super.getFrames()){
+			super.setCurrentFrame(0);
 		}
 	}
 	
