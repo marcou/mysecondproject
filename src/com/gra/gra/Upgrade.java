@@ -243,5 +243,13 @@ public class Upgrade extends FlyingObject {
 	public void setPlayer_immortality(boolean player_immortality) {
 		this.player_immortality = player_immortality;
 	}
+
+	public upgradeType getType() {
+		return type;
+	}
+
+	public void setType(upgradeType type) {
+		this.type = type;
+	}
 	
 }

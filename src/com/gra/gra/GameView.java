@@ -55,7 +55,7 @@ public class GameView extends SurfaceView{
 	private boolean playerjumping = false;
 	private boolean clockwisedirection;
 	
-	private boolean DEBUG_MODE = true;
+	private boolean DEBUG_MODE = false;
 	
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
@@ -87,6 +87,17 @@ public class GameView extends SurfaceView{
 	private Bitmap background_bmp;
 	private int background_x = 0;
 	
+	//Przy upgrejdach rysowany jest tylko najnowszy upgrade i jest on rysowany prosto z gameView (nie tworzy sie obiektu)
+	private int info_columns = 4;
+	private int info_rows = 4;
+	private int info_frames = info_columns * info_rows - 1;
+	private int info_current_frame = 0;
+	private int default_info_life = 30;
+	private int info_life = default_info_life;
+	private boolean info = false;
+	
+	private Bitmap info_bmp;
+	private Bitmap info_speed;
 	
     public GameView(Context context, double w_factor, double h_factor) {
         super(context);
@@ -140,6 +151,8 @@ public class GameView extends SurfaceView{
     	thorn_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.kolce);
     	background_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.gownotlo);
     	smoke_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.dym);
+    	info_speed = BitmapFactory.decodeResource(this.getResources(), R.drawable.upspeed);
+    	info_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.upspeed);
     	
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
@@ -361,10 +374,19 @@ public class GameView extends SurfaceView{
     		else{
     			//z kazdym innym obiektem kolizja przebiega normalnie
     			if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), false)){
+    				//jesli obiekt to upgrade to wyswietlane jest info o tym upgradzie
+    				if(flyingObjects.get(i) instanceof Upgrade){
+    					showInfo(((Upgrade) flyingObjects.get(i)).getType());
+    					drawUpgrade(canvas, info_speed);
+    				}
         			player.resolveCollision(flyingObjects.get(i));
         		}
     		}
     		
+    	}
+    	//rysowanie info (jesli takie isntieje)
+    	if(info){
+    		drawUpgrade(canvas, info_bmp);
     	}
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
 			//sprawdzamy czy obiekt "zyje"
@@ -373,7 +395,6 @@ public class GameView extends SurfaceView{
 				flyingObjects.remove(flyingObjects.get(i));
 			}
     	}
-    	
     	if (playermoving) {
     		movePlayer();
     	}
@@ -589,7 +610,7 @@ public class GameView extends SurfaceView{
         srcY = row * height;
         
     	Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
-		Rect dst = new Rect(x - width/2, y - width/2, x + width/2, y + width/2);
+		Rect dst = new Rect(x - width/2, y - height/2, x + width/2, y + height/2);
 		canvas.drawBitmap(bmp, src, dst, paint);
 		if(thorn){
 			canvas.restore();
@@ -607,13 +628,45 @@ public class GameView extends SurfaceView{
 		}
     }
     
+    public void drawUpgrade(Canvas canvas, Bitmap bmp){
+    	int srcX = 0;
+    	int srcY = 0;
+    	int x = 240;
+    	int y = 40;
+    	int row;
+    	if(info_life > 0){
+    		info_life--;
+    	}
+    	else{
+    		srcX = (info_current_frame % (info_columns)) * (info_bmp.getWidth()/info_columns);
+    		row = info_current_frame / (info_rows + 1);
+    		srcY = row * (info_bmp.getHeight()/info_rows);
+    	}
+    	Rect src = new Rect(srcX, srcY, srcX + info_bmp.getWidth()/info_columns, srcY + info_bmp.getHeight()/info_rows);
+		Rect dst = new Rect(x - info_bmp.getWidth()/(2 * info_columns), y - info_bmp.getHeight()/(2 * info_rows), x + info_bmp.getWidth()/(2 * info_columns), y + info_speed.getHeight()/(2 * info_rows));
+		canvas.drawBitmap(bmp, src, dst, paint);
+		if(info_life <= 0){
+    		info_current_frame++;
+    	}
+		if(info_current_frame > info_frames){
+			info_current_frame = 0;
+			info_life = default_info_life;
+			info = false;
+		}
+		Log.d("UPGRADE", "life : " + info_life);
+		Log.d("UPGRADE", "frame : " + info_current_frame);
+    }
     
+    public void showInfo(upgradeType type){
+    	//switch(type){
+    	//case speed:
+    		this.info = true;
+    		this.info_bmp = info_speed;
+    		//break;
+    	//}
+    }
     
-    
-    
-    
-    
-    
+
     /************************************************
      * 	NIE UZYWAM TEGO ALE Z SENTYMENTU ZOSTAWIE	*
      ************************************************/
