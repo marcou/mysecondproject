@@ -600,7 +600,6 @@ public class GameView extends SurfaceView{
         	Log.d(VIEW_LOG_TAG, "Sth else Index" + Integer.toString(event.getActionIndex()));
         	 
         }
-    	 
     		return super.onTouchEvent(event);		
     	}
     	
