@@ -21,7 +21,7 @@ public class Money extends FlyingObject {
 	
 	public Money(List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius) {
-		super(objects, x, y, speed, angle, 40, radius);
+		super(objects, x, y, speed, angle, 400, radius);
 		
 		super.setLife_timer(life_timer);
 		
@@ -45,7 +45,7 @@ public class Money extends FlyingObject {
 		}
 		//kolizja miedzy pieniedzmi
 		else if(object instanceof Money){
-			//NIC NIE ROB CHUJU
+			//NIC NIE ROB
 //			if(checkDistance(object)){
 //				points *= ((Money) object).getPoints();
 //				((Money) object).setPoints(0);

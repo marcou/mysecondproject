@@ -67,8 +67,8 @@ public class GameView extends SurfaceView{
 	private int a_rows = 3;
 	
 	private Bitmap money_bmp;
-	private int m_columns = 4;
-	private int m_rows = 4;
+	private int m_columns = 6;
+	private int m_rows = 1;
 	
 	private Bitmap upgrade_bmp;
 	private int u_columns = 1;
@@ -151,7 +151,7 @@ public class GameView extends SurfaceView{
     	 * inicjowanie bitmap
     	 */
     	asteroid_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.asteroids);
-    	money_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.gemstone);
+    	money_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.gems);
     	upgrade_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.upg);
     	earth_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.earthcrap);
     	thorn_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.kolce);
@@ -323,7 +323,8 @@ public class GameView extends SurfaceView{
     			}
     			//rysowanie hajsu
     			else if(flyingObjects.get(i) instanceof Money){
-    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  m_columns, m_rows,  money_bmp.getWidth()/m_columns, money_bmp.getHeight()/m_rows,  flyingObjects.get(i).getCurrentFrame(), money_bmp, (float)flyingObjects.get(i).getAngle(), false);
+    				//drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  m_columns, m_rows,  money_bmp.getWidth()/m_columns, money_bmp.getHeight()/m_rows,  flyingObjects.get(i).getCurrentFrame(), money_bmp, (float)flyingObjects.get(i).getAngle(), false);
+    				drawGems(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), ((Money)flyingObjects.get(i)).getPoints());
     			}
     			//rysowanie upgradeow
     			else if(flyingObjects.get(i) instanceof Upgrade){
@@ -496,9 +497,10 @@ public class GameView extends SurfaceView{
     			player.resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
     		}
     	}
+    	drawPoints(canvas);
     }
-    
-    public void resetTimer(){
+   
+	public void resetTimer(){
     	world_timer = default_world_timer;
     }
     
@@ -748,7 +750,49 @@ public class GameView extends SurfaceView{
     	}
     }
     
-
+    public void drawPoints(Canvas canvas){
+    	paint.setTextSize(20);
+    	paint.setAntiAlias(true);
+    	//jesli gracz ma wiecej niz 10k skroc liczbe punktow
+    	if(player.getPoints() > 10000){
+    		canvas.drawText("POINTS : " + player.getPoints()/1000 + " K", earth.getX() - 64, earth.getY(), paint);
+    	}
+    	//jesli gracz ma wiecej niz 10M skroc liczbe punktow
+    	else if(player.getPoints() > 10000000){
+    		canvas.drawText("POINTS : " + player.getPoints()/1000000 + " M", earth.getX() - 64, earth.getY(), paint);
+    	}
+    	else{
+    		canvas.drawText("POINTS : " + player.getPoints(), earth.getX() - 64, earth.getY(), paint);
+    	}
+    	paint.reset();
+    }
+    
+    private void drawGems(Canvas canvas, int x, int y, int points) {
+    	int srcX = 0;
+    	int srcY = 0;
+    	if(points < 5){
+    		srcX = 0;
+    	}
+    	else if(points < 10){
+    		srcX = 1;
+    	}
+    	else if(points < 20){
+    		srcX = 2;
+    	}
+    	else if(points < 50){
+    		srcX = 3;
+    	}
+    	else if(points < 100){
+    		srcX = 4;
+    	}
+    	else{
+    		srcX = 5;
+    	}
+        
+    	Rect src = new Rect(srcX * money_bmp.getWidth()/m_columns, srcY, srcX * money_bmp.getWidth()/m_columns + money_bmp.getWidth()/m_columns, srcY + money_bmp.getHeight()/m_rows);
+		Rect dst = new Rect(x - money_bmp.getWidth()/(m_columns * 2), y - money_bmp.getHeight()/(m_rows * 2), x + money_bmp.getWidth()/(m_columns * 2), y + money_bmp.getHeight()/(m_rows * 2));
+		canvas.drawBitmap(money_bmp, src, dst, paint);
+	}
     /************************************************
      * 	NIE UZYWAM TEGO ALE Z SENTYMENTU ZOSTAWIE	*
      ************************************************/
