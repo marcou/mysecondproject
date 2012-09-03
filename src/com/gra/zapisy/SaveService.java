@@ -66,9 +66,9 @@ public class SaveService {
 
 	}
 	
-	public  void saveNum(SaveContainer object, int num1, int num2){
+	public  void saveName(SaveContainer object, String filename){
 		try {
-			String name = "SaveN" + Integer.toString(num1) + "L" + Integer.toString(num2)+".ser";
+			String name = filename+".ser";
 			fOut = context.openFileOutput(name, Activity.MODE_PRIVATE);
 			osw = new ObjectOutputStream(fOut);
 			osw.writeObject(object);
@@ -101,9 +101,9 @@ public class SaveService {
 	}
 	
 	
-	public SaveContainer readNumState(int num1, int num2){
+	public SaveContainer readName(String filename){
 		try {
-			String name = "SaveN" + Integer.toString(num1) + "L" + Integer.toString(num2)+".ser";
+			String name = filename+".ser";
 			fin = context.openFileInput(name);
 			sin = new ObjectInputStream(fin);
 			saveData = (SaveContainer) sin.readObject();
