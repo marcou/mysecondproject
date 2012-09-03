@@ -10,12 +10,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.gra.R;
+import com.gra.zapisy.SaveContainer;
+import com.gra.zapisy.SaveService;
 
 public class MainMenu extends Activity {
 	
-//	private SaveService saver;
-	
-	
+	private SaveService saver;
+	SaveContainer savedstate;
+	private boolean canresume = false;
 	
     /** Called when the activity is first created. */
     @Override
@@ -29,16 +31,34 @@ public class MainMenu extends Activity {
         setContentView(R.layout.mainmenu);
         
         
-//        saver = new SaveService(MainMenu.this);
+        
+        
+        saver = new SaveService(MainMenu.this);
+        
+        savedstate = saver.readLastState();
+        
+        if (savedstate!=null) {
+        	canresume = true;
+        }
        
         
+        
         Button PlayGameButton = (Button)findViewById(R.id.Play);
+        
         
         PlayGameButton.setOnClickListener(new OnClickListener() {
         	
         	//@Override
 			public void onClick(View v) {
-        		Intent PlayGameIntent = new Intent(MainMenu.this,GameMenu.class);
+        		Intent PlayGameIntent = new Intent(MainMenu.this,Options.class);
+        		if (canresume) {
+        			PlayGameIntent.putExtra("RESUME", true);
+        			PlayGameIntent.putExtra("SAVE", savedstate);
+        		}
+        		else {
+        			PlayGameIntent.putExtra("RESUME", false);
+        		}
+        			
         		
         		startActivity(PlayGameIntent);
         	}
@@ -51,8 +71,9 @@ public class MainMenu extends Activity {
         	
         	//@Override
 			public void onClick(View v) {
-        		Intent OptionsIntent = new Intent(MainMenu.this,Options.class);
-        		startActivity(OptionsIntent);
+        		Intent NewGameIntent = new Intent(MainMenu.this,Options.class);
+        		NewGameIntent.putExtra("RESUME", false);
+        		startActivity(NewGameIntent);
         	}
         });
         

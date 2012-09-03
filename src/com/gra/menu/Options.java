@@ -8,10 +8,15 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.gra.gra.GameView;
+import com.gra.zapisy.SaveContainer;
+import com.gra.zapisy.SaveService;
 
 public class Options extends Activity {
 	//PlayerCreatorView view;
 	GameView view;
+	
+	SaveService saver;
+	
     /** Called when the activity is first created. */
 //    @Override
 //    public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,9 @@ public class Options extends Activity {
 	protected void onStop() 
     {
         super.onStop();
+        saver = new SaveService(Options.this);
+        SaveContainer savedstate = new SaveContainer(view.getPlayer(), view.getFlyingObjects());
+        saver.save(savedstate);
         Log.d("GameActivity", "MYonStop is called");
         finish();
     }

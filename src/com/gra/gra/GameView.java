@@ -45,7 +45,7 @@ public class GameView extends SurfaceView{
 	private List<Ball> balls = new ArrayList<Ball>();	//lista kulek
 	private Earth earth;	//ziemia
 	private Player player;	//gracz
-	private List<FlyingObject> flyingObjects = new ArrayList<FlyingObject>();//lista obiektow latajacych
+	private ArrayList<FlyingObject> flyingObjects = new ArrayList<FlyingObject>();//lista obiektow latajacych
 	
 	private List<TempSprite> temps = new ArrayList<TempSprite>();//lista obiektow ktore znikaja po krotkim czasie (dym)
 	
@@ -837,6 +837,30 @@ public class GameView extends SurfaceView{
     	else{
     		ball2.setDirection(0);
     	}
+	}
+	/**
+	 * @return the player
+	 */
+	public Player getPlayer() {
+		return player;
+	}
+	/**
+	 * @param player the player to set
+	 */
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	/**
+	 * @return the flyingObjects
+	 */
+	public ArrayList<FlyingObject> getFlyingObjects() {
+		return flyingObjects;
+	}
+	/**
+	 * @param flyingObjects the flyingObjects to set
+	 */
+	public void setFlyingObjects(ArrayList<FlyingObject> flyingObjects) {
+		this.flyingObjects = flyingObjects;
 	}
 }
     
