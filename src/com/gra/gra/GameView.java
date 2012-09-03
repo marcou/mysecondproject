@@ -220,8 +220,8 @@ public class GameView extends SurfaceView{
     @Override
     public void onDraw(Canvas canvas) {
     	//jesli player zdobyl ponad 1000 punktow to dodawany zostaje kolec (przeciwnik)
-    	if(!thorn && player.getPoints() > 10){
-    		flyingObjects.add(new GroundEnemy(flyingObjects, -64, -64, 2, player.getAngle() + 180, 1, 10));
+    	if(!thorn && player.getPoints() > 1000){
+    		flyingObjects.add(new GroundEnemy(flyingObjects, -64, -64, 1, player.getAngle() + 180, 1, 10));
     		thorn = true;
     	}
     	//SKALOWANIE

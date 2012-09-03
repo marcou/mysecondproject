@@ -21,12 +21,13 @@ public class Money extends FlyingObject {
 	
 	public Money(List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius) {
-		super(objects, x, y, speed, angle, 400, radius);
+		super(objects, x, y, speed, angle, 80, radius);
 		
 		super.setLife_timer(life_timer);
 		
 		Random rnd = new Random();
-		points = rnd.nextInt(mass/2) + mass/2;
+		//points = rnd.nextInt(mass/2) + mass/2;
+		points = rnd.nextInt(mass);
 		if(points < 1){
 			points = 1;
 		}
