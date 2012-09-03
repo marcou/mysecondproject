@@ -3,6 +3,7 @@ package com.gra.gra;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
  * 
@@ -55,7 +56,7 @@ public class Player {
 	
 	private Paint paint;
 	
-	private long points = 1000000;	//punkty gracza
+	private long points = 0;	//punkty gracza
 	private int multiplier = 1;		//mnoznik punktow
 	
 	private boolean armagedon = false;

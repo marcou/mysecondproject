@@ -57,6 +57,8 @@ public class GameView extends SurfaceView{
 	
 	private boolean DEBUG_MODE = false;
 	
+	private boolean thorn = false;
+	
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
 	 */
@@ -184,13 +186,11 @@ public class GameView extends SurfaceView{
     	Upgrade  u2 = new Upgrade(flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
     	Upgrade  u3 = new Upgrade(flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.low_gravity);
     	
-    	GroundEnemy e1  = new GroundEnemy(flyingObjects, 0, 0, 2, 90, 1, 10);
-    	
 //    	flyingObjects.add(a1);
 //    	flyingObjects.add(a2);
 //    	flyingObjects.add(a3);
 //    	
-    	flyingObjects.add(m1);
+//    	flyingObjects.add(m1);
 //    	flyingObjects.add(m2);
 //    	flyingObjects.add(m3);
 //    	flyingObjects.add(m4);
@@ -198,8 +198,6 @@ public class GameView extends SurfaceView{
 //    	flyingObjects.add(u1);
 //    	flyingObjects.add(u2);
     	flyingObjects.add(u3);
-    	
-    	flyingObjects.add(e1);
     	
     	for(int i = 0; i < flyingObjects.size(); i++){
     		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
@@ -221,6 +219,11 @@ public class GameView extends SurfaceView{
     
     @Override
     public void onDraw(Canvas canvas) {
+    	//jesli player zdobyl ponad 1000 punktow to dodawany zostaje kolec (przeciwnik)
+    	if(!thorn && player.getPoints() > 10){
+    		flyingObjects.add(new GroundEnemy(flyingObjects, -64, -64, 2, player.getAngle() + 180, 1, 10));
+    		thorn = true;
+    	}
     	//SKALOWANIE
     	canvas.scale(this.w_factor, this.h_factor);
     	//odliczanie tajmera
@@ -687,8 +690,6 @@ public class GameView extends SurfaceView{
 			info_life = default_info_life;
 			info = false;
 		}
-		Log.d("UPGRADE", "life : " + info_life);
-		Log.d("UPGRADE", "frame : " + info_current_frame);
     }
     
     public void showInfo(upgradeType type){
