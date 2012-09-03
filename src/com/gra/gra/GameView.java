@@ -62,7 +62,7 @@ public class GameView extends SurfaceView{
 	 */
 	private Bitmap asteroid_bmp;
 	private int a_columns = 4;
-	private int a_rows = 4;
+	private int a_rows = 3;
 	
 	private Bitmap money_bmp;
 	private int m_columns = 4;
@@ -338,10 +338,18 @@ public class GameView extends SurfaceView{
     			float temp_y = flyingObjects.get(i).getY();
     			
     			flyingObjects.get(i).resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
-    			//narysuj warkocz za asteroida jesli jest ona widoczna
+    			//narysuj warkocz za asteeroida jesli jest ona widoczna
     			if(flyingObjects.get(i) instanceof Asteroid && checkVissible(flyingObjects.get(i))){
     				//temps.add(new TempSprite(temps, this, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getAngle(), asteroid_bmp.getWidth()/a_columns, smoke_bmp.getWidth()/s_columns));
     				temps.add(new TempSprite(temps, temp_x, temp_y, tempType.smoke));
+    			}
+    		}
+    		//jesli obiekt dotyka ziemi
+    		if(flyingObjects.get(i).isOn_ground() && flyingObjects.get(i) instanceof Asteroid){
+    			//Jesli asteroida uderzyla pierwszy raz w ziemie dodaj wybuch
+    			if(!((Asteroid) flyingObjects.get(i)).isExploded()){
+    				temps.add(new TempSprite(temps, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), tempType.explosion));
+    				((Asteroid) flyingObjects.get(i)).setExploded(true);
     			}
     		}
     		//sprawdzenie kolizji miedzy obiektami latajacymi
@@ -621,8 +629,12 @@ public class GameView extends SurfaceView{
     	int srcY = 0;
     	int row;
     	srcX = (currentFrame % (columns)) * width;
-        //row = currentFrame / (rows + 1);
-    	row = currentFrame / (rows);
+    	if(rows % 2 == 0){
+    		row = currentFrame / (rows);
+    	}
+    	else{
+    		row = currentFrame / (rows + 1);
+    	}
         srcY = row * height;
         
     	Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
@@ -655,6 +667,12 @@ public class GameView extends SurfaceView{
     	}
     	else{
     		srcX = (info_current_frame % (info_columns)) * (info_bmp.getWidth()/info_columns);
+    		if(info_rows % 2 == 0){
+    			row = info_current_frame / (info_rows);
+        	}
+        	else{
+        		row = info_current_frame / (info_rows + 1);
+        	}
     		row = info_current_frame / (info_rows);
     		srcY = row * (info_bmp.getHeight()/info_rows);
     	}

@@ -18,6 +18,8 @@ public class Asteroid extends FlyingObject {
 	
 	private int basic_radius;
 	
+	private boolean exploded = false;	//przy kontakcie z ziemia ma wybuchnac, zmienna ktora blokuje wielokrotne wybuchanie
+	
 	public Asteroid(List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius, int size) {
 		super( objects, x, y, speed, angle, mass, radius * size);
@@ -90,6 +92,12 @@ public class Asteroid extends FlyingObject {
 	}
 	public void setBasic_radius(int basic_radius) {
 		this.basic_radius = basic_radius;
+	}
+	public boolean isExploded() {
+		return exploded;
+	}
+	public void setExploded(boolean exploded) {
+		this.exploded = exploded;
 	}
 	
 }
