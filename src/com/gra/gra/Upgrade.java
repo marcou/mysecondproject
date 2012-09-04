@@ -17,8 +17,6 @@ public class Upgrade extends FlyingObject {
 	
 	private String tag;
 	
-	private Paint paint;
-	
 	private long time;	//czas przez jaki upgrade dziala
 	
 	private static int mass = 20;
@@ -43,9 +41,6 @@ public class Upgrade extends FlyingObject {
 	
 	public Upgrade(List<FlyingObject> objects, float x, float y, double speed, double angle, upgradeType type) {
 		super(objects, x, y, speed, angle, mass, radius);
-		
-		this.paint = new Paint();
-		paint.setColor(Color.GREEN);
 		
 //		super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.package_upgrade), 1, 1);
 		
@@ -132,8 +127,8 @@ public class Upgrade extends FlyingObject {
 	@Override
 	public void onDraw(Canvas canvas){
 		update();
-		canvas.drawText(this.tag, super.getX() - super.getRadius(), super.getY() - super.getRadius() - 16, paint);
-		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+//		canvas.drawText(this.tag, super.getX() - super.getRadius(), super.getY() - super.getRadius() - 16, paint);
+//		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
 	}
 
 	public void update(){

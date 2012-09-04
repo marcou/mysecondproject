@@ -15,8 +15,6 @@ public class Money extends FlyingObject {
 
 	private int life_timer = 200;
 	
-	private Paint paint;
-	
 	private int points;	//liczba punktow ktora daje ten obiekt
 	
 	public Money(List<FlyingObject> objects, float x, float y, double speed, double angle,
@@ -31,9 +29,6 @@ public class Money extends FlyingObject {
 		if(points < 1){
 			points = 1;
 		}
-		
-		this.paint = new Paint();
-		paint.setColor(Color.CYAN);
 		
 		//super.setBmpData(BitmapFactory.decodeResource(view.getResources(), R.drawable.gemstone), 1, 1);
 	}
@@ -77,7 +72,7 @@ public class Money extends FlyingObject {
 	@Override
 	public void onDraw(Canvas canvas){
 		update();
-		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+//		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
 	}
 	
 	public void update(){

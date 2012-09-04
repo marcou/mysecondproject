@@ -26,8 +26,7 @@ public abstract class FlyingObject {
 	private List<FlyingObject> objects;
 	
 	private static double gravity_const = 4.5;	//stala grawitacji ktora ma sprawidz ze grawitacja 
-												//bedzie bardziej "miodowa". zwiekszenie tego wspolczynnika
-												//zmniejsza grawitacje. Ustaw na 1.0 jesli nie chcesz zeby mial wplyw na cokolwiek
+												//bedzie bardziej "miodowa". zwiekszenie tego wspolczynnika										//zmniejsza grawitacje. Ustaw na 1.0 jesli nie chcesz zeby mial wplyw na cokolwiek
 	private float x;
 	private float y;
 	
@@ -44,7 +43,6 @@ public abstract class FlyingObject {
 	private int earth_radius;	//promien okregu po jakim ma siê poruszaæ nasz obiekt
 	private boolean on_ground = false;	//czy dotyka ziemi
 	
-	private Paint paint;
 	
 	private int life = 1;
 	
@@ -57,7 +55,6 @@ public abstract class FlyingObject {
 	private int frames;
 	
 	public FlyingObject(List<FlyingObject> objects, float x, float y, double speed, double angle, int mass, int radius){
-		//this.view = view;
 		this.objects = objects;
 		this.x = x;
 		this.y = y;
@@ -69,8 +66,6 @@ public abstract class FlyingObject {
 		x_speed = Math.cos(Math.toRadians(angle)) * speed;
 		y_speed = Math.sin(Math.toRadians(angle)) * speed;
 		
-		paint = new Paint();
-		paint.setColor(Color.WHITE);
 	}
 	
 	public void onDraw(Canvas canvas){
@@ -295,14 +290,6 @@ public abstract class FlyingObject {
 
 	public void setOn_ground(boolean on_ground) {
 		this.on_ground = on_ground;
-	}
-
-	public Paint getPaint() {
-		return paint;
-	}
-
-	public void setPaint(Paint paint) {
-		this.paint = paint;
 	}
 
 	public List<FlyingObject> getObjects() {

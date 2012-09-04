@@ -12,8 +12,6 @@ import android.graphics.Paint;
 
 public class Asteroid extends FlyingObject {
 	
-	private Paint paint;
-	
 	private int size = 1;
 	
 	private int basic_radius;
@@ -27,9 +25,7 @@ public class Asteroid extends FlyingObject {
 		this.size = size;
 		
 		basic_radius = radius;
-		
-		this.paint = new Paint();
-		paint.setColor(Color.RED);
+
 	}
 	@Override
 	public void resolveCollision(FlyingObject object){
@@ -61,7 +57,7 @@ public class Asteroid extends FlyingObject {
 	@Override
 	public void onDraw(Canvas canvas){
 		update();
-		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+//		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
 	}
 	public void update(){
 		//jesli obiekt dotyka ziemi usun go po czasie "life_timer"
