@@ -62,6 +62,9 @@ public class GameView extends SurfaceView{
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
 	 */
+	private Bitmap heart_bmp;
+	private Bitmap lifebar_bmp;
+	
 	private Bitmap asteroid_bmp;
 	private int a_columns = 4;
 	private int a_rows = 3;
@@ -179,6 +182,8 @@ public class GameView extends SurfaceView{
     	info_low_gravity = BitmapFactory.decodeResource(this.getResources(), R.drawable.uphighgravity);
     	info_money_rain = BitmapFactory.decodeResource(this.getResources(), R.drawable.uparmagedon);
     	explosion_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.explosion);
+    	heart_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.heart);
+    	lifebar_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.lifebar);
     	
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
@@ -435,6 +440,11 @@ public class GameView extends SurfaceView{
     	//rysowanie info (jesli takie isntieje)
     	if(info){
     		drawUpgrade(canvas, info_bmp);
+    	}
+    	//rysowanie paska zycia
+    	drawSprite(canvas, 246, 720, 1, 1, 128, 48, 0, lifebar_bmp, 0, false);
+    	for(int i = 0; i < player.getLife(); i++){
+    		drawSprite(canvas, 214 + (i * 34), 720, 1, 1, 32, 32, 0, heart_bmp, 0, false);
     	}
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
 			//sprawdzamy czy obiekt "zyje"
@@ -797,6 +807,7 @@ public class GameView extends SurfaceView{
     	}
     	paint.reset();
     }
+    
     
     private void drawGems(Canvas canvas, int x, int y, int points) {
     	int srcX = 0;
