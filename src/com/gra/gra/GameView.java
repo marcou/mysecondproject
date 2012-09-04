@@ -31,7 +31,7 @@ public class GameView extends SurfaceView{
 	
 	private Generator generator;		//generator obiektow latajacych
 	
-	private int default_world_timer = 80;
+	private int default_world_timer = 60;
 	private int world_timer = default_world_timer;	//timer swiata, po tym czasie (logicznym) odpalany jest generator
 	
 	//Pole gry (wieksze od ekranu) na ktorym generuje sie obiekty tak zeby gracz ich nie widzial (nie moga sie przeca nagle pojawiac)
@@ -103,7 +103,17 @@ public class GameView extends SurfaceView{
 	private boolean info = false;
 	
 	private Bitmap info_bmp;
+	
 	private Bitmap info_speed;
+	private Bitmap info_x2;
+	private Bitmap info_x3;
+	private Bitmap info_x4;
+	private Bitmap info_tiny;
+	private Bitmap info_huge;
+	private Bitmap info_armagedon;
+	private Bitmap info_money_rain;
+	private Bitmap info_high_gravity;
+	private Bitmap info_low_gravity;
 	
     public GameView(Context context, double w_factor, double h_factor) {
         super(context);
@@ -158,7 +168,16 @@ public class GameView extends SurfaceView{
     	background_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.gownotlo);
     	smoke_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.dym);
     	info_speed = BitmapFactory.decodeResource(this.getResources(), R.drawable.upspeed);
+    	info_x2 = BitmapFactory.decodeResource(this.getResources(), R.drawable.upx2);
+    	info_x3 = BitmapFactory.decodeResource(this.getResources(), R.drawable.upx2);
+    	info_x4 = BitmapFactory.decodeResource(this.getResources(), R.drawable.upx2);
     	info_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.upspeed);
+    	info_tiny = BitmapFactory.decodeResource(this.getResources(), R.drawable.uptiny);
+    	info_huge = BitmapFactory.decodeResource(this.getResources(), R.drawable.uptiny);
+    	info_armagedon = BitmapFactory.decodeResource(this.getResources(), R.drawable.uparmagedon);
+    	info_high_gravity = BitmapFactory.decodeResource(this.getResources(), R.drawable.uphighgravity);
+    	info_low_gravity = BitmapFactory.decodeResource(this.getResources(), R.drawable.uphighgravity);
+    	info_money_rain = BitmapFactory.decodeResource(this.getResources(), R.drawable.uparmagedon);
     	explosion_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.explosion);
     	
     	Log.d("START PROGRAMU", "=============================================");
@@ -256,25 +275,27 @@ public class GameView extends SurfaceView{
     	paint.setStyle(Paint.Style.FILL_AND_STROKE);
     	
     	canvas.restore();
-    	//informacje o graczu
-    	paint.setColor(Color.GREEN);
-    	canvas.drawText("X : " + player.getX(), 240, 10, paint);
-    	canvas.drawText("Y : " + player.getY(), 240, 20, paint);
-    	canvas.drawText("Angle : " + player.getAngle(), 240, 30, paint);
-    	canvas.drawText("On_Ground : " + player.isOn_ground(), 240, 40, paint);
-    	canvas.drawText("Points : " + player.getPoints(), 240, 50, paint);
-    	canvas.drawText("Life : " + player.getLife(), 240, 60, paint);
-    	canvas.drawText("ARMAGEDON TIMER : " + player.getArmagedon_timer(), 240, 70, paint);
-    	canvas.drawText("MONEY RAIN TIMER : " + player.getMoney_rain_timer(), 240, 80, paint);
-    	canvas.drawText("Immortality : " + player.isImmortal(), 240, 90, paint);
     	
-    	//tajmery
-    	paint.setColor(Color.YELLOW);
-    	canvas.drawText("Player_timer : " + player.getTimer(), 40, 10, paint);
-    	canvas.drawText("Earth_timer  : " + earth.getTimer(), 40, 30, paint);
-    	canvas.drawText("World_timer  : " + world_timer, 40, 50, paint);
-    	canvas.drawText("Immortality_timer  : " + player.getImmortality_timer(), 40, 70, paint);
-    	
+    	if(DEBUG_MODE){
+	    	//informacje o graczu
+	    	paint.setColor(Color.GREEN);
+	    	canvas.drawText("X : " + player.getX(), 240, 10, paint);
+	    	canvas.drawText("Y : " + player.getY(), 240, 20, paint);
+	    	canvas.drawText("Angle : " + player.getAngle(), 240, 30, paint);
+	    	canvas.drawText("On_Ground : " + player.isOn_ground(), 240, 40, paint);
+	    	canvas.drawText("Points : " + player.getPoints(), 240, 50, paint);
+	    	canvas.drawText("Life : " + player.getLife(), 240, 60, paint);
+	    	canvas.drawText("ARMAGEDON TIMER : " + player.getArmagedon_timer(), 240, 70, paint);
+	    	canvas.drawText("MONEY RAIN TIMER : " + player.getMoney_rain_timer(), 240, 80, paint);
+	    	canvas.drawText("Immortality : " + player.isImmortal(), 240, 90, paint);
+	    	
+	    	//tajmery
+	    	paint.setColor(Color.YELLOW);
+	    	canvas.drawText("Player_timer : " + player.getTimer(), 40, 10, paint);
+	    	canvas.drawText("Earth_timer  : " + earth.getTimer(), 40, 30, paint);
+	    	canvas.drawText("World_timer  : " + world_timer, 40, 50, paint);
+	    	canvas.drawText("Immortality_timer  : " + player.getImmortality_timer(), 40, 70, paint);
+    	}
     	if (DEBUG_MODE) 
 		{
 		canvas.scale(0.5f, 0.5f, 240, 400);
@@ -530,78 +551,82 @@ public class GameView extends SurfaceView{
         //SKALOWANIE
         x = x / this.w_factor;
         y = y / this.h_factor;
-        
-        if(event.getAction()==MotionEvent.ACTION_DOWN){
-        	Log.d(VIEW_LOG_TAG, "Touch DOWN");
-        	if(y > 400){
-        		if(player.isOn_ground()){
-        			player.jump();
-        			playerjumping = true;
-        			Log.d(VIEW_LOG_TAG, "Jump pressed");
-        		}
-        	}
-        	else{
-        		playermoving = true;
-	        	if(x < 240){
-		        	//player.move(false);
-	        		clockwisedirection = false;
-		        	Log.d(VIEW_LOG_TAG, "less than");
-	        	}
-	        	if(x > 240){
-	        		clockwisedirection = true;
-		        	//player.move(true);
-		        	Log.d(VIEW_LOG_TAG, "more than");
-	        	}
-        	}
-    	 }
-        
-        else if(event.getAction()==MotionEvent.ACTION_POINTER_2_DOWN) {
-        	Log.d(VIEW_LOG_TAG, "SECOND pointer down");
-        	event.getX(1);
-        	float yy = event.getY(1);
-        	if(yy > 400){
-        		if(player.isOn_ground()){
-        			player.jump();
-        			playerjumping = true;
-        			Log.d(VIEW_LOG_TAG, "Jump pressed");
-        		}
-        	}
-        }
-        
-        else if(event.getAction()==MotionEvent.ACTION_UP){
-    		 Log.d(VIEW_LOG_TAG, "Touch UP");
-    		 if (y<400) {
-    			 playermoving = false;
-    			 Log.d(VIEW_LOG_TAG, "Player stopped");
-    		 }
-    		 else {
-    			 playerjumping = false;
-    		 }
-    		 //
-    	 }
-    	 
-        else if(event.getAction()==MotionEvent.ACTION_POINTER_2_UP) {
-         	Log.d(VIEW_LOG_TAG, "SECOND pointer UP");
-         	float yy = event.getY(1);
-        	if (yy>400) {
-        		playerjumping = false;
-        	}
-         	
-         }
-        
-        else if (event.getAction()==MotionEvent.ACTION_MOVE) {
+        //jesli player zyje
+        if(player.getLife() > 0){
         	
-        	
-        }
+	        if(event.getAction()==MotionEvent.ACTION_DOWN){
+	        	Log.d(VIEW_LOG_TAG, "Touch DOWN");
+	        	if(y > 400){
+	        		if(player.isOn_ground()){
+	        			player.jump();
+	        			playerjumping = true;
+	        			Log.d(VIEW_LOG_TAG, "Jump pressed");
+	        		}
+	        	}
+	        	else{
+	        		playermoving = true;
+		        	if(x < 240){
+			        	//player.move(false);
+		        		clockwisedirection = false;
+			        	Log.d(VIEW_LOG_TAG, "less than");
+		        	}
+		        	if(x > 240){
+		        		clockwisedirection = true;
+			        	//player.move(true);
+			        	Log.d(VIEW_LOG_TAG, "more than");
+		        	}
+	        	}
+	    	 }
         
         
-        else {
-        	Log.d(VIEW_LOG_TAG,"Sth else Action " + Integer.toString(event.getAction()));
-        	Log.d(VIEW_LOG_TAG, "Sth else Index" + Integer.toString(event.getActionIndex()));
-        	 
+	        else if(event.getAction()==MotionEvent.ACTION_POINTER_2_DOWN) {
+	        	Log.d(VIEW_LOG_TAG, "SECOND pointer down");
+	        	event.getX(1);
+	        	float yy = event.getY(1);
+	        	if(yy > 400){
+	        		if(player.isOn_ground()){
+	        			player.jump();
+	        			playerjumping = true;
+	        			Log.d(VIEW_LOG_TAG, "Jump pressed");
+	        		}
+	        	}
+	        }
+	        
+	        else if(event.getAction()==MotionEvent.ACTION_UP){
+	    		 Log.d(VIEW_LOG_TAG, "Touch UP");
+	    		 if (y<400) {
+	    			 playermoving = false;
+	    			 Log.d(VIEW_LOG_TAG, "Player stopped");
+	    		 }
+	    		 else {
+	    			 playerjumping = false;
+	    		 }
+	    		 //
+	    	 }
+	    	 
+	        else if(event.getAction()==MotionEvent.ACTION_POINTER_2_UP) {
+	         	Log.d(VIEW_LOG_TAG, "SECOND pointer UP");
+	         	float yy = event.getY(1);
+	        	if (yy>400) {
+	        		playerjumping = false;
+	        	}
+	         	
+	         }
+	        
+	        else if (event.getAction()==MotionEvent.ACTION_MOVE) {
+	        	
+	        	
+	        }
+	        
+	        
+	        else {
+	        	Log.d(VIEW_LOG_TAG,"Sth else Action " + Integer.toString(event.getAction()));
+	        	Log.d(VIEW_LOG_TAG, "Sth else Index" + Integer.toString(event.getActionIndex()));
+	        	 
+	        }
         }
     		return super.onTouchEvent(event);		
-    	}
+    }
     	
 
     public void movePlayer() {
@@ -700,15 +725,15 @@ public class GameView extends SurfaceView{
     	switch(type){
     	case armagedon:
     		this.info = true;
-    		this.info_bmp = info_speed;
+    		this.info_bmp = info_armagedon;
     		break;
     	case high_gravity:
     		this.info = true;
-    		this.info_bmp = info_speed;
+    		this.info_bmp = info_low_gravity;
     		break;
     	case huge_player:
     		this.info = true;
-    		this.info_bmp = info_speed;
+    		this.info_bmp = info_huge;
     		break;
     	case immortality:
     		this.info = true;
@@ -716,11 +741,11 @@ public class GameView extends SurfaceView{
     		break;
     	case low_gravity:
     		this.info = true;
-    		this.info_bmp = info_speed;
+    		this.info_bmp = info_high_gravity;
     		break;
     	case money_rain:
     		this.info = true;
-    		this.info_bmp = info_speed;
+    		this.info_bmp = info_money_rain;
     		break;
     	case speed:
     		this.info = true;
@@ -728,7 +753,7 @@ public class GameView extends SurfaceView{
     		break;
     	case tiny_player:
     		this.info = true;
-    		this.info_bmp = info_speed;
+    		this.info_bmp = info_tiny;
     		break;
     	case ultra_suck:
     		this.info = true;
@@ -736,15 +761,15 @@ public class GameView extends SurfaceView{
     		break;
     	case x2:
     		this.info = true;
-    		this.info_bmp = info_speed;
+    		this.info_bmp = info_x2;
     		break;
     	case x3:
     		this.info = true;
-    		this.info_bmp = info_speed;
+    		this.info_bmp = info_x3;
     		break;
     	case x4:
     		this.info = true;
-    		this.info_bmp = info_speed;
+    		this.info_bmp = info_x4;
     		break;
     	}
     }
@@ -752,16 +777,23 @@ public class GameView extends SurfaceView{
     public void drawPoints(Canvas canvas){
     	paint.setTextSize(20);
     	paint.setAntiAlias(true);
-    	//jesli gracz ma wiecej niz 10k skroc liczbe punktow
-    	if(player.getPoints() > 10000){
-    		canvas.drawText("POINTS : " + player.getPoints()/1000 + " K", earth.getX() - 64, earth.getY(), paint);
-    	}
-    	//jesli gracz ma wiecej niz 10M skroc liczbe punktow
-    	else if(player.getPoints() > 10000000){
-    		canvas.drawText("POINTS : " + player.getPoints()/1000000 + " M", earth.getX() - 64, earth.getY(), paint);
+    	//jesli gracz zyje
+    	if(player.getLife() > 0){
+	    	//jesli gracz ma wiecej niz 10k skroc liczbe punktow
+	    	if(player.getPoints() > 10000){
+	    		canvas.drawText("POINTS : " + player.getPoints()/1000 + " K", earth.getX() - 64, earth.getY(), paint);
+	    	}
+	    	//jesli gracz ma wiecej niz 10M skroc liczbe punktow
+	    	else if(player.getPoints() > 10000000){
+	    		canvas.drawText("POINTS : " + player.getPoints()/1000000 + " M", earth.getX() - 64, earth.getY(), paint);
+	    	}
+	    	else{
+	    		canvas.drawText("POINTS : " + player.getPoints(), earth.getX() - 64, earth.getY(), paint);
+	    	}
     	}
     	else{
-    		canvas.drawText("POINTS : " + player.getPoints(), earth.getX() - 64, earth.getY(), paint);
+    		canvas.drawText("UMARLES! " , earth.getX() - 32, earth.getY() - 32, paint); 
+    		canvas.drawText("ZDOBYLES : " + player.getPoints()+ " PUNKTOW", earth.getX() - 64, earth.getY(), paint);
     	}
     	paint.reset();
     }
@@ -787,7 +819,6 @@ public class GameView extends SurfaceView{
     	else{
     		srcX = 5;
     	}
-        
     	Rect src = new Rect(srcX * money_bmp.getWidth()/m_columns, srcY, srcX * money_bmp.getWidth()/m_columns + money_bmp.getWidth()/m_columns, srcY + money_bmp.getHeight()/m_rows);
 		Rect dst = new Rect(x - money_bmp.getWidth()/(m_columns * 2), y - money_bmp.getHeight()/(m_rows * 2), x + money_bmp.getWidth()/(m_columns * 2), y + money_bmp.getHeight()/(m_rows * 2));
 		canvas.drawBitmap(money_bmp, src, dst, paint);

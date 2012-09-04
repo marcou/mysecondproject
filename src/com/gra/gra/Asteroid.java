@@ -95,5 +95,4 @@ public class Asteroid extends FlyingObject {
 	public void setExploded(boolean exploded) {
 		this.exploded = exploded;
 	}
-	
 }

@@ -59,7 +59,7 @@ public class Generator {
     	
     	if(points < threshold_1){
     		asteroid_count = 1;
-    		money_count = 10;
+    		money_count = 6;
     		upgrade_count = 0;
     		
     		asteroid_difficulty = 1;
@@ -128,19 +128,21 @@ public class Generator {
     	}
     	else if(money_rain){
     		money_count = (money_count + 1) * 2;
+    		asteroid_count = 0;
     	}
     	else if(armagedon){
     		asteroid_count = (asteroid_count + 1) * 2;
+    		money_count = 0;
     	}
     	else{
-    		if(asteroid_count > 2){
-        		asteroid_count = rand.nextInt(asteroid_count/2) + asteroid_count/2;
+    		if(asteroid_count > 1){
+        		asteroid_count = rand.nextInt(asteroid_count);
         	}
-        	if(money_count > 2){
-        		money_count = rand.nextInt(money_count/2) + money_count/2;
+        	if(money_count > 1){
+        		money_count = rand.nextInt(money_count);
         	}
-        	if(upgrade_count > 2){
-        		upgrade_count = rand.nextInt(upgrade_count/2) + upgrade_count/2;
+        	if(upgrade_count > 1){
+        		upgrade_count = rand.nextInt(upgrade_count);
         	}
     	}
     	
@@ -320,7 +322,6 @@ public class Generator {
 		public void setAngle(int angle) {
 			this.angle = angle;
 		}
-    	
     }
     
     public void setBounds(int x, int y, int w, int h){
