@@ -55,8 +55,6 @@ public class Player implements Serializable{
 	private int earth_radius;	//promien okregu po jakim ma siê poruszaæ nasz obiekt
 	private boolean on_ground = true;	//czy dotyka ziemi
 	
-	private Paint paint;
-	
 	private long points = 0;	//punkty gracza
 	private int multiplier = 1;		//mnoznik punktow
 	
@@ -67,7 +65,8 @@ public class Player implements Serializable{
 	
 	private double sucking_range;	//ile od gracza moze znajdowac sie moneta zeby ja zassal
 	
-	private int currentFrame;
+	private int currentFrame = 0;
+	private int frames;
 	
 	private boolean immortal = false;
 	
@@ -85,19 +84,9 @@ public class Player implements Serializable{
 		this.default_speed = speed;
 		this.sucking_range = default_sucking_range;
 		
-		paint = new Paint();
-		paint.setColor(Color.YELLOW);
 	}
 	
 	public void onDraw(Canvas canvas){
-		if(immortal){
-			paint.setColor(Color.BLUE);
-		}
-		else{
-			paint.setColor(Color.YELLOW);
-		}
-		canvas.drawCircle(x, y, (float) radius, paint);
-		
 		//dekrementacja tajmerow
 		if(timer > 0){
 			timer--;
@@ -117,6 +106,34 @@ public class Player implements Serializable{
 		else{
 			immortality_timer = 0;
 			immortal = false;
+		}
+	}
+	
+	public void update(){
+		//dekrementacja tajmerow
+		if(timer > 0){
+			timer--;
+		}
+		else{
+			//zresetowanie dzialania upgradeow
+			timer = 0;
+			this.multiplier = default_multiplier;
+			this.speed = default_speed;
+			this.jump_power = default_jump_power;
+			this.radius = default_radius;
+			this.sucking_range = default_sucking_range;
+		}
+		if(immortality_timer > 0){
+			immortality_timer--;
+		}
+		else{
+			immortality_timer = 0;
+			immortal = false;
+		}
+		setCurrentFrame(getCurrentFrame() + 1);
+		
+		if(getCurrentFrame() > getFrames()){
+			setCurrentFrame(0);
 		}
 	}
 	
@@ -392,14 +409,6 @@ public class Player implements Serializable{
 		this.on_ground = on_ground;
 	}
 
-	public Paint getPaint() {
-		return paint;
-	}
-
-	public void setPaint(Paint paint) {
-		this.paint = paint;
-	}
-
 	public boolean isEarth_stats_changed() {
 		return earth_stats_changed;
 	}
@@ -518,4 +527,21 @@ public class Player implements Serializable{
 		this.x = u.getX();
 		this.y = u.getY();
 	}
+
+	public int getCurrentFrame() {
+		return currentFrame;
+	}
+
+	public void setCurrentFrame(int currentFrame) {
+		this.currentFrame = currentFrame;
+	}
+
+	public int getFrames() {
+		return frames;
+	}
+
+	public void setFrames(int frames) {
+		this.frames = frames;
+	}
+	
 }

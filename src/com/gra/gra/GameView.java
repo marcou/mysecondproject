@@ -62,6 +62,10 @@ public class GameView extends SurfaceView{
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
 	 */
+	private Bitmap player_bmp;
+	private int p_columns = 1;
+	private int p_rows = 1;
+	
 	private Bitmap heart_bmp;
 	private Bitmap lifebar_bmp;
 	
@@ -184,6 +188,7 @@ public class GameView extends SurfaceView{
     	explosion_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.explosion);
     	heart_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.heart);
     	lifebar_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.lifebar);
+    	player_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.jez);
     	
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
@@ -239,6 +244,7 @@ public class GameView extends SurfaceView{
 				flyingObjects.get(i).setBmpData(t_columns, t_rows);
 			}
     	}
+    	player.setFrames((p_columns * p_rows) - 1);
     }
     
     @Override
@@ -317,7 +323,9 @@ public class GameView extends SurfaceView{
     	//wersja ze spritami
     	drawSprite(canvas, (int)earth.getX(), (int)earth.getY(), e_columns, e_rows, earth_bmp.getWidth()/e_columns, earth_bmp.getHeight()/e_rows, earth.getCurrentFrame(), earth_bmp, 0, true);
     	earth.update();
-    	player.onDraw(canvas);
+    	drawSprite(canvas, (int)player.getX(), (int)player.getY(), p_columns, p_rows, player_bmp.getWidth()/p_columns, player_bmp.getHeight()/p_rows, player.getCurrentFrame(), player_bmp,0, false);
+    	player.update();
+    	//player.onDraw(canvas);
     	
     	//rysowanie dymu
     	for(int i = temps.size()-1; i >=0; i--){
@@ -428,7 +436,6 @@ public class GameView extends SurfaceView{
         			player.resolveCollision(flyingObjects.get(i));
         		}
     		}
-    		
     	}
     	//rysowanie wybuchow
     	for(int i = temps.size()-1; i >=0; i--){
