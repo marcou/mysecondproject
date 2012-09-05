@@ -45,6 +45,7 @@ public class GameView extends SurfaceView{
 	private List<Ball> balls = new ArrayList<Ball>();	//lista kulek
 	private Earth earth;	//ziemia
 	private Player player;	//gracz
+	private Player temp_player = null;
 	private ArrayList<FlyingObject> flyingObjects = new ArrayList<FlyingObject>();//lista obiektow latajacych
 	
 	private List<TempSprite> temps = new ArrayList<TempSprite>();//lista obiektow ktore znikaja po krotkim czasie (dym)
@@ -158,11 +159,55 @@ public class GameView extends SurfaceView{
 	            }
         }); 
     }
+    
+    public GameView(Context context, double w_factor, double h_factor, Player player) {
+        super(context);
+        
+        this.h_factor = (float)h_factor;
+	   	this.w_factor = (float)w_factor;
+	   	
+	   	temp_player = player;
+	   	
+        setFocusable(true);
+        setFocusableInTouchMode(true);
+        setLongClickable(true);
+        //this.setOnTouchListener(this);
+    	thread = new GameLoopThread(this);
+        getHolder().addCallback(new SurfaceHolder.Callback() {
+               //@Override
+               public void surfaceDestroyed(SurfaceHolder holder) {
+                      boolean retry = true;
+                      thread.setRunning(false);
+                      while (retry) {
+                             try {
+                            	 thread.join();
+                                   retry = false;
+                             } catch (InterruptedException e) {}
+                      }
+               }
+               //@Override
+               public void surfaceCreated(SurfaceHolder holder) {
+            	   createSprites();
+            	   createGenerator();
+            	   thread.setRunning(true);
+            	   thread.start();
+	            }
+	            //@Override
+	            public void surfaceChanged(SurfaceHolder holder, int format,int width, int height) {
+	            	
+	            }
+        }); 
+    }
+    
+    public void updatePlayer(Player player){
+    	this.player = player;
+    }
+    
 	public void createGenerator(){
     	this.generator = new Generator();
     	generator.setBounds(area_x, area_y, area_w, area_h);
     }
-    
+	
     public void createSprites(){
     	/*
     	 * inicjowanie bitmap
@@ -226,7 +271,7 @@ public class GameView extends SurfaceView{
 //    	
 //    	flyingObjects.add(u1);
 //    	flyingObjects.add(u2);
-    	flyingObjects.add(u3);
+//    	flyingObjects.add(u3);
     	
     	for(int i = 0; i < flyingObjects.size(); i++){
     		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
@@ -245,6 +290,9 @@ public class GameView extends SurfaceView{
 			}
     	}
     	player.setFrames((p_columns * p_rows) - 1);
+    	if(temp_player != null){
+    		this.player = temp_player;
+    	}
     }
     
     @Override
