@@ -55,7 +55,7 @@ public class Options extends Activity {
 			Log.d("GameActivity","byly extrasy");
 			
 			if (extras.getBoolean("RESUME")) {
-				Log.d("GameActivity","resuming");
+				Log.d("GameActivity","resume zapisanej gry");
 				SaveContainer savedstate = (SaveContainer) extras.get("SAVE");
 				
 				view.setPlayer(savedstate.getPlayer());
@@ -92,6 +92,7 @@ public class Options extends Activity {
 		saver = new SaveService(Options.this);
         SaveContainer savedstate = new SaveContainer(view.getPlayer(), view.getFlyingObjects());
         saver.save(savedstate);
+        Log.d("GameActivity", "SAVED STATE");
         
 	}
     

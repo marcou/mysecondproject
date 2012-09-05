@@ -10,6 +10,7 @@ import java.io.StreamCorruptedException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 
 
@@ -19,7 +20,7 @@ import android.content.Context;
  */
 public class SaveService {
 
-	private static final String SAVE_FILENAME = "SaveFile.ser";
+	private static final String SAVE_FILENAME = "DefaultSave.ser";
 
 	private SaveContainer saveData = null;
 
@@ -46,6 +47,9 @@ public class SaveService {
 
 	
 	public String[] existing() {
+		for (String filename : context.fileList()) {
+			Log.d("Saver",filename);
+		}
 		return context.fileList();
 		
 	}

@@ -3,6 +3,7 @@ package com.gra.menu;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -33,13 +34,8 @@ public class MainMenu extends Activity {
         
         
         
-        saver = new SaveService(MainMenu.this);
-        
-        savedstate = saver.readLastState();
-        
-        if (savedstate!=null) {
-        	canresume = true;
-        }
+        readState();
+        Log.d("MainMenu","tworzenie menu");
        
         
         
@@ -54,9 +50,11 @@ public class MainMenu extends Activity {
         		if (canresume) {
         			PlayGameIntent.putExtra("RESUME", true);
         			PlayGameIntent.putExtra("SAVE", savedstate);
+        			Log.d("MainMenu","save przekazany");
         		}
         		else {
         			PlayGameIntent.putExtra("RESUME", false);
+        			Log.d("MainMenu","nie ma sava");
         		}
         			
         		
@@ -78,7 +76,8 @@ public class MainMenu extends Activity {
         });
         
 
-        
+
+ 
 //        Button CreditsButton = (Button)findViewById(R.id.Credits);
 //        CreditsButton.setOnClickListener(new OnClickListener() {
 //        	
@@ -89,4 +88,20 @@ public class MainMenu extends Activity {
 //        	}
 //        });
     }
+
+private void readState() {
+	saver = new SaveService(MainMenu.this);
+	saver.existing();
+    savedstate = saver.readLastState();
+    canresume = (savedstate!=null);
+	}
+
+protected void onResume() {
+	super.onResume();
+	readState();
+	Log.d("MainMenu","resume menu");
+	
+
+}
+
 }
