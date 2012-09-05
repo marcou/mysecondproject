@@ -1,12 +1,9 @@
 package com.gra.gra;
 
+import java.io.Serializable;
 import java.util.List;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 
 /**
  * 
@@ -21,7 +18,7 @@ import android.graphics.Rect;
  *	moneta - zwiekszanie punktow gracza.
  *	upgrade - zmiana wlasciwosci gracza, ziemi i innych gowien.
  */
-public abstract class FlyingObject {
+public abstract class FlyingObject implements Serializable{
 	
 	private List<FlyingObject> objects;
 	

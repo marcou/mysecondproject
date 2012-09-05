@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.gra.gra.GameView;
+
 import com.gra.zapisy.SaveContainer;
 import com.gra.zapisy.SaveService;
 
@@ -35,6 +36,10 @@ public class Options extends Activity {
 //        setContentView(view);
 //        view.requestFocus();
         
+        
+        
+        
+        
         //SKALOWANIE
         DisplayMetrics displaymetrics = new DisplayMetrics(); 
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics); 
@@ -44,6 +49,24 @@ public class Options extends Activity {
         double w_factor = width/480.0;
         
         view = new GameView(this,w_factor, h_factor);
+        
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+			Log.d("GameActivity","byly extrasy");
+			
+			if (extras.getBoolean("RESUME")) {
+				Log.d("GameActivity","resuming");
+				SaveContainer savedstate = (SaveContainer) extras.get("SAVE");
+				
+				view.setPlayer(savedstate.getPlayer());
+				view.setFlyingObjects(savedstate.getObjects());
+			}
+			else {
+				
+			}
+        }
+        
+        
         setContentView(view);
         view.requestFocus();
     }
@@ -51,12 +74,24 @@ public class Options extends Activity {
 	protected void onStop() 
     {
         super.onStop();
-        saver = new SaveService(Options.this);
+        saveState();
+        finish();
+    }
+	
+	
+	protected void onPause() {
+    	super.onPause();
+    	saveState();
+	}
+	
+	
+
+	private void saveState() {
+		saver = new SaveService(Options.this);
         SaveContainer savedstate = new SaveContainer(view.getPlayer(), view.getFlyingObjects());
         saver.save(savedstate);
         Log.d("GameActivity", "MYonStop is called");
-        finish();
-    }
+	}
     
     
     

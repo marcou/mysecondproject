@@ -1,9 +1,10 @@
 package com.gra.gra;
 
+import java.io.Serializable;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
 /**
  * 
@@ -11,7 +12,7 @@ import android.util.Log;
  *
  *	gracz a wlasciwie kulka ktora kontroluje gracz
  */
-public class Player {
+public class Player implements Serializable{
 	/*-----------------------------------------------------------------------------------------------------*
 	 * Startowe wartosci do ktorych bedzie sie wracalo po uplynieciu czasu dzialania modyfikatora(upgradeu)*
 	 *-----------------------------------------------------------------------------------------------------*/
