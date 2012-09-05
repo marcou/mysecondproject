@@ -78,15 +78,7 @@ public class MainMenu extends Activity {
 
 
  
-//        Button CreditsButton = (Button)findViewById(R.id.Credits);
-//        CreditsButton.setOnClickListener(new OnClickListener() {
-//        	
-//        	@Override
-//			public void onClick(View v) {
-//        		Intent CreditsIntent= new Intent(Menu.this,Credits.class);
-//        		startActivity(CreditsIntent);
-//        	}
-//        });
+
     }
 
 private void readState() {
