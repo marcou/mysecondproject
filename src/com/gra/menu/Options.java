@@ -74,13 +74,15 @@ public class Options extends Activity {
 	protected void onStop() 
     {
         super.onStop();
-        saveState();
+        Log.d("GameActivity", "MYonStop is called");
+        //saveState();
         finish();
     }
 	
 	
 	protected void onPause() {
     	super.onPause();
+    	Log.d("GameActivity", "MYonPause is called");
     	saveState();
 	}
 	
@@ -90,7 +92,7 @@ public class Options extends Activity {
 		saver = new SaveService(Options.this);
         SaveContainer savedstate = new SaveContainer(view.getPlayer(), view.getFlyingObjects());
         saver.save(savedstate);
-        Log.d("GameActivity", "MYonStop is called");
+        
 	}
     
     

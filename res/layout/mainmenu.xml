@@ -15,10 +15,10 @@ android:layout_centerVertical="true"
 android:layout_centerHorizontal="true"
 >
 <Button
-android:id="@+id/Play"
+android:id="@+id/Resume"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
-android:background="@drawable/play_button"
+android:background="@drawable/resume_button"
 >
 </Button>
 <TextView
@@ -30,10 +30,10 @@ android:layout_height="wrap_content"
 </TextView>
 
 <Button
-android:id="@+id/Options"
+android:id="@+id/StartNew"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
-android:background="@drawable/options_button" 
+android:background="@drawable/startgame_button" 
 >
 </Button>
 <TextView

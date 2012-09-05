@@ -43,7 +43,7 @@ public class MainMenu extends Activity {
        
         
         
-        Button PlayGameButton = (Button)findViewById(R.id.Play);
+        Button PlayGameButton = (Button)findViewById(R.id.Resume);
         
         
         PlayGameButton.setOnClickListener(new OnClickListener() {
@@ -66,7 +66,7 @@ public class MainMenu extends Activity {
         
         
         
-        Button OptionsButton = (Button)findViewById(R.id.Options);
+        Button OptionsButton = (Button)findViewById(R.id.StartNew);
         OptionsButton.setOnClickListener(new OnClickListener() {
         	
         	//@Override
@@ -77,15 +77,7 @@ public class MainMenu extends Activity {
         	}
         });
         
-        Button CreatorButton = (Button)findViewById(R.id.Options);
-        CreatorButton.setOnClickListener(new OnClickListener() {
-        	
-        	//@Override
-			public void onClick(View v) {
-        		Intent OptionsIntent = new Intent(MainMenu.this,Options.class);
-        		startActivity(OptionsIntent);
-        	}
-        });
+
         
 //        Button CreditsButton = (Button)findViewById(R.id.Credits);
 //        CreditsButton.setOnClickListener(new OnClickListener() {
