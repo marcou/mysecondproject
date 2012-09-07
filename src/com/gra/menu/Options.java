@@ -48,7 +48,7 @@ public class Options extends Activity {
         double h_factor = height/800.0;
         double w_factor = width/480.0;
         
-        view = new GameView(this,w_factor, h_factor);
+        
         
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
@@ -58,12 +58,16 @@ public class Options extends Activity {
 				Log.d("GameActivity","resume zapisanej gry");
 				SaveContainer savedstate = (SaveContainer) extras.get("SAVE");
 				
-				view.setPlayer(savedstate.getPlayer());
+				view = new GameView(this,w_factor, h_factor,savedstate.getPlayer());
 				view.setFlyingObjects(savedstate.getObjects());
-			}
-			else {
 				
 			}
+			else {
+				view = new GameView(this,w_factor, h_factor);
+			}
+        }
+        else {
+        	view = new GameView(this,w_factor, h_factor);
         }
         
         
@@ -90,7 +94,7 @@ public class Options extends Activity {
 
 	private void saveState() {
 		saver = new SaveService(Options.this);
-        SaveContainer savedstate = new SaveContainer(view.getPlayer(), view.getFlyingObjects());
+		SaveContainer savedstate = new SaveContainer(view.getPlayer(), view.getFlyingObjects());
         saver.save(savedstate);
         Log.d("GameActivity", "SAVED STATE");
         
