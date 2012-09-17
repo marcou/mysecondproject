@@ -5,6 +5,7 @@ import java.io.Serializable;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
  * 
@@ -87,6 +88,9 @@ public class Player implements Serializable{
 	}
 	
 	public void onDraw(Canvas canvas){
+		Paint paint = new Paint();
+		paint.setColor(Color.YELLOW);
+		canvas.drawCircle(x, y, (float)radius, paint);
 		//dekrementacja tajmerow
 		if(timer > 0){
 			timer--;
@@ -143,7 +147,7 @@ public class Player implements Serializable{
 		this.earth_radius = radius;
 	}
 	
-	public void setUpgrade(long time, double radius, double multiplier, double speed, double jump_power, double sucking_range, boolean immortality){
+	public void setUpgrade(long time, double radius, double multiplier, double speed, double jump_power, double sucking_range, boolean immortality, int player_life){
 		this.timer = time;
 		if(immortality){
 			this.immortality_timer = time;
@@ -154,6 +158,15 @@ public class Player implements Serializable{
 		this.jump_power *= jump_power;
 		this.sucking_range *= sucking_range;
 		this.immortal = immortality;
+		//jesli player nie ma pelnego lajfa
+		if(this.life < 3){
+			this.life += player_life;	
+		}
+		else{
+			//jesli ma full life to podwoj punkty
+			this.points *= 2;
+		}
+		
 	}
 	
 	//Ruch				zgodnie lub przeciwnie do wskazowek zegara
@@ -272,10 +285,16 @@ public class Player implements Serializable{
 	public void resolveCollision(FlyingObject object) {
 		//kolizja gracza z asteroida
 		if(object instanceof Asteroid){
-			((Asteroid) object).setLife(0);
-			if(!immortal){
-				setLife(getLife()-1);
-				immortal(40);
+			//kolizja gracza z moneto-asteroida
+			if (object instanceof MoneyAsteroid){
+				//setLife(5);
+			}
+			else{
+				((Asteroid) object).setLife(0);
+				if(!immortal){
+					setLife(getLife()-1);
+					immortal(40);
+				}
 			}
 		}
 		//kolizja gracza z pieniedzmi
@@ -298,11 +317,12 @@ public class Player implements Serializable{
 					|| ((Upgrade) object).getPlayer_radius() < 1 || ((Upgrade) object).getPlayer_radius() > 1 
 					|| ((Upgrade) object).getPlayer_speed() < 1 || ((Upgrade) object).getPlayer_speed() > 1
 					|| ((Upgrade) object).getPlayer_sucking_range() < 1 || ((Upgrade) object).getPlayer_sucking_range() > 1
-					|| ((Upgrade) object).isPlayer_immortality()){
+					|| ((Upgrade) object).isPlayer_immortality()
+					|| ((Upgrade) object).getPlayer_life() > 0){
 				//zresetowanie poprzednich upgradeow
 				resetUpgrade();
 				//ustawienie nowych upgradeow playerowi
-				setUpgrade(((Upgrade) object).getTime(), ((Upgrade) object).getPlayer_radius(), ((Upgrade) object).getPlayer_point_multiplier(), ((Upgrade) object).getPlayer_speed(), ((Upgrade) object).getPlayer_jump_power(), ((Upgrade) object).getPlayer_sucking_range(), ((Upgrade) object).isPlayer_immortality());
+				setUpgrade(((Upgrade) object).getTime(), ((Upgrade) object).getPlayer_radius(), ((Upgrade) object).getPlayer_point_multiplier(), ((Upgrade) object).getPlayer_speed(), ((Upgrade) object).getPlayer_jump_power(), ((Upgrade) object).getPlayer_sucking_range(), ((Upgrade) object).isPlayer_immortality(), ((Upgrade) object).getPlayer_life());
 			}
 			//jesli upgrade jest typu armagedon
 			if(((Upgrade) object).isArmagedon()){
@@ -332,11 +352,9 @@ public class Player implements Serializable{
 	public void setPoints(long points){
 		this.points = points;
 	}
-	
 	public long getPoints(){
 		return points;
 	}
-
 	public float getX() {
 		return x;
 	}
@@ -543,5 +561,111 @@ public class Player implements Serializable{
 	public void setFrames(int frames) {
 		this.frames = frames;
 	}
+
+	/************************************************
+	 *        METODY DLA JUMPERA (TIME ATTACK)		*
+	 ************************************************/
 	
+	public void countAngle(float object_x, float object_y, double distance, double power){
+		double cos_beta =  Math.abs((object_x - x)/distance);
+		double beta = Math.toDegrees(Math.acos((cos_beta)));
+		/*
+		 * 	|	3cw	|	4cw	|
+		 * 	|-------|-------|
+		 * 	|	2cw	|	1cw	|
+		 * 
+		 */
+		
+		/*
+		 * w cwiarcte :
+		 * 
+		 * I	-	beta = 180 + alfa
+		 * II	-	beta = 360 - alfa
+		 * III	-	beta = alfa
+		 * IV	- 	beta = 180 - alfa
+		 */
+		double landing_angle = 0;// = 180 + beta;
+		
+		//pierwsza cwairtka
+		if(this.x >= 240 && this.y >= 400){
+			landing_angle = 180 + beta;
+		}
+		//druga cwiartka
+		else if(this.x < 240 && this.y >= 400){
+			landing_angle = 360 - beta;
+		}
+		//trzecia cwiartka
+		else if(this.x < 240 && this.y < 400){
+			landing_angle = beta;
+		}
+		//czwarta cwiartka
+		else if(this.x >= 240 && this.y < 400){
+			landing_angle = 180 - beta;
+		}
+		beta = landing_angle;
+		
+		
+		//skladowa X grawitacji
+		double x_power = Math.cos(Math.toRadians(beta)) * (power/3);	//-> dwukrotne spowolnienie (za szybko chodzi)
+		//skladowa Y grawitacji
+		double y_power = Math.sin(Math.toRadians(beta)) * (power/3);
+		
+		//wersja bez wytracania predkosci
+		
+		x_speed += x_power;
+		y_speed += y_power;
+		
+		angle = beta;
+	}
+	public void fly(boolean clockwise){
+		if(clockwise){
+			this.x += 2;
+		}
+		else{
+			this.x -= 2;
+		}
+	}
+
+	public void resolveGravityPowers(float x_power, float y_power) {
+		if(current_jump_power > 0){
+			
+			x_speed = Math.cos(Math.toRadians(angle)) * current_jump_power;	//obliczenie skladowej X						
+			y_speed = Math.sin(Math.toRadians(angle)) * current_jump_power;	//obliczenie skladowej Y
+			
+			x_speed -= x_power;
+			y_speed -= y_power;
+			
+			current_jump_power -= Math.pow(Math.pow(x_power, 2) + Math.pow(y_power, 2), 0.5);
+		}
+		else{
+			x_speed += x_power;
+			y_speed += y_power;
+		}
+		this.x += x_speed;
+		this.y += y_speed;
+	}
+
+	public void checkPlanetCollision(float x, float y, int radius) {
+		//sprawdzamy czy nie ma kolizji z planeta
+		if(Math.pow((Math.pow(x - this.x,2) + Math.pow(y - this.y,2)),0.5) <= this.radius + radius){
+			double landing_angle = angle;
+			//jesli ladujemy na innej planecie
+			if(this.earth_x != x || this.earth_y != y){
+				//kat ladowania jest odbiciem lustrzanym kata pod jakim podrozuje obiekt
+				landing_angle += 180;
+			}
+			
+			this.earth_x = x;
+			this.earth_y = y;
+			
+			this.earth_radius = radius;
+			
+			on_ground = true;
+			
+			this.x = (float) (		Math.cos(Math.toRadians(landing_angle)) * (this.radius + this.earth_radius) + this.earth_x		);
+			this.y = (float) (		Math.sin(Math.toRadians(landing_angle)) * (this.radius + this.earth_radius) + this.earth_y		);
+			
+			this.angle = landing_angle;
+		}
+	}
 }

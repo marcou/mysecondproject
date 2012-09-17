@@ -37,11 +37,18 @@ public class MainMenu extends Activity {
         readState();
         Log.d("MainMenu","tworzenie menu");
        
+        Button PlayTimeAttack = (Button)findViewById(R.id.button1);
+        PlayTimeAttack.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent PlayTimeAttackIntent = new Intent(MainMenu.this,TimeAttack.class);
+				startActivity(PlayTimeAttackIntent);
+			}
+		});
+        
         
         
         Button PlayGameButton = (Button)findViewById(R.id.Resume);
-        
-        
         PlayGameButton.setOnClickListener(new OnClickListener() {
         	
         	//@Override

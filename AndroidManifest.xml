@@ -20,7 +20,9 @@
         <activity android:name=".menu.GameMenu"
          android:screenOrientation="portrait">
         </activity>
-        
+        <activity android:name=".menu.TimeAttack"
+         android:screenOrientation="portrait">
+        </activity>
 
     </application>
 </manifest>

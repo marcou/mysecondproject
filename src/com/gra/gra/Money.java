@@ -19,7 +19,7 @@ public class Money extends FlyingObject {
 	
 	public Money(List<FlyingObject> objects, float x, float y, double speed, double angle,
 			int mass, int radius) {
-		super(objects, x, y, speed, angle, 80, radius);
+		super(objects, x, y, speed, angle, 80, 5);
 		
 		super.setLife_timer(life_timer);
 		

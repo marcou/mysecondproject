@@ -46,6 +46,8 @@ public class Generator {
     	int asteroid_count = 0;	//liczba asteroid
     	int money_count = 0;	//liczba kasy
     	int upgrade_count = 0;	//liczba upgradeow
+    	int money_asteroid_count = 0;
+    	int money_asteroid_quota = 0;
     	
     	int asteroid_difficulty = 1;	//zmienna wplywajaca na wypuszczanie wiekszych asteroid
     									//przedzial wartosci :
@@ -67,7 +69,7 @@ public class Generator {
     	}
     	else if(points <threshold_2){
     		asteroid_count = 1;
-    		money_count = 16;
+    		money_count = 8;
     		upgrade_count = 0;
     		
     		asteroid_difficulty = 1;
@@ -75,43 +77,56 @@ public class Generator {
     	}
     	else if(points <threshold_3){
     		asteroid_count = 2;
-    		money_count = 16;
+    		money_count = 10;
     		upgrade_count = 1;
     		
     		asteroid_difficulty = 2;
     		money_value = 8;
+    		
     	}
     	else if(points <threshold_4){
     		asteroid_count = 3;
     		money_count = 10;
-    		upgrade_count = 2;
+    		upgrade_count = 1;
     		
     		asteroid_difficulty = 3;
     		money_value = 16;
+    		
+    		money_asteroid_count = 1;
+    		money_asteroid_quota = rand.nextInt(4) + 4;
     	}
     	else if(points <threshold_5){
     		asteroid_count = 4;
     		money_count = 8;
-    		upgrade_count = 2;
+    		upgrade_count = 1;
     		
     		asteroid_difficulty = 4;
     		money_value = 32;
+    		
+    		money_asteroid_count = 1;
+    		money_asteroid_quota = rand.nextInt(6) + 6;
     	}
     	else if(points <threshold_6){
     		asteroid_count = 4;
     		money_count = 6;
-    		upgrade_count = 2;
+    		upgrade_count = 1;
     		
     		asteroid_difficulty = 5;
     		money_value = 64;
+    		
+    		money_asteroid_count = 2;
+    		money_asteroid_quota = rand.nextInt(6) + 6;
     	}
     	else if(points <threshold_7){
     		asteroid_count = 4;
     		money_count = 4;
-    		upgrade_count = 2;
+    		upgrade_count = 1;
     		
     		asteroid_difficulty = 7;
     		money_value = 128;
+    		
+    		money_asteroid_count = 2;
+    		money_asteroid_quota = rand.nextInt(8) + 8;
     	}
     	else{
     		asteroid_count = 5;
@@ -120,11 +135,18 @@ public class Generator {
     		
     		asteroid_difficulty = 10;
     		money_value = 256;
+    		
+    		money_asteroid_count = 3;
+    		money_asteroid_quota = rand.nextInt(10) + 10;
     	}
     	
     	if(armagedon && money_rain){
-    		asteroid_count = (asteroid_count + 1) * 2;
-    		money_count = (money_count + 1) * 2;
+    		//asteroid_count = (asteroid_count + 1) * 2;
+    		//money_count = (money_count + 1) * 2;
+    		money_asteroid_count = asteroid_count + money_count + 2;
+    		money_asteroid_quota = rand.nextInt(10) + 10;
+    		asteroid_count = 0;
+    		money_count = 0;
     	}
     	else if(money_rain){
     		money_count = (money_count + 1) * 2;
@@ -135,14 +157,17 @@ public class Generator {
     		money_count = 0;
     	}
     	else{
-    		if(asteroid_count > 1){
+    		if(asteroid_count >= 1){
         		asteroid_count = rand.nextInt(asteroid_count);
         	}
-        	if(money_count > 1){
+        	if(money_count >= 1){
         		money_count = rand.nextInt(money_count);
         	}
-        	if(upgrade_count > 1){
+        	if(upgrade_count >= 1){
         		upgrade_count = rand.nextInt(upgrade_count);
+        	}
+        	if(money_asteroid_count >= 1){
+        		money_asteroid_count = rand.nextInt(money_asteroid_count);
         	}
     	}
     	
@@ -161,6 +186,7 @@ public class Generator {
     		prop = calculateProperties();
     		asteroid_size = generateSize(asteroid_difficulty);
     		Asteroid asteroid = new Asteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, asteroid_size);
+//    		MoneyAsteroid asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, asteroid_size, 10);
     		objects.add(asteroid);
     	}
     	for(int i = 0; i < money_count; i++){
@@ -174,13 +200,19 @@ public class Generator {
     		Upgrade upgrade = new Upgrade(objects, prop.getX(), prop.getY(), rand.nextInt(6), prop.getAngle(),type);
     		objects.add(upgrade);
 		}
+		for(int i = 0; i < money_asteroid_count; i++){
+    		prop = calculateProperties();
+//    		MoneyAsteroid money_asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, money_asteroid_quota, money_value);
+    		MoneyAsteroid money_asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, 1, money_value, money_asteroid_quota);
+    		objects.add(money_asteroid);
+    	}
 		return objects;
     }
     
     public upgradeType calculateType(){
     	int interval;
     	Random rand = new Random();
-    	interval = rand.nextInt(12);
+    	interval = rand.nextInt(13);
 		upgradeType type = upgradeType.speed;
 		switch(interval){
 		case 0:
@@ -219,6 +251,9 @@ public class Generator {
 		case 11:
 			type = upgradeType.immortality;
 			break;
+		case 12:
+			type = upgradeType.life;
+			break;
 		}
 		return type;
     }
@@ -236,7 +271,7 @@ public class Generator {
     	interval = rand.nextInt(4);
     	
     	/**********************************************************
-    	 *  z katami bedzie troche jebania bo :
+    	 *  z katami bedzie troche roboty bo :
     	 *  				________________
     	 *  	o - obiekt1	|				|	--> skraj mapy
     	 *  				|				|

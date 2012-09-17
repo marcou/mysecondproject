@@ -160,4 +160,44 @@ public class Earth {
 		this.frames = frames;
 	}
 	
+	/************************************************
+	 *        METODY DO TRYBU TIME ATTACK			*
+	 ************************************************/
+	
+	public Gravity countPowers(float x, float y){
+		double distance = (Math.pow(this.x - x,2) + Math.pow(this.y - y,2));//odleglosc do kwadratu
+		double power = (gravity * mass)/(distance);	//wzor na sile grawitacji
+		
+		distance = Math.pow(distance, 0.5);	//prawdziwa odleglosc
+		
+		double cos_beta =  Math.abs((this.x - x)/distance);
+		double beta = Math.toDegrees(Math.acos((cos_beta)));
+		
+		double landing_angle = 0.0;// = 180 + beta;
+		
+		//pierwsza cwairtka
+		if(x >= this.x && y >= this.y){
+			landing_angle = 180 + beta;
+		}
+		//druga cwiartka
+		else if(x < this.x && y >= this.y){
+			landing_angle = 360 - beta;
+		}
+		//trzecia cwiartka
+		else if(x < this.x && y < this.y){
+			landing_angle = beta;
+		}
+		//czwarta cwiartka
+		else if(x >= this.x && y < this.y){
+			landing_angle = 180 - beta;
+		}
+		
+		beta = landing_angle;
+		
+		//skladowa X grawitacji
+		double x_power = Math.cos(Math.toRadians(beta)) * (power);
+		//skladowa Y grawitacji
+		double y_power = Math.sin(Math.toRadians(beta)) * (power);
+		return new Gravity((float)x_power,(float)y_power);
+	}
 }

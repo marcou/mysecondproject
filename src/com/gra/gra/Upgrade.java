@@ -9,7 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain, ultra_suck, x2, x3, x4, immortality};
+enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain, ultra_suck, x2, x3, x4, immortality, life};
 
 public class Upgrade extends FlyingObject {
 
@@ -33,6 +33,7 @@ public class Upgrade extends FlyingObject {
 	private double player_radius = 1;
 	private double player_sucking_range =1;
 	private boolean player_immortality = false;
+	private int player_life = 0;
 	
 	private boolean armagedon; 
 	private boolean money_rain;
@@ -109,6 +110,10 @@ public class Upgrade extends FlyingObject {
 			this.player_immortality = true;
 			this.time = 80;
 			this.tag = "IMMORTALITY";
+		case life:
+			this.player_life = 1;
+			this.time = 80;
+			this.tag = "LIFE";
 		}
 	}
 
@@ -245,6 +250,14 @@ public class Upgrade extends FlyingObject {
 
 	public void setType(upgradeType type) {
 		this.type = type;
+	}
+
+	public int getPlayer_life() {
+		return player_life;
+	}
+
+	public void setPlayer_life(int player_life) {
+		this.player_life = player_life;
 	}
 	
 }

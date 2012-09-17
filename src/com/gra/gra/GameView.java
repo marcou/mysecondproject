@@ -101,6 +101,10 @@ public class GameView extends SurfaceView{
 	private Bitmap background_bmp;
 	private int background_x = 0;
 	
+	private Bitmap mosteroid_bmp;	//money asteroid
+	private int moa_columns = 4;
+	private int moa_rows = 3;
+	
 	//Przy upgrejdach rysowany jest tylko najnowszy upgrade i jest on rysowany prosto z gameView (nie tworzy sie obiektu)
 	private int info_columns = 4;
 	private int info_rows = 4;
@@ -234,6 +238,8 @@ public class GameView extends SurfaceView{
     	heart_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.heart);
     	lifebar_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.lifebar);
     	player_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.jez);
+    	mosteroid_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.money_asteroids);
+    	
     	
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
@@ -256,9 +262,9 @@ public class GameView extends SurfaceView{
     	Money m3 = new Money	(flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
     	Money m4 = new Money	(flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
     													//x		y		speed	angle	upgrade type
-    	Upgrade  u1 = new Upgrade(flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.armagedon);
-    	Upgrade  u2 = new Upgrade(flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.ultra_suck);
-    	Upgrade  u3 = new Upgrade(flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.low_gravity);
+    	Upgrade  u1 = new Upgrade(flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.life);
+    	Upgrade  u2 = new Upgrade(flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.life);
+    	Upgrade  u3 = new Upgrade(flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.life);
     	
 //    	flyingObjects.add(a1);
 //    	flyingObjects.add(a2);
@@ -401,7 +407,12 @@ public class GameView extends SurfaceView{
     			 
     			//rysowanie asteroid
     			if(flyingObjects.get(i) instanceof Asteroid){
-    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(), false);
+    				if(flyingObjects.get(i) instanceof MoneyAsteroid){
+        				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	moa_columns, moa_rows,  mosteroid_bmp.getWidth()/moa_columns, mosteroid_bmp.getHeight()/moa_rows,  flyingObjects.get(i).getCurrentFrame(), mosteroid_bmp, (float)flyingObjects.get(i).getAngle(), false);
+        			}
+    				else{
+    					drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(), false);
+    				}
     			}
     			//rysowanie hajsu
     			else if(flyingObjects.get(i) instanceof Money){
@@ -437,7 +448,13 @@ public class GameView extends SurfaceView{
     				temps.add(new TempSprite(temps, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), tempType.explosion));
     				((Asteroid) flyingObjects.get(i)).setExploded(true);
     			}
+    			if(flyingObjects.get(i).isOn_ground() && flyingObjects.get(i) instanceof MoneyAsteroid){
+        			int size = flyingObjects.size();
+        			flyingObjects.addAll(((MoneyAsteroid) flyingObjects.get(i)).getMoney(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getAngle()));
+        			Log.d("MoneyAsteroid", "DODANO : " + (flyingObjects.size() - size) + " obiektow");
+        		}
     		}
+    		
     		//sprawdzenie kolizji miedzy obiektami latajacymi
     		for(int j = i - 1; j >= 0; j--){
     			if(flyingObjects.get(i).checkCollision(flyingObjects.get(j).getX(), flyingObjects.get(j).getY(), flyingObjects.get(j).getRadius())){
@@ -536,6 +553,9 @@ public class GameView extends SurfaceView{
     			}
     			else if(flyingObjects.get(i) instanceof Upgrade){
     				flyingObjects.get(i).setBmpData(u_columns, u_rows);
+    			}
+    			else if(flyingObjects.get(i) instanceof MoneyAsteroid){
+    				flyingObjects.get(i).setBmpData(a_columns, a_rows);
     			}
     		}
     		//jesli gracz odpalil generator z armagedonem lub money_rainem wylacz je
@@ -835,6 +855,10 @@ public class GameView extends SurfaceView{
     	case x4:
     		this.info = true;
     		this.info_bmp = info_x4;
+    		break;
+    	case life:
+    		this.info = true;
+    		this.info_bmp = info_huge;
     		break;
     	}
     }
