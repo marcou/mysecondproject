@@ -639,7 +639,7 @@ public class GameView extends SurfaceView{
         //jesli player zyje
         if(player.getLife() > 0){
         	
-	        if(event.getAction()==MotionEvent.ACTION_DOWN){
+	        if(event.getAction()== MotionEvent.ACTION_DOWN){
 	        	Log.d(VIEW_LOG_TAG, "Touch DOWN");
 	        	if(y > 400){
 	        		if(player.isOn_ground()){
