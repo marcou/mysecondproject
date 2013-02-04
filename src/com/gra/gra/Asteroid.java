@@ -3,15 +3,15 @@ package com.gra.gra;
 import java.util.List;
 import java.util.Random;
 
-import com.gra.R;
-
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 
 public class Asteroid extends FlyingObject {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int size = 1;
 	
 	private int basic_radius;
