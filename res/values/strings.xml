@@ -6,4 +6,9 @@
     <string name="accelerometer">Accelerometer</string>
     <string name="controlls_button">Buttons</string>
     <string name="progress">Progress</string>
+    <string name="player_speed">Speed</string>
+    <string name="max_life">Max life</string>
+    <string name="upgrades">Upgrades</string>
+    <string name="earth_gravity">Gravity</string>
+    <string name="earth_size">Size</string>
 </resources>
