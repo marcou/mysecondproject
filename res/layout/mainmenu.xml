@@ -8,8 +8,8 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 >
 <TableLayout
 android:id="@+id/widget28"
-android:layout_width="295px"
-android:layout_height="250px"
+android:layout_width="295dp"
+android:layout_height="250dp"
 android:orientation="vertical"
 android:layout_centerVertical="true"
 android:layout_centerHorizontal="true"
@@ -52,6 +52,6 @@ android:layout_height="wrap_content"
     android:layout_alignLeft="@+id/widget28"
     android:layout_alignParentBottom="true"
     android:layout_marginBottom="131dp"
-    android:text="Options" />
+    android:text= "@string/options" />
 
 </RelativeLayout>

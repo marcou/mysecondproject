@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello World, MainMenu!</string>
-    <string name="app_name">ChurchTycoon</string>
+    <string name="app_name">Space faggot</string>
+    <string name="options">Options</string>
+    <string name="accelerometer">Accelerometer</string>
+    <string name="controlls_button">Buttons</string>
 </resources>
