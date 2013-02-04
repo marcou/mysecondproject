@@ -29,7 +29,7 @@ public class OptionsTab2 extends Activity{
         
         //Galeria textur gracza
         player = (Gallery) findViewById(R.id.gallery2);
-        player.setAdapter(new ImageAdapter(this, 200, 200));
+        player.setAdapter(new ImageAdapter(this, 100, 100, R.drawable.jez1, R.drawable.jez2, R.drawable.jez3, R.drawable.jez4));
         player.setOnItemSelectedListener(new OnItemSelectedListener() {
 	
 			public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
@@ -45,7 +45,7 @@ public class OptionsTab2 extends Activity{
         
       //Galeria textur ziemi
         earth = (Gallery) findViewById(R.id.gallery1);
-        earth.setAdapter(new ImageAdapter(this, 200, 200));
+        earth.setAdapter(new ImageAdapter(this, 100, 100, R.drawable.ziemia1, R.drawable.ziemia2, R.drawable.ziemia3));
         earth.setOnItemSelectedListener(new OnItemSelectedListener() {
 	
 			public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {

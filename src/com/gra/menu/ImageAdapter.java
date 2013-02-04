@@ -33,6 +33,17 @@ public class ImageAdapter extends BaseAdapter {
 			this.height = height;
 		}
 
+		public ImageAdapter(Context c, int width, int height, int imageId, int...imageIds) {
+			this.myContext = c;
+			this.width = width;
+			this.height = height;
+			myImageIds = new int[imageIds.length + 1];
+			myImageIds[0] = imageId;
+			for(int i = 0; i < imageIds.length; i++){
+				myImageIds[i + 1] = imageIds[i];
+			}
+		}
+		
 		public int getImageId(int position){
 			return myImageIds[position];
 		}
@@ -61,8 +72,8 @@ public class ImageAdapter extends BaseAdapter {
 			// Image should be scaled somehow
 			//iv.setScaleType(ImageView.ScaleType.CENTER);
 			//iv.setScaleType(ImageView.ScaleType.CENTER_CROP);			
-			//iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+			iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+			//iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			//iv.setScaleType(ImageView.ScaleType.FIT_XY);
 			//iv.setScaleType(ImageView.ScaleType.FIT_END);
 			

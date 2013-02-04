@@ -60,32 +60,27 @@
                 android:layout_height="wrap_content"
                 android:spacing="20dp" />
         </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/frameLayout1"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/linearLayout2"
-            android:layout_alignLeft="@+id/progressBar1"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/progressBar1"
-            android:layout_marginTop="33dp" >
+            android:layout_below="@+id/progressBar1" >
 
             <ImageView
                 android:id="@+id/earth"
-                android:layout_width="202dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/earthcrap" />
-        </FrameLayout>
 
-        <ImageView
-            android:id="@+id/player"
-            android:layout_width="142dp"
-            android:layout_height="143dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/frameLayout1"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/heart" />
+            <ImageView
+                android:id="@+id/player"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/earthcrap" />
+        </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>
