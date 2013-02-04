@@ -26,20 +26,20 @@ public class Options extends TabActivity {
  
         
         // Tab for Photos
-        TabSpec photospec = tabHost.newTabSpec("Photos");
+        TabSpec photospec = tabHost.newTabSpec("Controlls");
         // setting Title and Icon for the Tab
         photospec.setIndicator("Controlls", getResources().getDrawable(R.drawable.jez));
         Intent photosIntent = new Intent(this, OptionsTab1.class);
         photospec.setContent(photosIntent);
  
         // Tab for Songs
-        TabSpec songspec = tabHost.newTabSpec("Songs");
+        TabSpec songspec = tabHost.newTabSpec("Progress");
         songspec.setIndicator("Progress", getResources().getDrawable(R.drawable.heart));
         Intent songsIntent = new Intent(this, OptionsTab2.class);
         songspec.setContent(songsIntent);
  
         // Tab for Videos
-        TabSpec videospec = tabHost.newTabSpec("Videos");
+        TabSpec videospec = tabHost.newTabSpec("Other");
         videospec.setIndicator("Others", getResources().getDrawable(R.drawable.moneta));
         Intent videosIntent = new Intent(this, OptionsTab3.class);
         videospec.setContent(videosIntent);

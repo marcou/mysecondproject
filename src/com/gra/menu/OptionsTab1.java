@@ -5,12 +5,9 @@ import com.gra.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 public class OptionsTab1 extends Activity{
 	public void onCreate(Bundle savedInstanceState) {

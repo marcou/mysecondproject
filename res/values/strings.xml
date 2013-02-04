@@ -5,4 +5,5 @@
     <string name="options">Options</string>
     <string name="accelerometer">Accelerometer</string>
     <string name="controlls_button">Buttons</string>
+    <string name="progress">Progress</string>
 </resources>

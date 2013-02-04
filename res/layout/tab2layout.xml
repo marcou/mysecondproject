@@ -2,5 +2,90 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="@string/progress"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="138dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="19dp" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="174dp"
+            android:orientation="vertical" >
+
+            <Gallery
+                android:id="@+id/gallery1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spacing="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/linearLayout2"
+            android:layout_marginTop="83dp"
+            android:orientation="vertical" >
+
+            <Gallery
+                android:id="@+id/gallery2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spacing="20dp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayout2"
+            android:layout_alignLeft="@+id/progressBar1"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/progressBar1"
+            android:layout_marginTop="33dp" >
+
+            <ImageView
+                android:id="@+id/earth"
+                android:layout_width="202dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/earthcrap" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/player"
+            android:layout_width="142dp"
+            android:layout_height="143dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/frameLayout1"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/heart" />
+    </RelativeLayout>
+
 </LinearLayout>
