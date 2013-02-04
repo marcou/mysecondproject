@@ -12,7 +12,7 @@ import com.gra.gra.GameView;
 import com.gra.zapisy.SaveContainer;
 import com.gra.zapisy.SaveService;
 
-public class Options extends Activity {
+public class GameStart extends Activity {
 	//PlayerCreatorView view;
 	GameView view;
 	
@@ -93,7 +93,7 @@ public class Options extends Activity {
 	
 
 	private void saveState() {
-		saver = new SaveService(Options.this);
+		saver = new SaveService(GameStart.this);
 		SaveContainer savedstate = new SaveContainer(view.getPlayer(), view.getFlyingObjects());
         saver.save(savedstate);
         Log.d("GameActivity", "SAVED STATE");

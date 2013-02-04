@@ -14,7 +14,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".menu.Options"
+        <activity android:name=".menu.GameStart"
          android:screenOrientation="portrait">
         </activity>
         <activity android:name=".menu.GameMenu"
@@ -23,6 +23,7 @@
         <activity android:name=".menu.TimeAttack"
          android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".menu.Opcje"></activity>
 
     </application>
 </manifest>

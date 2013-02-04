@@ -52,6 +52,6 @@ android:layout_height="wrap_content"
     android:layout_alignLeft="@+id/widget28"
     android:layout_alignParentBottom="true"
     android:layout_marginBottom="131dp"
-    android:text="Time Attack" />
+    android:text="Options" />
 
 </RelativeLayout>

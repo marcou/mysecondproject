@@ -7,11 +7,10 @@ import android.view.WindowManager;
 
 /**
  * @author Szpdada
- * activity do kreatora gracza
+ * activity opcji gry
  */
 public class PlayerCreatorActivity extends Activity {
-	    PlayerCreatorView view;
-
+	
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
@@ -20,9 +19,6 @@ public class PlayerCreatorActivity extends Activity {
 	                                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-	        view = new PlayerCreatorView(this);
-	        setContentView(view);
-	        view.requestFocus();
 	    }
 }
 

@@ -37,12 +37,12 @@ public class MainMenu extends Activity {
         readState();
         Log.d("MainMenu","tworzenie menu");
        
-        Button PlayTimeAttack = (Button)findViewById(R.id.button1);
-        PlayTimeAttack.setOnClickListener(new OnClickListener() {
+        Button ShowOptions = (Button)findViewById(R.id.button1);
+        ShowOptions.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				Intent PlayTimeAttackIntent = new Intent(MainMenu.this,TimeAttack.class);
-				startActivity(PlayTimeAttackIntent);
+				Intent ShowOptionsIntent = new Intent(MainMenu.this,Opcje.class);
+				startActivity(ShowOptionsIntent);
 			}
 		});
         
@@ -53,7 +53,7 @@ public class MainMenu extends Activity {
         	
         	//@Override
 			public void onClick(View v) {
-        		Intent PlayGameIntent = new Intent(MainMenu.this,Options.class);
+        		Intent PlayGameIntent = new Intent(MainMenu.this,GameStart.class);
         		if (canresume) {
         			PlayGameIntent.putExtra("RESUME", true);
         			PlayGameIntent.putExtra("SAVE", savedstate);
@@ -76,7 +76,7 @@ public class MainMenu extends Activity {
         	
         	//@Override
 			public void onClick(View v) {
-        		Intent NewGameIntent = new Intent(MainMenu.this,Options.class);
+        		Intent NewGameIntent = new Intent(MainMenu.this,GameStart.class);
         		NewGameIntent.putExtra("RESUME", false);
         		startActivity(NewGameIntent);
         	}
