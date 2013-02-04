@@ -41,7 +41,7 @@ public class MainMenu extends Activity {
         ShowOptions.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				Intent ShowOptionsIntent = new Intent(MainMenu.this,Opcje.class);
+				Intent ShowOptionsIntent = new Intent(MainMenu.this,Options.class);
 				startActivity(ShowOptionsIntent);
 			}
 		});
