@@ -19,14 +19,14 @@ public class Options extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        settings = new UserSettings();
-        
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         setContentView(R.layout.options);
  
+        settings = new UserSettings();
+        
         TabHost tabHost = getTabHost();
  
         TabSpec controlls = tabHost.newTabSpec("Controlls");
@@ -51,4 +51,22 @@ public class Options extends TabActivity {
         tabHost.addTab(other); // Adding videos tab
         
     }
+    /*
+    @Override
+    public void onBackPressed(){
+    	Intent MainMenu = new Intent(Options.this,MainMenu.class);
+    	
+    	//Bundle settings = new Bundle();
+    	
+    	MainMenu.putExtra("acceleremoter", Options.settings.isAccelerometer());
+    	MainMenu.putExtra("invisible", Options.settings.isInvisibleButtons());
+    	MainMenu.putExtra("character", Options.settings.getCharacter());
+    	MainMenu.putExtra("planet", Options.settings.getEarth());
+    	
+    	
+    	//super.onBackPressed();
+    	
+    	
+    }
+    */
 }

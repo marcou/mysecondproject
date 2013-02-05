@@ -61,12 +61,14 @@ public class OptionsTab2 extends Activity{
         progress.setMax(Options.settings.getMaxProgress());
         setValue(progress, Options.settings.getProgress(), progress.getMax());
         
+        
+        
         //lista grafik wraz z wlasciwosciami
         playerStats = Options.settings.getImages(true);
         earthStats = Options.settings.getImages(false);
         
         //wybrana planeta oraz postac na podstawie poprzednich ustawien
-        earthPosition = Options.settings.getErath();
+        earthPosition = Options.settings.getEarth();
         playerPosition = Options.settings.getCharacter();
         
         //Wlasciwosci wybranej postaci

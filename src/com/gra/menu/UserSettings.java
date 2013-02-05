@@ -15,9 +15,9 @@ public class UserSettings {
 	//number wybranej postaci
 	private int character = 0;
 	//numer wybranej planety
-	private int erath = 0;
+	private int earth = 0;
 	//typ sterowania
-	private boolean acelerometer = false;
+	private boolean accelerometer = false;
 	//przezroczyste przyciski
 	private boolean invisibleButtons = true;
 	//postep gracza
@@ -35,8 +35,8 @@ public class UserSettings {
 	public UserSettings(int character, int erath, boolean acelerometer,
 			boolean invisibleButtons, int progress, int maxProgress) {
 		this.character = character;
-		this.erath = erath;
-		this.acelerometer = acelerometer;
+		this.earth = erath;
+		this.accelerometer = acelerometer;
 		this.invisibleButtons = invisibleButtons;
 		this.progress = progress;
 		this.maxProgress = maxProgress;
@@ -50,20 +50,20 @@ public class UserSettings {
 		this.character = character;
 	}
 
-	public int getErath() {
-		return erath;
+	public int getEarth() {
+		return earth;
 	}
 
-	public void setErath(int erath) {
-		this.erath = erath;
+	public void setEarth(int earth) {
+		this.earth = earth;
 	}
 
-	public boolean isAcelerometer() {
-		return acelerometer;
+	public boolean isAccelerometer() {
+		return accelerometer;
 	}
 
-	public void setAcelerometer(boolean acelerometer) {
-		this.acelerometer = acelerometer;
+	public void setAccelerometer(boolean accelerometer) {
+		this.accelerometer = accelerometer;
 	}
 
 	public boolean isInvisibleButtons() {
