@@ -24,9 +24,9 @@ public class UserSettings {
 	private int progress = 400;
 	//maksymalny postep
 	private int maxProgress = 1000;
-	//statystyki postaci 	|SPEED|LIFE|UPGRADE|
+	//statystyki postaci 			|BITMAP|SPEED|LIFE|UPGRADE|
 	private int[][] playerStats = {{R.drawable.jez1,1,1,1},{R.drawable.jez2,2,1,1},{R.drawable.jez3,1,3,1},{R.drawable.jez4,2,1,3},{R.drawable.jez3,5,1,1},{R.drawable.jez4,3,4,1}};
-	//statystyki planety	|GRAVITY|SIZE|
+	//statystyki planety			|BITMAP|GRAVITY|SIZE|
 	private int[][] earthStats = {{R.drawable.ziemia1,1,1},{R.drawable.ziemia2,2,1},{R.drawable.ziemia3,1,3},{R.drawable.ziemia1,2,1},{R.drawable.ziemia2,4,1},{R.drawable.ziemia3,3,3}};
 	
 	public UserSettings(){
@@ -90,22 +90,28 @@ public class UserSettings {
 		this.maxProgress = maxProgress;
 	}
 	
+	//Metoda zwracaj¹ca tablice z bitmapami postaci/planet oraz wlasciwowsciami dla danej postaci/planety
 	public int[][] getImages(boolean player){
 		int[][] images;
 		int length = 2;
+		//prog do 20 : 2 jeze| 2 planety
 		if(progress < 20){}
+		//prog do 100 : 3 jeze| 2 planety
 		else if(progress < 100) {
 			if(player)length = 3;
 			else length = 2;
 		}
+		//prog do 500 : 4 jeze| 3 planety
 		else if(progress < 500){
 			if(player)length = 4;
 			else length = 3;
 		}
+		//prog do 1000 : 5 jezy| 3 planety
 		else if(progress < 1000){
 			if(player)length = 5;
 			else length = 3;
 		}
+		//prog 1000 (MAX) : 6 jezy| 4 planety
 		else {
 			if(player)length = 6;
 			else length = 4;
