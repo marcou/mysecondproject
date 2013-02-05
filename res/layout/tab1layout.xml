@@ -37,7 +37,15 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/radioGroup1"
             android:layout_toRightOf="@+id/radioGroup1"
-            android:text="Transparent buttons" />
+            android:text="Invisible buttons" />
+
+        <ImageView
+            android:id="@+id/tab1_controllImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/radioGroup1"
+            android:src="@drawable/sterowanie1" />
 
     </RelativeLayout>
 

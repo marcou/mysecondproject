@@ -5,14 +5,20 @@ import com.gra.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class OptionsTab1 extends Activity{
+	
+	private ImageView controlls;
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab1layout);
+        
+        controlls = (ImageView) findViewById(R.id.tab1_controllImage);
         
         //przycisk przezroczstych przyciskow
         final CheckBox transparentControlls = (CheckBox) findViewById(R.id.tab1_transparentControlls);
@@ -32,9 +38,11 @@ public class OptionsTab1 extends Activity{
 				switch(checkedId){
 		        case R.id.tab1_accelerometer:
 		        	transparentControlls.setEnabled(false);
+		        	controlls.setImageResource(R.drawable.sterowanie2);
 		        	break;
 		        case R.id.tab1_controllButton:
 		        	transparentControlls.setEnabled(true);
+		        	controlls.setImageResource(R.drawable.sterowanie1);
 		        	break;
 		        }
 			}

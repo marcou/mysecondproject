@@ -72,9 +72,8 @@ public class OptionsTab2 extends Activity{
 			public void onNothingSelected(AdapterView<?> parent) {
 				
 			}
-	
-	
 		});
+        
       //Galeria textur ziemi
         earth = (Gallery) findViewById(R.id.gallery1);
         earth.setAdapter(new ImageAdapter(this, 100, 100, R.drawable.ziemia1, R.drawable.ziemia2, R.drawable.ziemia3, R.drawable.moneta));
