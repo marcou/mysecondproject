@@ -23,10 +23,10 @@
         <activity android:name=".menu.TimeAttack"
          android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".menu.Options"></activity>
-        <activity android:name=".menu.OptionsTab1"></activity>
-        <activity android:name=".menu.OptionsTab2"></activity>
-        <activity android:name=".menu.OptionsTab3"></activity>
+        <activity android:name=".menu.Options" android:screenOrientation="portrait"></activity>
+        <activity android:name=".menu.OptionsTab1" android:screenOrientation="portrait"></activity>
+        <activity android:name=".menu.OptionsTab2" android:screenOrientation="portrait"></activity>
+        <activity android:name=".menu.OptionsTab3" android:screenOrientation="portrait"></activity>
 
     </application>
 </manifest>
