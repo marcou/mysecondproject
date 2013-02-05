@@ -82,4 +82,27 @@ public class ImageAdapter extends BaseAdapter {
 
 			return iv;
 		}
+		
+		public void setImages(int imageId, int...imageIds){
+			myImageIds = new int[imageIds.length + 1];
+			myImageIds[0] = imageId;
+			for(int i = 0; i < imageIds.length; i++){
+				myImageIds[i + 1] = imageIds[i];
+			}
+		}
+		
+		public void addImage(int position, int imageId){
+//			int temp[] = new int[myImageIds.length + 1];
+//			for(int i = 0; i < myImageIds.length; i++){
+//				temp[i] = myImageIds[i];
+//			}
+//			temp[myImageIds.length] = imageId;
+//			myImageIds = new int[temp.length];
+//			myImageIds = temp;
+			myImageIds[position] = imageId;
+		}
+		
+		public void clearImageIds(int length){
+			myImageIds = new int[length];
+		}
 	}// ImageAdapter
