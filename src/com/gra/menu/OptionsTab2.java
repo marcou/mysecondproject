@@ -3,6 +3,8 @@ package com.gra.menu;
 
 
 import com.gra.R;
+import com.gra.zapisy.SaveContainer;
+import com.gra.zapisy.SaveService;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -20,6 +22,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 public class OptionsTab2 extends Activity{
+	
+	//zapis settingsow
+	SaveService saver;
+	
+	UserSettings savedSettings;
 	
 	//pozycja w galerii ziemi
 	private int earthPosition;
@@ -56,6 +63,9 @@ public class OptionsTab2 extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab2layout);
         
+        saver = new SaveService(OptionsTab2.this);
+        loadSettings();
+        
         //postep gracza
         progress = (ProgressBar) findViewById(R.id.tab1_playerProgress);
         progress.setMax(Options.settings.getMaxProgress());
@@ -68,8 +78,8 @@ public class OptionsTab2 extends Activity{
         earthStats = Options.settings.getImages(false);
         
         //wybrana planeta oraz postac na podstawie poprzednich ustawien
-        earthPosition = Options.settings.getEarth();
-        playerPosition = Options.settings.getCharacter();
+//        earthPosition = Options.settings.getEarth();
+//        playerPosition = Options.settings.getCharacter();
         
         //Wlasciwosci wybranej postaci
         playerSpeed = (ProgressBar) findViewById(R.id.playerSpeedProgressBar);
@@ -155,6 +165,8 @@ public class OptionsTab2 extends Activity{
 		});
     }
 	
+
+
 	//metoda nadajaca kolor paska postepu w zaleznosci od postepu
 	public void setValue(ProgressBar bar, int value, int max){
 		final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
@@ -190,5 +202,37 @@ public class OptionsTab2 extends Activity{
 	public int getPlayerUpgrade(){
 		return playerStats[playerPosition][3];
 	}
+	
+	
+	protected void onPause() {
+    	super.onPause();
+    	Log.d("OptionsTab", "MYonPause is called");
+    	saveState();
+	}
+	
+	
+
+	private void loadSettings() {
+//		saver = new SaveService(OptionsTab2.this);
+		  new UserSettings();
+		 UserSettings saved = saver.readSettings("user_settings");
+		 if (saved==null) {
+			 saved = new UserSettings();	
+		 }
+		 playerPosition=saved.getCharacter();
+		 earthPosition=saved.getEarth();
+	
+	}
+	
+	private void saveState() {
+//		saver = new SaveService(OptionsTab2.this);
+//		UserSettings savedSettings = new UserSettings();
+		savedSettings.setCharacter(playerPosition);
+		savedSettings.setEarth(earthPosition);
+        saver.saveSettings(savedSettings, "user_settings");
+        Log.d("OptionsTab", "SAVED SETTINGS");
+        
+	}
+	
 }
 

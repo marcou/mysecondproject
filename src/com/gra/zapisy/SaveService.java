@@ -12,6 +12,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.gra.menu.UserSettings;
+
 
 
 /**
@@ -23,6 +25,7 @@ public class SaveService {
 	private static final String SAVE_FILENAME = "DefaultSave.ser";
 
 	private SaveContainer saveData = null;
+	private UserSettings saveSettings = null;
 
 	private static SaveService saveService;
 	private Activity context;
@@ -84,6 +87,21 @@ public class SaveService {
 		}
 
 	}
+	
+	public  void saveSettings(UserSettings object, String filename){
+		try {
+			String name = filename+".ser";
+			fOut = context.openFileOutput(name, Activity.MODE_PRIVATE);
+			osw = new ObjectOutputStream(fOut);
+			osw.writeObject(object);
+			osw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	
 	
@@ -122,5 +140,23 @@ public class SaveService {
 
 		return saveData;
 }
+	public UserSettings readSettings(String filename){
+		try {
+			String name = filename+".ser";
+			fin = context.openFileInput(name);
+			sin = new ObjectInputStream(fin);
+			saveSettings = (UserSettings) sin.readObject();
+			sin.close();
+		} catch (StreamCorruptedException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return saveSettings;
+}
+	
 }
 

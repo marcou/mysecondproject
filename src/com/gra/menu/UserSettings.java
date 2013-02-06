@@ -1,7 +1,6 @@
 package com.gra.menu;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 import com.gra.R;
 
@@ -11,7 +10,7 @@ import com.gra.R;
  *
  * Klasa zawiera pola z optionsa ktore wybra³ gracz
  */
-public class UserSettings {
+public class UserSettings implements Serializable {
 	//number wybranej postaci
 	private int character = 0;
 	//numer wybranej planety
@@ -32,10 +31,10 @@ public class UserSettings {
 	public UserSettings(){
 	}
 	
-	public UserSettings(int character, int erath, boolean acelerometer,
+	public UserSettings(int character, int earth, boolean acelerometer,
 			boolean invisibleButtons, int progress, int maxProgress) {
 		this.character = character;
-		this.earth = erath;
+		this.earth = earth;
 		this.accelerometer = acelerometer;
 		this.invisibleButtons = invisibleButtons;
 		this.progress = progress;

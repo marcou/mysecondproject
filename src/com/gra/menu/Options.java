@@ -1,7 +1,5 @@
 package com.gra.menu;
 
-import com.gra.R;
-
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +7,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+
+import com.gra.R;
+import com.gra.zapisy.SaveService;
  
 public class Options extends TabActivity {
 	
 	public static UserSettings settings;
+	
 	
     /** Called when the activity is first created. */
     @Override
@@ -26,6 +28,7 @@ public class Options extends TabActivity {
         setContentView(R.layout.options);
  
         settings = new UserSettings();
+        
         
         TabHost tabHost = getTabHost();
  
