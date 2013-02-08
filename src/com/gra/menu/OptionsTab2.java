@@ -2,10 +2,6 @@ package com.gra.menu;
 
 
 
-import com.gra.R;
-import com.gra.zapisy.SaveContainer;
-import com.gra.zapisy.SaveService;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ClipDrawable;
@@ -16,10 +12,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Gallery;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+
+import com.gra.R;
+import com.gra.zapisy.SaveService;
 
 public class OptionsTab2 extends Activity{
 	
