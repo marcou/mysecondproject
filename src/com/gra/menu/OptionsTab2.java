@@ -28,9 +28,9 @@ public class OptionsTab2 extends Activity{
 	UserSettings savedSettings;
 	
 	//pozycja w galerii ziemi
-	private int earthPosition;
+	private int earthPosition=1;
 	//pozycja w galerii gracza
-	private int playerPosition;
+	private int playerPosition=1;
 	//galeria tekstur gracza
 	private Gallery player;
 	//galeria tekstur planety
@@ -218,8 +218,11 @@ public class OptionsTab2 extends Activity{
 		 if (saved==null) {
 			 saved = new UserSettings();	
 		 }
+		 savedSettings=saved;
 		 playerPosition=saved.getCharacter();
 		 earthPosition=saved.getEarth();
+		 Log.d("OptionsTab", "player  "+ Integer.toString(playerPosition) );
+		 
 	
 	}
 	
