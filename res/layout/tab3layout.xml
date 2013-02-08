@@ -112,13 +112,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp" >
-
+
+        <ImageView
+            android:id="@+id/tab3_achievementPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.70"
+            android:src="@drawable/jez3" />
+
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tab3_achievementInfo"
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_weight="0.70"
-            android:text="TextView" />
+            android:text="TextView" android:layout_gravity="center"/>
+
     </LinearLayout>
 
 </LinearLayout>

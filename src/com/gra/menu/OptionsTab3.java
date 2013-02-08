@@ -28,6 +28,9 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 	private ImageView achievement33;
 	private ImageView achievement41;
 	
+	private ImageView preview;
+	private TextView info;
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab3layout);
@@ -55,11 +58,17 @@ public class OptionsTab3 extends Activity implements OnClickListener{
         achievement32.setOnClickListener(this);
         achievement33.setOnClickListener(this);
         achievement41.setOnClickListener(this);
+        
+        //podlgad achievementu
+        preview = (ImageView) findViewById(R.id.tab3_achievementPreview);
+        info = (TextView) findViewById(R.id.tab3_achievementInfo);
     }
 	
-	private void showInfo(achievementType type, View v) {
+	private void showInfo(achievementType type, ImageView v) {
 		switch(type){
 		case acziwment1:
+			preview.setImageDrawable(v.getDrawable());
+			info.setText(R.string.achievement1);
 			break;
 		}
 	}
@@ -69,7 +78,7 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch(v.getId()){
 		case R.id.tab3_row1col1:
-			showInfo(achievementType.acziwment1, v);
+			showInfo(achievementType.acziwment1, (ImageView)v);
 			break;
 		}
 	}
