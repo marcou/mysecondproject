@@ -27,6 +27,8 @@ public class UserSettings implements Serializable {
 	private int[][] playerStats = {{R.drawable.jez1,1,1,1},{R.drawable.jez2,2,1,1},{R.drawable.jez3,1,3,1},{R.drawable.jez4,2,1,3},{R.drawable.jez3,5,1,1},{R.drawable.jez4,3,4,1}};
 	//statystyki planety			|BITMAP|GRAVITY|SIZE|
 	private int[][] earthStats = {{R.drawable.ziemia1,1,1},{R.drawable.ziemia2,2,1},{R.drawable.ziemia3,1,3},{R.drawable.ziemia1,2,1},{R.drawable.ziemia2,4,1},{R.drawable.ziemia3,3,3}};
+	//informacje o acziwmentach
+	private AchievementsHolder achievements;
 	
 	public UserSettings(){
 	}
@@ -133,5 +135,13 @@ public class UserSettings implements Serializable {
 			}
 		}
 		return images;
+	}
+
+	public AchievementsHolder getAchievements() {
+		return achievements;
+	}
+
+	public void setAchievements(AchievementsHolder achievements) {
+		this.achievements = achievements;
 	}
 }

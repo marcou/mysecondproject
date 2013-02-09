@@ -2,14 +2,8 @@ package com.gra.gra;
 
 import java.util.List;
 
-import com.gra.R;
-
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 
-enum upgradeType{speed, low_gravity, high_gravity, tiny_player, huge_player, armagedon, money_rain, ultra_suck, x2, x3, x4, immortality, life};
 
 public class Upgrade extends FlyingObject {
 
