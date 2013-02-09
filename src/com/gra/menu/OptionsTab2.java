@@ -101,7 +101,7 @@ public class OptionsTab2 extends Activity{
         earthImage = (ImageView) findViewById(R.id.earth);
         
         //Galeria textur gracza
-        player = (Gallery) findViewById(R.id.gallery2);
+        player = (Gallery) findViewById(R.id.gallery1);
         
         //tworzenie adaptera dla obrazkow jeza
         ImageAdapter playerAdapter = new ImageAdapter(this, 100, 100);
@@ -133,7 +133,7 @@ public class OptionsTab2 extends Activity{
 		});
         
         //Galeria textur ziemi
-        earth = (Gallery) findViewById(R.id.gallery1);
+        earth = (Gallery) findViewById(R.id.gallery2);
         
         ImageAdapter earthAdapter = new ImageAdapter(this, 100, 100);
         //czyscimy tablice i zwiekszamy ja do rozmiarow odpowiadajacych liczbie obrazkow z settingsa dla danego progu punktowego
