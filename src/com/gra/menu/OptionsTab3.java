@@ -3,6 +3,7 @@ package com.gra.menu;
 import com.gra.R;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 	
 	private ImageView preview;
 	private TextView info;
+	private TextView title;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,9 @@ public class OptionsTab3 extends Activity implements OnClickListener{
         //podlgad achievementu
         preview = (ImageView) findViewById(R.id.tab3_achievementPreview);
         info = (TextView) findViewById(R.id.tab3_achievementInfo);
+        title = (TextView) findViewById(R.id.tab3_achievementTitle);
+        
+        title.setTextColor(Color.GREEN);
     }
 	
 	private void showInfo(achievementType type, ImageView v) {
@@ -69,11 +74,10 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 		case acziwment1:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_novice);
+			title.setText(R.string.acv_novicetitle);
 			break;
 		}
 	}
-
-
 
 	public void onClick(View v) {
 		switch(v.getId()){

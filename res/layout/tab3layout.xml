@@ -136,19 +136,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.70"
             android:orientation="vertical" >
-
+
             <TextView
                 android:id="@+id/tab3_achievementTitle"
-                android:layout_width="143dp"
+                android:layout_width="218dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Large Text"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
             <TextView
                 android:id="@+id/tab3_achievementInfo"
-                android:layout_width="187dp"
-                android:layout_height="55dp"
+                android:layout_width="217dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:text="TextView" />
 
