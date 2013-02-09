@@ -11,5 +11,7 @@
     <string name="upgrades">Upgrades</string>
     <string name="earth_gravity">Gravity</string>
     <string name="earth_size">Size</string>
-    <string name="acv_novice">Upgrade Novice - collect 5 upgrades in one game</string>
+    <string name="acv_novice">Collect 5 upgrades in one game</string>
+    <string name="acv_novicetitle">Upgrade Novice</string>
+<string />
 </resources>
