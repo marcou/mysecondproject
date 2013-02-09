@@ -136,4 +136,102 @@ public class AchievementsHolder implements Serializable{
 			allUpgrades[i] = false;
 		}
 	}
+
+	public boolean isUpgradeNovice() {
+		return upgradeNovice;
+	}
+
+	public void setUpgradeNovice(boolean upgradeNovice) {
+		this.upgradeNovice = upgradeNovice;
+	}
+
+	public boolean isUpgradeApprentice() {
+		return upgradeApprentice;
+	}
+
+	public void setUpgradeApprentice(boolean upgradeApprentice) {
+		this.upgradeApprentice = upgradeApprentice;
+	}
+
+	public boolean isUpgradeAdept() {
+		return upgradeAdept;
+	}
+
+	public void setUpgradeAdept(boolean upgradeAdept) {
+		this.upgradeAdept = upgradeAdept;
+	}
+
+	public boolean isUpgradeMaster() {
+		return upgradeMaster;
+	}
+
+	public void setUpgradeMaster(boolean upgradeMaster) {
+		this.upgradeMaster = upgradeMaster;
+	}
+
+	public boolean isWalkingDead() {
+		return walkingDead;
+	}
+
+	public void setWalkingDead(boolean walkingDead) {
+		this.walkingDead = walkingDead;
+	}
+
+	public boolean isLover() {
+		return lover;
+	}
+
+	public void setLover(boolean lover) {
+		this.lover = lover;
+	}
+
+	public boolean isCasanova() {
+		return casanova;
+	}
+
+	public void setCasanova(boolean casanova) {
+		this.casanova = casanova;
+	}
+
+	public boolean isAlienInvasion() {
+		return alienInvasion;
+	}
+
+	public void setAlienInvasion(boolean alienInvasion) {
+		this.alienInvasion = alienInvasion;
+	}
+
+	public boolean isCollector() {
+		return collector;
+	}
+
+	public void setCollector(boolean collector) {
+		this.collector = collector;
+	}
+
+	public boolean isDuckHunter() {
+		return duckHunter;
+	}
+
+	public void setDuckHunter(boolean duckHunter) {
+		this.duckHunter = duckHunter;
+	}
+
+	public boolean isTheSecretAchievement() {
+		return theSecretAchievement;
+	}
+
+	public void setTheSecretAchievement(boolean theSecretAchievement) {
+		this.theSecretAchievement = theSecretAchievement;
+	}
+
+	public boolean isiSeeDeadPeople() {
+		return iSeeDeadPeople;
+	}
+
+	public void setiSeeDeadPeople(boolean iSeeDeadPeople) {
+		this.iSeeDeadPeople = iSeeDeadPeople;
+	}
+	
+	
 }

@@ -148,37 +148,37 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 			showInfo(achievementType.novice, (ImageView)v);
 			break;
 		case R.id.tab3_row1col2:
-			showInfo(achievementType.apprentice, (ImageView)v);
+			showInfo(achievementType.duck, (ImageView)v);
 			break;
 		case R.id.tab3_row1col3:
-			showInfo(achievementType.adept, (ImageView)v);
+			showInfo(achievementType.isdp, (ImageView)v);
 			break;
 		case R.id.tab3_row2col1:
-			showInfo(achievementType.master, (ImageView)v);
+			showInfo(achievementType.apprentice, (ImageView)v);
 			break;
 		case R.id.tab3_row2col2:
 			showInfo(achievementType.lover, (ImageView)v);
 			break;
 		case R.id.tab3_row2col3:
-			showInfo(achievementType.casanova, (ImageView)v);
+			showInfo(achievementType.dead, (ImageView)v);
 			break;
 		case R.id.tab3_row3col1:
-			showInfo(achievementType.isdp, (ImageView)v);
+			showInfo(achievementType.adept, (ImageView)v);
 			break;
 		case R.id.tab3_row3col2:
-			showInfo(achievementType.dead, (ImageView)v);
+			showInfo(achievementType.casanova, (ImageView)v);
 			break;
 		case R.id.tab3_row3col3:
 			showInfo(achievementType.collector, (ImageView)v);
 			break;
 		case R.id.tab3_row4col1:
-			showInfo(achievementType.alien, (ImageView)v);
+			showInfo(achievementType.master, (ImageView)v);
 			break;
 		case R.id.tab3_row4col2:
-			showInfo(achievementType.duck, (ImageView)v);
+			showInfo(achievementType.secret, (ImageView)v);
 			break;
 		case R.id.tab3_row4col3:
-			showInfo(achievementType.secret, (ImageView)v);
+			showInfo(achievementType.alien, (ImageView)v);
 			break;
 		}
 	}

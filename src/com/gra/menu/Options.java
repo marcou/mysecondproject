@@ -44,7 +44,7 @@ public class Options extends TabActivity {
         progress.setContent(progressIntent);
  
         TabSpec other = tabHost.newTabSpec("Achievements");
-        other.setIndicator("Others", getResources().getDrawable(R.drawable.moneta));
+        other.setIndicator("Achievements", getResources().getDrawable(R.drawable.moneta));
         Intent otherIntent = new Intent(this, OptionsTab3.class);
         other.setContent(otherIntent);
  
