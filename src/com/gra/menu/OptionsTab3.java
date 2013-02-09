@@ -68,7 +68,7 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 		switch(type){
 		case acziwment1:
 			preview.setImageDrawable(v.getDrawable());
-			info.setText(R.string.achievement1);
+			info.setText(R.string.acv_novice);
 			break;
 		}
 	}
