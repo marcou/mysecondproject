@@ -13,4 +13,26 @@
     <string name="earth_size">Size</string>
     <string name="acv_novice">Collect 5 upgrades in one game</string>
     <string name="acv_novicetitle">Upgrade Novice</string>
+	<string name="acv_apprenticetitle">Upgrade Apprentice</string>
+	<string name="acv_apprentice">Collect 10 upgrades twice</string>
+	<string name="acv_adepttitle">Upgrade Adept</string>
+	<string name="acv_adept">Collect 20 upgrades 3 times</string>
+	<string name="acv_mastertitle">Upgrade Master</string>
+	<string name="acv_master">Collect 30 upgrades 4 times</string>
+	<string name="acv_isdptitle">I see dead people</string>
+	<string name="acv_isdp">Die 100 times</string>
+	<string name="acv_deadtitle">Walking dead</string>
+	<string name="acv_dead">Die 1000 times</string>
+	<string name="acv_lovertitle">Lover</string>
+	<string name="acv_lover">Collect 50 hearts</string>
+	<string name="acv_casanovatitle">Casanova</string>
+	<string name="acv_casanova">Collect 250 hearts</string>
+ 	<string name="acv_alientitle">Alien Invasion</string>
+	<string name="acv_alien">Knock down a spaceship 5 times</string>
+	<string name="acv_collectortitle">Collector</string>
+	<string name="acv_collector">Collect all types of upgrades in one game</string>
+	<string name="acv_ducktitle">Duck Hunter</string>
+	<string name="acv_duck">Get hit in the air 10 times</string>
+	<string name="acv_secrettitle">The Secret achievement</string>
+	<string name="acv_secret">"?"</string>
 </resources>
