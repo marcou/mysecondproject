@@ -12,7 +12,7 @@
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_weight="0.5">
+            android:layout_height="wrap_content" android:layout_weight="0.8">
 
             <ImageView
                 android:id="@+id/tab3_row1col1"
@@ -40,7 +40,7 @@
         <TableRow
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_weight="0.4">
+            android:layout_height="wrap_content" android:layout_weight="0.6">
 
             <ImageView
                 android:id="@+id/tab3_row2col1"
@@ -68,7 +68,7 @@
         <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_weight="0.3">
+            android:layout_height="wrap_content" android:layout_weight="0.4">
 
             <ImageView
                 android:id="@+id/tab3_row3col1"
@@ -97,13 +97,24 @@
             android:id="@+id/tableRow4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_weight="0.2">
-
+
             <ImageView
                 android:id="@+id/tab3_row4col1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ziemia3" />
+                android:src="@drawable/ziemia3" android:layout_weight="0.8"/>
+
+            <ImageView
+                android:id="@+id/tab3_row4col2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ziemia3" android:layout_weight="0.1"/>
+
+            <ImageView
+                android:id="@+id/tab3_row4col3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ziemia3" android:layout_weight="0.8"/>
 
         </TableRow>
     </TableLayout>
