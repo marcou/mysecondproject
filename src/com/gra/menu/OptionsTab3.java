@@ -3,7 +3,12 @@ package com.gra.menu;
 import com.gra.R;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -67,6 +72,15 @@ public class OptionsTab3 extends Activity implements OnClickListener{
         achievement42.setOnClickListener(this);
         achievement43.setOnClickListener(this);
         
+        /*
+        //achievementy nie zdobyte (czarnobiale)
+        achievement11.setDrawingCacheEnabled(true);
+        
+        Bitmap bmp = Bitmap.createBitmap(achievement11.getDrawingCache());
+        if(bmp != null){
+        	achievement11.setImageBitmap(convertColorIntoBlackAndWhiteImage(bmp));	
+        }
+        */
         //podlgad achievementu
         preview = (ImageView) findViewById(R.id.tab3_achievementPreview);
         info = (TextView) findViewById(R.id.tab3_achievementInfo);
@@ -182,4 +196,23 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 			break;
 		}
 	}
+	
+	private Bitmap convertColorIntoBlackAndWhiteImage(Bitmap orginalBitmap) {
+        ColorMatrix colorMatrix = new ColorMatrix();
+        colorMatrix.setSaturation(0);
+
+        ColorMatrixColorFilter colorMatrixFilter = new ColorMatrixColorFilter(
+                colorMatrix);
+
+        Bitmap blackAndWhiteBitmap = orginalBitmap.copy(
+                Bitmap.Config.ARGB_8888, true);
+
+        Paint paint = new Paint();
+        paint.setColorFilter(colorMatrixFilter);
+
+        Canvas canvas = new Canvas(blackAndWhiteBitmap);
+        canvas.drawBitmap(blackAndWhiteBitmap, 0, 0, paint);
+
+        return blackAndWhiteBitmap;
+    }
 }
