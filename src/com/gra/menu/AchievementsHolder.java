@@ -232,6 +232,4 @@ public class AchievementsHolder implements Serializable{
 	public void setiSeeDeadPeople(boolean iSeeDeadPeople) {
 		this.iSeeDeadPeople = iSeeDeadPeople;
 	}
-	
-	
 }

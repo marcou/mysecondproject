@@ -82,11 +82,6 @@ public class OptionsTab3 extends Activity implements OnClickListener{
         achievement41.setOnClickListener(this);
         achievement42.setOnClickListener(this);
         achievement43.setOnClickListener(this);
-        
-        
-        //achievementy nie zdobyte (czarnobiale)
-        achievement11.setDrawingCacheEnabled(true);
-        achievement11.buildDrawingCache();
        
         //zapelnij tablice danymi 
         fillArray();
@@ -284,5 +279,20 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 	public void enableAchievement(int row, int column){
 		Bitmap bmp = BitmapFactory.decodeResource(getResources(), array[row][column]);
 		imageArray[row][column].setImageBitmap((bmp));
+	}
+	
+	public void fillAchievementHolder(AchievementsHolder holder){
+		if(holder.isUpgradeNovice()) enableAchievement(0, 0);
+		if(holder.isDuckHunter()) enableAchievement(0, 1);
+		if(holder.isiSeeDeadPeople()) enableAchievement(0, 2);
+		if(holder.isUpgradeApprentice()) enableAchievement(1, 0);
+		if(holder.isLover()) enableAchievement(1, 1);
+		if(holder.isWalkingDead()) enableAchievement(1, 2);
+		if(holder.isUpgradeAdept()) enableAchievement(2, 0);
+		if(holder.isCasanova()) enableAchievement(2, 1);
+		if(holder.isCollector()) enableAchievement(2, 2);
+		if(holder.isUpgradeMaster()) enableAchievement(3, 0);
+		if(holder.isTheSecretAchievement()) enableAchievement(3, 1);
+		if(holder.isAlienInvasion()) enableAchievement(3, 2);
 	}
 }

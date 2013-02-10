@@ -20,9 +20,11 @@ public class UserSettings implements Serializable {
 	//przezroczyste przyciski
 	private boolean invisibleButtons = true;
 	//postep gracza
-	private int progress = 400;
+	private int progress = 0;
 	//maksymalny postep
 	private int maxProgress = 1000;
+	//liczba rozegranych gier
+	private int gamesPlayed = 0;
 	//statystyki postaci 			|BITMAP|SPEED|LIFE|UPGRADE|
 	private int[][] playerStats = {{R.drawable.jez1,1,1,1},{R.drawable.jez2,2,1,1},{R.drawable.jez3,1,3,1},{R.drawable.jez4,2,1,3},{R.drawable.jez3,5,1,1},{R.drawable.jez4,3,4,1}};
 	//statystyki planety			|BITMAP|GRAVITY|SIZE|
@@ -143,5 +145,29 @@ public class UserSettings implements Serializable {
 
 	public void setAchievements(AchievementsHolder achievements) {
 		this.achievements = achievements;
+		
+	}
+	
+	public void countProgress(){
+		progress = 0;
+		//punkty za achievementy (710)
+		if(achievements.isUpgradeNovice()) 			progress += 10;
+		if(achievements.isDuckHunter()) 			progress += 10;
+		if(achievements.isiSeeDeadPeople()) 		progress += 10;
+		if(achievements.isUpgradeApprentice()) 		progress += 20;
+		if(achievements.isLover()) 					progress += 20;
+		if(achievements.isWalkingDead()) 			progress += 20;
+		if(achievements.isUpgradeAdept()) 			progress += 40;
+		if(achievements.isCasanova()) 				progress += 40;
+		if(achievements.isCollector()) 				progress += 40;
+		if(achievements.isUpgradeMaster()) 			progress += 100;
+		if(achievements.isTheSecretAchievement()) 	progress += 200;
+		if(achievements.isAlienInvasion()) 			progress += 100;
+		
+		//punkty za rozegrane gry (190)
+		if(gamesPlayed > 1900) progress += 190;
+		else progress += gamesPlayed/10;
+		
+		//punkty za ranking? (100)
 	}
 }
