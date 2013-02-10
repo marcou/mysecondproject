@@ -9,7 +9,6 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 import com.gra.R;
-import com.gra.zapisy.SaveService;
  
 public class Options extends TabActivity {
 	
@@ -54,22 +53,4 @@ public class Options extends TabActivity {
         tabHost.addTab(other); // Adding videos tab
         
     }
-    /*
-    @Override
-    public void onBackPressed(){
-    	Intent MainMenu = new Intent(Options.this,MainMenu.class);
-    	
-    	//Bundle settings = new Bundle();
-    	
-    	MainMenu.putExtra("acceleremoter", Options.settings.isAccelerometer());
-    	MainMenu.putExtra("invisible", Options.settings.isInvisibleButtons());
-    	MainMenu.putExtra("character", Options.settings.getCharacter());
-    	MainMenu.putExtra("planet", Options.settings.getEarth());
-    	
-    	
-    	//super.onBackPressed();
-    	
-    	
-    }
-    */
 }

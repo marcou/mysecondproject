@@ -76,10 +76,6 @@ public class OptionsTab2 extends Activity{
         playerStats = Options.settings.getImages(true);
         earthStats = Options.settings.getImages(false);
         
-        //wybrana planeta oraz postac na podstawie poprzednich ustawien
-//        earthPosition = Options.settings.getEarth();
-//        playerPosition = Options.settings.getCharacter();
-        
         //Wlasciwosci wybranej postaci
         playerSpeed = (ProgressBar) findViewById(R.id.playerSpeedProgressBar);
         playerLife = (ProgressBar) findViewById(R.id.playerLifeProgressBar);
