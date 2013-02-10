@@ -130,6 +130,8 @@ public class AchievementsHolder implements Serializable{
 		if(duck >= 10) duckHunter = true;
 	}
 	
+	//wyczysc tymczasowe dane jak : liczbe upgradow zebranych w danej grze i tablice
+	//zebranych upgradow. Metoda powinna byc wywolana po ZAKONCZENIU gry.
 	public void clearTemporaryData(){
 		oneGameUpgrades = 0;
 		for(int i = 0; i < upgradeType.values().length; i++){
