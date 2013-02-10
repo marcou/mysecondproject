@@ -405,8 +405,6 @@ public class GameView extends SurfaceView{
     	//rysowanie statku kosmicznego
     	if(ship != null){
     		drawSprite(canvas, (int)ship.getX(), (int)ship.getY(), 1, 1, ship.getWidth(), ship.getHeight(), 0, spaceShip_bmp, 270, false);
-    		paint.setColor(Color.CYAN);
-    		//canvas.drawRect(ship.getX() - ship.getWidth()/2, ship.getY() - ship.getHeight()/2, ship.getX() + ship.getWidth()/2, ship.getY() + ship.getHeight()/2, paint);
     		ship.move();
     		if(ship.getX() > this.area_w || ship.getY() > this.area_h) ship = null;
     	}
