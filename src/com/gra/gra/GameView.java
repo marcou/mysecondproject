@@ -26,7 +26,11 @@ import android.view.SurfaceView;
  */
 
 public class GameView extends SurfaceView{
-	
+	/***********************************/
+	 private boolean DEBUG_MODE = false;
+	/***********************************/
+	 
+	 
 	private float w_factor;
 	private float h_factor;
 	
@@ -57,16 +61,20 @@ public class GameView extends SurfaceView{
 	private boolean playerjumping = false;
 	private boolean clockwisedirection;
 	
-	private boolean DEBUG_MODE = false;
 	//kolec wystajacy z ziemi
 	private boolean thorn = false;
 	//achievementy gracza
 	private AchievementsHolder achievements;
+	//latajacy statek kosmiczny
+	private SpaceShip ship = null;
+	private boolean spaceShipReady = true;
 	
 	//
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
 	 */
+	private Bitmap spaceShip_bmp;
+	
 	private Bitmap player_bmp;
 	private int p_columns = 1;
 	private int p_rows = 1;
@@ -243,7 +251,7 @@ public class GameView extends SurfaceView{
     	lifebar_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.lifebar);
     	player_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.jez);
     	mosteroid_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.money_asteroids);
-    	
+    	spaceShip_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.spaceship);
     	
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
@@ -392,6 +400,15 @@ public class GameView extends SurfaceView{
     		if(temps.get(i).getType() == tempType.smoke){
     			drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, false);
     		}
+    	}
+    	
+    	//rysowanie statku kosmicznego
+    	if(ship != null){
+    		drawSprite(canvas, (int)ship.getX(), (int)ship.getY(), 1, 1, ship.getWidth(), ship.getHeight(), 0, spaceShip_bmp, 270, false);
+    		paint.setColor(Color.CYAN);
+    		//canvas.drawRect(ship.getX() - ship.getWidth()/2, ship.getY() - ship.getHeight()/2, ship.getX() + ship.getWidth()/2, ship.getY() + ship.getHeight()/2, paint);
+    		ship.move();
+    		if(ship.getX() > this.area_w || ship.getY() > this.area_h) ship = null;
     	}
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
     		//jesli obiekt sie zatrzymal (i jest poza ekranem) to go usun
@@ -548,10 +565,15 @@ public class GameView extends SurfaceView{
     	if(world_timer <= 0){
     		resetTimer();
     		//dodaj graczowi punkty za generacje (przezycie kolejnych x sekund)
-    		//player.setPoints(player.getPoints() + 1);
+    		player.setPoints(player.getPoints() + 1);
     		
     		flyingObjects.addAll(generator.generate(player.getPoints(), player.isArmagedon(), player.isMoney_rain()));
-    		//List<FlyingObject> temp = generator.generate(player.getPoints(), player.isArmagedon(), player.isMoney_rain());
+    		
+    		//jesli gracz ma pelnego lajfa i ponad 10k punktow to ma szanse, ¿e pojawi sie statek kosmiczny
+    		if(spaceShipReady && player.getPoints() >= 10 && player.getLife() == player.getMaxLife()){
+    			ship = new SpaceShip(-100, 100, 128, 128);
+    			spaceShipReady = false;
+    		}
     		
     		//zaktualizowanie danych
     		for(int i = 0; i < flyingObjects.size(); i++){
@@ -585,7 +607,6 @@ public class GameView extends SurfaceView{
 	    			player.setMoney_rain(false);
 	    		}
 	    	}
-
     	}
     	//jesli statystyki ziemi zostaly zmienione zassaj je na nowo a nastepnie ustaw flage na false
     	if(earth.isSuck_my_stats()){
@@ -662,7 +683,14 @@ public class GameView extends SurfaceView{
         y = y / this.h_factor;
         //jesli player zyje
         if(player.getLife() > 0){
-        	
+        	//jesli statek jest na ekranie to w pierwszej kolejnosci sprawdz kolizje z nim
+        	if(ship != null){
+        		if(ship.checkCollision(x, y)){
+        			achievements.addAlien();
+        			temps.add(new TempSprite(temps,ship.getX() - (ship.getX() - ship.getX())/2, ship.getY() - (ship.getY() - ship.getY())/2, tempType.explosion));
+        			ship = null;
+        		}
+        	}
 	        if(event.getAction()== MotionEvent.ACTION_DOWN){
 	        	Log.d(VIEW_LOG_TAG, "Touch DOWN");
 	        	if(y > 400){
@@ -759,10 +787,10 @@ public class GameView extends SurfaceView{
     
     //width -> szerokosc bitmapy podzielona przez rows
     public void drawSprite(Canvas canvas, int x, int y, int columns, int rows, int width, int height, int currentFrame, Bitmap bmp, float angle, boolean thorn){
-    	if(thorn){
+    	//if(thorn){
     		canvas.save();
     		canvas.rotate(angle, x, y);
-    	}
+    	//}
     	int srcX = 0;
     	int srcY = 0;
     	int row;
@@ -778,9 +806,9 @@ public class GameView extends SurfaceView{
     	Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
 		Rect dst = new Rect(x - width/2, y - height/2, x + width/2, y + height/2);
 		canvas.drawBitmap(bmp, src, dst, paint);
-		if(thorn){
+		//if(thorn){
 			canvas.restore();
-		}
+		//}
     }
     
     public void drawBackground(Canvas canvas){

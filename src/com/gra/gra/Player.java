@@ -63,6 +63,7 @@ public class Player implements Serializable{
 	private boolean money_rain = false;
 	
 	private int life = 3;			//zycie gracza MAX = 3 smierc przy Life = 0
+	private int maxLife = 3;
 	
 	private double sucking_range;	//ile od gracza moze znajdowac sie moneta zeby ja zassal
 	
@@ -159,7 +160,7 @@ public class Player implements Serializable{
 		this.sucking_range *= sucking_range;
 		this.immortal = immortality;
 		//jesli player nie ma pelnego lajfa
-		if(this.life < 3){
+		if(this.life < this.maxLife){
 			this.life += player_life;	
 		}
 		else{
@@ -668,4 +669,13 @@ public class Player implements Serializable{
 			this.angle = landing_angle;
 		}
 	}
+
+	public int getMaxLife() {
+		return maxLife;
+	}
+
+	public void setMaxLife(int maxLife) {
+		this.maxLife = maxLife;
+	}
+	
 }
