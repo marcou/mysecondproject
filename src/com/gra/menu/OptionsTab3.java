@@ -91,6 +91,8 @@ public class OptionsTab3 extends Activity implements OnClickListener{
         	}
         }
         
+        enableAchievement(0, 0);
+        
         //podlgad achievementu
         preview = (ImageView) findViewById(R.id.tab3_achievementPreview);
         info = (TextView) findViewById(R.id.tab3_achievementInfo);
@@ -170,11 +172,9 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 		switch(v.getId()){
 		case R.id.tab3_row1col1:
 			showInfo(achievementType.novice, (ImageView)v);
-			disableAchievement(3, 1);
 			break;
 		case R.id.tab3_row1col2:
 			showInfo(achievementType.duck, (ImageView)v);
-			enableAchievement(3, 1);
 			break;
 		case R.id.tab3_row1col3:
 			showInfo(achievementType.isdp, (ImageView)v);
