@@ -55,6 +55,9 @@ public class AchievementsHolder implements Serializable{
 	private boolean allUpgrades[];
 	private int duck;
 	
+	//zmienna pomocnicza do smierci (gracz moze umrzec tylko raz podczas rozgrywki)
+	private boolean playerAlreadyDead;
+	
 	public AchievementsHolder(){
 		upgradeNovice = false;
 		upgradeApprentice = false;
@@ -80,6 +83,8 @@ public class AchievementsHolder implements Serializable{
 		for(int i = 0; i < upgradeType.values().length; i++){
 			allUpgrades[i] = false;
 		}
+		
+		playerAlreadyDead = false;
 	}
 
 	public void addUpgrade(upgradeType type){
@@ -92,6 +97,9 @@ public class AchievementsHolder implements Serializable{
 				break;
 			}
 		}
+		//jesli upgrade jest serduszkiem dodaj skladowa achievementu HEART
+		if(type == upgradeType.life) addHeart();
+		
 		oneGameUpgrades++;
 		if(oneGameUpgrades % 10 == 0) upgrades10++;
 		if(oneGameUpgrades % 20 == 0) upgrades20++;
@@ -107,14 +115,18 @@ public class AchievementsHolder implements Serializable{
 	}
 	
 	public void addDeath(){
-		deaths++;
-		//I see dead people
-		if(deaths >= 100) iSeeDeadPeople = true;
-		//Walking dead
-		if(deaths >= 1000) walkingDead = true;
+		if(!playerAlreadyDead){
+			deaths++;
+			//I see dead people
+			if(deaths >= 100) iSeeDeadPeople = true;
+			//Walking dead
+			if(deaths >= 1000) walkingDead = true;
+			
+			playerAlreadyDead = true;
+		}
 	}
 	
-	public void AddHeart(){
+	public void addHeart(){
 		hearts++;
 		if(hearts >= 50) lover = true;
 		if(hearts >= 250) casanova = true;
@@ -130,13 +142,15 @@ public class AchievementsHolder implements Serializable{
 		if(duck >= 10) duckHunter = true;
 	}
 	
-	//wyczysc tymczasowe dane jak : liczbe upgradow zebranych w danej grze i tablice
-	//zebranych upgradow. Metoda powinna byc wywolana po ZAKONCZENIU gry.
+	//wyczysc tymczasowe dane jak : liczbe upgradow zebranych w danej grze, tablice
+	//zebranych upgradow i zmienna mowiaca o tym czy gracz zyje. 
+	//Metoda powinna byc wywolana po ZAKONCZENIU gry.
 	public void clearTemporaryData(){
 		oneGameUpgrades = 0;
 		for(int i = 0; i < upgradeType.values().length; i++){
 			allUpgrades[i] = false;
 		}
+		playerAlreadyDead = false;
 	}
 
 	public boolean isUpgradeNovice() {
@@ -234,4 +248,86 @@ public class AchievementsHolder implements Serializable{
 	public void setiSeeDeadPeople(boolean iSeeDeadPeople) {
 		this.iSeeDeadPeople = iSeeDeadPeople;
 	}
+
+	public int getOneGameUpgrades() {
+		return oneGameUpgrades;
+	}
+
+	public void setOneGameUpgrades(int oneGameUpgrades) {
+		this.oneGameUpgrades = oneGameUpgrades;
+	}
+
+	public int getUpgrades10() {
+		return upgrades10;
+	}
+
+	public void setUpgrades10(int upgrades10) {
+		this.upgrades10 = upgrades10;
+	}
+
+	public int getUpgrades20() {
+		return upgrades20;
+	}
+
+	public void setUpgrades20(int upgrades20) {
+		this.upgrades20 = upgrades20;
+	}
+
+	public int getUpgrades30() {
+		return upgrades30;
+	}
+
+	public void setUpgrades30(int upgrades30) {
+		this.upgrades30 = upgrades30;
+	}
+
+	public int getDeaths() {
+		return deaths;
+	}
+
+	public void setDeaths(int deaths) {
+		this.deaths = deaths;
+	}
+
+	public int getHearts() {
+		return hearts;
+	}
+
+	public void setHearts(int hearts) {
+		this.hearts = hearts;
+	}
+
+	public int getAliens() {
+		return aliens;
+	}
+
+	public void setAliens(int aliens) {
+		this.aliens = aliens;
+	}
+
+	public boolean[] getAllUpgrades() {
+		return allUpgrades;
+	}
+
+	public void setAllUpgrades(boolean[] allUpgrades) {
+		this.allUpgrades = allUpgrades;
+	}
+
+	public int getDuck() {
+		return duck;
+	}
+
+	public void setDuck(int duck) {
+		this.duck = duck;
+	}
+
+	public boolean isPlayerAlreadyDead() {
+		return playerAlreadyDead;
+	}
+
+	public void setPlayerAlreadyDead(boolean playerAlreadyDead) {
+		this.playerAlreadyDead = playerAlreadyDead;
+	}
+	
+	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gra.R;
+import com.gra.menu.AchievementsHolder;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -57,9 +58,12 @@ public class GameView extends SurfaceView{
 	private boolean clockwisedirection;
 	
 	private boolean DEBUG_MODE = false;
-	
+	//kolec wystajacy z ziemi
 	private boolean thorn = false;
+	//achievementy gracza
+	private AchievementsHolder achievements;
 	
+	//
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
 	 */
@@ -299,6 +303,8 @@ public class GameView extends SurfaceView{
     	if(temp_player != null){
     		this.player = temp_player;
     	}
+    	
+    	achievements = new AchievementsHolder();
     }
     
     @Override
@@ -497,6 +503,12 @@ public class GameView extends SurfaceView{
     				if(flyingObjects.get(i) instanceof Upgrade){
     					showInfo(((Upgrade) flyingObjects.get(i)).getType());
     					drawUpgrade(canvas, info_speed);
+    					//dodaj achievement (podniesiony upgrade)
+    					achievements.addUpgrade(((Upgrade) flyingObjects.get(i)).getType());
+    				}
+    				//jesli obiekt to asteroida lub asterodia z kasa to sprawdz czy gracz dostal w locie (duck hunter achievement)
+    				else if(flyingObjects.get(i) instanceof Asteroid || flyingObjects.get(i) instanceof MoneyAsteroid){
+    					if(!player.isOn_ground()) achievements.addDuck();
     				}
         			player.resolveCollision(flyingObjects.get(i));
         		}
@@ -626,6 +638,18 @@ public class GameView extends SurfaceView{
     	}
     }
 
+    public void achievementLog(){
+    	Log.d("GAMEVIEW", "=========================ACHIEVEMENTS=======================");
+    	Log.d("", "oneGameUpgrades : " + achievements.getOneGameUpgrades());
+    	Log.d("", "upgrades10 : " + achievements.getUpgrades10());
+    	Log.d("", "upgrades20 : " + achievements.getUpgrades20());
+    	Log.d("", "upgrades30 : " + achievements.getUpgrades30());
+    	Log.d("", "deaths : " + achievements.getDeaths());
+    	Log.d("", "hearts : " + achievements.getHearts());
+    	Log.d("", "aliens : " + achievements.getAliens());
+    	Log.d("", "duck : " + achievements.getDuck());
+    }
+    
     @Override
     public boolean onTouchEvent(MotionEvent event) {
     	
@@ -646,6 +670,7 @@ public class GameView extends SurfaceView{
 	        			player.jump();
 	        			playerjumping = true;
 	        			Log.d(VIEW_LOG_TAG, "Jump pressed");
+	        			achievementLog();
 	        		}
 	        	}
 	        	else{
@@ -712,8 +737,7 @@ public class GameView extends SurfaceView{
         }
     		return super.onTouchEvent(event);		
     }
-    	
-
+  	
     public void movePlayer() {
     	player.move(clockwisedirection);
     }
@@ -881,6 +905,7 @@ public class GameView extends SurfaceView{
 	    	}
     	}
     	else{
+    		achievements.addDeath();
     		canvas.drawText("UMARLES! " , earth.getX() - 32, earth.getY() - 32, paint); 
     		canvas.drawText("ZDOBYLES : " + player.getPoints()+ " PUNKTOW", earth.getX() - 64, earth.getY(), paint);
     	}
