@@ -2,6 +2,7 @@ package com.gra.menu;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -46,11 +47,18 @@ public class Options extends TabActivity {
         other.setIndicator("Achievements", getResources().getDrawable(R.drawable.moneta));
         Intent otherIntent = new Intent(this, OptionsTab3.class);
         other.setContent(otherIntent);
- 
+
         // Adding all TabSpec to TabHost
         tabHost.addTab(controlls); // Adding photos tab
         tabHost.addTab(progress); // Adding songs tab
         tabHost.addTab(other); // Adding videos tab
         
+        //Kolory zakladek
+        tabHost.getTabWidget().getChildAt(0).setBackgroundColor(Color.parseColor("#202020"));
+        tabHost.getTabWidget().getChildAt(1).setBackgroundColor(Color.parseColor("#202020"));
+        tabHost.getTabWidget().getChildAt(2).setBackgroundColor(Color.parseColor("#202020"));
+        
+        //usuniecie ramki tabhosta
+        tabHost.getTabWidget().setStripEnabled(false);
     }
 }
