@@ -4,6 +4,7 @@ import com.gra.R;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
@@ -23,6 +24,7 @@ enum achievementType{novice, apprentice, adept, master, isdp, dead, lover, casan
 
 public class OptionsTab3 extends Activity implements OnClickListener{
 	
+	//obrazki przedtsawiajace achievementy
 	private ImageView achievement11;
 	private ImageView achievement12;
 	private ImageView achievement13;
@@ -35,10 +37,19 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 	private ImageView achievement41;
 	private ImageView achievement42;
 	private ImageView achievement43;
+	//tablica imageViewsow
+	private ImageView imageArray[][];
 	
+	//podglad wybranego achievementu
 	private ImageView preview;
+	//informacje o acheivemencie
 	private TextView info;
+	//nazwa achievementu
 	private TextView title;
+	//tablica zweirajaca id obrazow achievementow
+	private int array[][];
+	
+	
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +83,19 @@ public class OptionsTab3 extends Activity implements OnClickListener{
         achievement42.setOnClickListener(this);
         achievement43.setOnClickListener(this);
         
-        /*
+        
         //achievementy nie zdobyte (czarnobiale)
         achievement11.setDrawingCacheEnabled(true);
-        
-        Bitmap bmp = Bitmap.createBitmap(achievement11.getDrawingCache());
-        if(bmp != null){
-        	achievement11.setImageBitmap(convertColorIntoBlackAndWhiteImage(bmp));	
+        achievement11.buildDrawingCache();
+       
+        //zapelnij tablice danymi 
+        fillArray();
+        for(int i = 0; i < 4; i++){
+        	for(int j = 0; j < 3; j++){
+        		disableAchievement(i, j);
+        	}
         }
-        */
+        
         //podlgad achievementu
         preview = (ImageView) findViewById(R.id.tab3_achievementPreview);
         info = (TextView) findViewById(R.id.tab3_achievementInfo);
@@ -160,9 +175,11 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 		switch(v.getId()){
 		case R.id.tab3_row1col1:
 			showInfo(achievementType.novice, (ImageView)v);
+			disableAchievement(3, 1);
 			break;
 		case R.id.tab3_row1col2:
 			showInfo(achievementType.duck, (ImageView)v);
+			enableAchievement(3, 1);
 			break;
 		case R.id.tab3_row1col3:
 			showInfo(achievementType.isdp, (ImageView)v);
@@ -215,4 +232,57 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 
         return blackAndWhiteBitmap;
     }
+	
+	public void fillArray(){
+		array = new int[4][3];
+        array[0][0] = R.drawable.ziemia3;
+        array[0][1] = R.drawable.ziemia1;
+        array[0][2] = R.drawable.ziemia3;
+        array[1][0] = R.drawable.ziemia3;
+        array[1][1] = R.drawable.ziemia3;
+        array[1][2] = R.drawable.ziemia2;
+        array[2][0] = R.drawable.ziemia3;
+        array[2][1] = R.drawable.ziemia3;
+        array[2][2] = R.drawable.ziemia3;
+        array[3][0] = R.drawable.jez1;
+        array[3][1] = R.drawable.jez2;
+        array[3][2] = R.drawable.jez3;
+        
+        achievement11.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[0][0]));
+    	achievement12.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[0][1]));
+    	achievement13.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[0][2]));
+    	achievement21.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[1][0]));
+    	achievement22.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[1][1]));
+    	achievement23.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[1][2]));
+    	achievement31.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[2][0]));
+    	achievement32.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[2][1]));
+    	achievement33.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[2][2]));
+    	achievement41.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[3][0]));
+    	achievement42.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[3][1]));
+    	achievement43.setImageBitmap(BitmapFactory.decodeResource(getResources(), array[3][2]));
+        
+    	imageArray = new ImageView[4][3];
+        imageArray[0][0] = achievement11;
+        imageArray[0][1] = achievement12;
+        imageArray[0][2] = achievement13;
+        imageArray[1][0] = achievement21;
+        imageArray[1][1] = achievement22;
+        imageArray[1][2] = achievement23;
+        imageArray[2][0] = achievement31;
+        imageArray[2][1] = achievement32;
+        imageArray[2][2] = achievement33;
+        imageArray[3][0] = achievement41;
+        imageArray[3][1] = achievement42;
+        imageArray[3][2] = achievement43;
+	}
+	
+	public void disableAchievement(int row, int column){
+		Bitmap bmp = BitmapFactory.decodeResource(getResources(), array[row][column]);
+        imageArray[row][column].setImageBitmap(convertColorIntoBlackAndWhiteImage(bmp));
+	}
+	
+	public void enableAchievement(int row, int column){
+		Bitmap bmp = BitmapFactory.decodeResource(getResources(), array[row][column]);
+		imageArray[row][column].setImageBitmap((bmp));
+	}
 }
