@@ -672,13 +672,36 @@ public class GameView extends SurfaceView{
     @Override
     public boolean onTouchEvent(MotionEvent event) {
     	
-    	//Log.d(VIEW_LOG_TAG, "Pointer Num:" + Integer.toString(event.getPointerId(0)));
+    	int touchInd = event.getActionIndex();
+    	float x = event.getX(touchInd)/ this.w_factor;
+        float y = event.getY(touchInd) / this.h_factor;
     	
-    	float x = event.getX();
-        float y = event.getY();
-        //SKALOWANIE
-        x = x / this.w_factor;
-        y = y / this.h_factor;
+        boolean upT = false;
+        boolean downT = false;
+        boolean moveT = false;
+    	//Log.d(VIEW_LOG_TAG, "Pointer Num:" + Integer.toString(event.getPointerId(0)));
+    	if(event.getActionMasked()==MotionEvent.ACTION_UP || event.getActionMasked()==MotionEvent.ACTION_POINTER_UP ) {
+        	upT=true;
+        	downT=false;
+        	moveT = false;
+    	}
+    	else if (event.getActionMasked()==MotionEvent.ACTION_DOWN || event.getActionMasked()==MotionEvent.ACTION_POINTER_DOWN) {
+    		downT=true;
+    		upT=false;
+    		moveT = false;
+    	}
+    	else if (event.getActionMasked()==MotionEvent.ACTION_MOVE) {
+    		moveT=true;
+    	}
+    	else {
+    		upT=false;
+    		downT=false;
+    		moveT=false;
+    	}
+    	
+
+        Log.d("TOUCH", Integer.toString(touchInd));
+        
         //jesli player zyje
         if(player.getLife() > 0){
         	//jesli statek jest na ekranie to w pierwszej kolejnosci sprawdz kolizje z nim
@@ -689,75 +712,112 @@ public class GameView extends SurfaceView{
         			ship = null;
         		}
         	}
-	        if(event.getAction()== MotionEvent.ACTION_DOWN){
-	        	Log.d(VIEW_LOG_TAG, "Touch DOWN");
-	        	if(y > 400){
-	        		if(player.isOn_ground()){
-	        			player.jump();
-	        			playerjumping = true;
-	        			Log.d(VIEW_LOG_TAG, "Jump pressed");
-	        			achievementLog();
-	        		}
-	        	}
-	        	else{
-	        		playermoving = true;
-		        	if(x < 240){
-			        	//player.move(false);
-		        		clockwisedirection = false;
-			        	Log.d(VIEW_LOG_TAG, "less than");
-		        	}
-		        	if(x > 240){
-		        		clockwisedirection = true;
-			        	//player.move(true);
-			        	Log.d(VIEW_LOG_TAG, "more than");
-		        	}
-	        	}
-	    	 }
-        
-        
-	        else if(event.getAction()==MotionEvent.ACTION_POINTER_2_DOWN) {
-	        	Log.d(VIEW_LOG_TAG, "SECOND pointer down");
-	        	event.getX(1);
-	        	float yy = event.getY(1);
-	        	if(yy > 400){
-	        		if(player.isOn_ground()){
-	        			player.jump();
-	        			playerjumping = true;
-	        			Log.d(VIEW_LOG_TAG, "Jump pressed");
-	        		}
-	        	}
-	        }
-	        
-	        else if(event.getAction()==MotionEvent.ACTION_UP){
-	    		 Log.d(VIEW_LOG_TAG, "Touch UP");
-	    		 if (y<400) {
-	    			 playermoving = false;
-	    			 Log.d(VIEW_LOG_TAG, "Player stopped");
-	    		 }
-	    		 else {
-	    			 playerjumping = false;
-	    		 }
-	    		 //
-	    	 }
-	    	 
-	        else if(event.getAction()==MotionEvent.ACTION_POINTER_2_UP) {
-	         	Log.d(VIEW_LOG_TAG, "SECOND pointer UP");
-	         	float yy = event.getY(1);
-	        	if (yy>400) {
-	        		playerjumping = false;
-	        	}
-	         	
-	         }
-	        
-	        else if (event.getAction()==MotionEvent.ACTION_MOVE) {
-	        	
-	        	
-	        }
-	        
+        	
+        	else if (upT & y<400) {
+        		playermoving=false;
+        	}
+        	
+        	else if (upT & y>=400) {
+        		playerjumping=false;
+        	}
+
+//	        else if(event.getActionMasked()==MotionEvent.ACTION_UP){
+//	    		 Log.d(VIEW_LOG_TAG, "Touch UP");
+//	    		 if (y<400) {
+//	    			 playermoving = false;
+//	    			 Log.d(VIEW_LOG_TAG, "Player stopped");
+//	    		 }
+//	    		 else if (y>400) {
+//	    			 playerjumping = false;
+//	    		 }
+//	    		 //
+//	    	 }
+        	
+        	else if (downT) {
+        		if (y>=400 && player.isOn_ground()) {
+	        		player.jump();
+	    			playerjumping = true;
+        		}
+        		else if (x < 240) {
+        			clockwisedirection = false;
+        			playermoving = true;
+        		}
+        		else if (x >= 240) {
+        			clockwisedirection = true;
+        			playermoving = true;
+        		}
+        	}
+        	
+        	else if (moveT) {
+        		if (y>=400 && player.isOn_ground() && playermoving) {
+	        		player.jump();
+	    			playerjumping = true;
+	    			playermoving=false;
+        		}
+        		else if (x < 240 && clockwisedirection) {
+        			clockwisedirection = false;
+        			playermoving = true;
+        		}
+        		else if (x >= 240 && !clockwisedirection) {
+        			clockwisedirection = true;
+        			playermoving = true;
+        		}
+        	}
+        	
+//        	else if(event.getActionMasked()== MotionEvent.ACTION_DOWN){
+//	        	Log.d(VIEW_LOG_TAG, "Touch DOWN");
+//	        	if(y > 400){
+//	        		if(player.isOn_ground()){
+//	        			player.jump();
+//	        			playerjumping = true;
+//	        			Log.d(VIEW_LOG_TAG, "Jump pressed");
+//	        			achievementLog();
+//	        		}
+//	        	}
+//	        	else{
+//	        		playermoving = true;
+//		        	if(x < 240){
+//			        	//player.move(false);
+//		        		clockwisedirection = false;
+//			        	Log.d(VIEW_LOG_TAG, "less than");
+//		        	}
+//		        	if(x > 240){
+//		        		clockwisedirection = true;
+//			        	//player.move(true);
+//			        	Log.d(VIEW_LOG_TAG, "more than");
+//		        	}
+//	        	}
+//	    	 }
+//        
+//        
+//	        else if(event.getActionMasked()==MotionEvent.ACTION_POINTER_DOWN) {
+//	        	Log.d(VIEW_LOG_TAG, "SECOND pointer down");
+//	        	event.getX(1);
+//	        	float yy = event.getY(1) / this.h_factor;
+//	        	if(yy > 400){
+//	        		if(player.isOn_ground()){
+//	        			player.jump();
+//	        			playerjumping = true;
+//	        			Log.d(VIEW_LOG_TAG, "Jump pressed");
+//	        		}
+//	        	}
+//	        }
+//	        
+//	    	 
+//	        else if(event.getActionMasked()==MotionEvent.ACTION_POINTER_UP) {
+//	         	Log.d(VIEW_LOG_TAG, "SECOND pointer UP");
+//	         	float yy = event.getY(1) / this.h_factor;
+//	        	if (yy>400) {
+//	        		playerjumping = false;
+//	        	}
+//	         	
+//	         }
+	        	        
 	        
 	        else {
-	        	Log.d(VIEW_LOG_TAG,"Sth else Action " + Integer.toString(event.getAction()));
-	        	Log.d(VIEW_LOG_TAG, "Sth else Index" + Integer.toString(event.getActionIndex()));
+	        	Log.d(VIEW_LOG_TAG,"Sth else Action " + Integer.toString(event.getActionMasked()));
+	        	
+	        	
 	        	 
 	        }
         }
