@@ -713,26 +713,16 @@ public class GameView extends SurfaceView{
         		}
         	}
         	
-        	else if (upT & y<400) {
-        		playermoving=false;
+        	else if (upT)  {
+        		if (y<400) {
+        			playermoving=false;	
+        		}
+        		else if (y>=400) {
+        			playerjumping=false;	
+        		}
         	}
-        	
-        	else if (upT & y>=400) {
-        		playerjumping=false;
-        	}
-
-//	        else if(event.getActionMasked()==MotionEvent.ACTION_UP){
-//	    		 Log.d(VIEW_LOG_TAG, "Touch UP");
-//	    		 if (y<400) {
-//	    			 playermoving = false;
-//	    			 Log.d(VIEW_LOG_TAG, "Player stopped");
-//	    		 }
-//	    		 else if (y>400) {
-//	    			 playerjumping = false;
-//	    		 }
-//	    		 //
-//	    	 }
-        	
+        		
+        	       	
         	else if (downT) {
         		if (y>=400 && player.isOn_ground()) {
 	        		player.jump();
@@ -763,56 +753,7 @@ public class GameView extends SurfaceView{
         			playermoving = true;
         		}
         	}
-        	
-//        	else if(event.getActionMasked()== MotionEvent.ACTION_DOWN){
-//	        	Log.d(VIEW_LOG_TAG, "Touch DOWN");
-//	        	if(y > 400){
-//	        		if(player.isOn_ground()){
-//	        			player.jump();
-//	        			playerjumping = true;
-//	        			Log.d(VIEW_LOG_TAG, "Jump pressed");
-//	        			achievementLog();
-//	        		}
-//	        	}
-//	        	else{
-//	        		playermoving = true;
-//		        	if(x < 240){
-//			        	//player.move(false);
-//		        		clockwisedirection = false;
-//			        	Log.d(VIEW_LOG_TAG, "less than");
-//		        	}
-//		        	if(x > 240){
-//		        		clockwisedirection = true;
-//			        	//player.move(true);
-//			        	Log.d(VIEW_LOG_TAG, "more than");
-//		        	}
-//	        	}
-//	    	 }
-//        
-//        
-//	        else if(event.getActionMasked()==MotionEvent.ACTION_POINTER_DOWN) {
-//	        	Log.d(VIEW_LOG_TAG, "SECOND pointer down");
-//	        	event.getX(1);
-//	        	float yy = event.getY(1) / this.h_factor;
-//	        	if(yy > 400){
-//	        		if(player.isOn_ground()){
-//	        			player.jump();
-//	        			playerjumping = true;
-//	        			Log.d(VIEW_LOG_TAG, "Jump pressed");
-//	        		}
-//	        	}
-//	        }
-//	        
-//	    	 
-//	        else if(event.getActionMasked()==MotionEvent.ACTION_POINTER_UP) {
-//	         	Log.d(VIEW_LOG_TAG, "SECOND pointer UP");
-//	         	float yy = event.getY(1) / this.h_factor;
-//	        	if (yy>400) {
-//	        		playerjumping = false;
-//	        	}
-//	         	
-//	         }
-	        	        
+      
 	        
 	        else {
 	        	Log.d(VIEW_LOG_TAG,"Sth else Action " + Integer.toString(event.getActionMasked()));
