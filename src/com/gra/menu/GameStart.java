@@ -11,6 +11,7 @@ import com.gra.gra.GameView;
 
 import com.gra.zapisy.SaveContainer;
 import com.gra.zapisy.SaveService;
+import com.gra.zapisy.UserSettings;
 
 public class GameStart extends Activity {
 	//PlayerCreatorView view;
@@ -65,6 +66,8 @@ public class GameStart extends Activity {
 			else {
 				view = new GameView(this,w_factor, h_factor);
 			}
+			
+			view.setSettings((UserSettings) extras.get("SETTINGS")) ;
         }
         else {
         	view = new GameView(this,w_factor, h_factor);

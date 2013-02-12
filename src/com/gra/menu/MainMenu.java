@@ -13,11 +13,13 @@ import android.widget.Button;
 import com.gra.R;
 import com.gra.zapisy.SaveContainer;
 import com.gra.zapisy.SaveService;
+import com.gra.zapisy.UserSettings;
 
 public class MainMenu extends Activity {
 	
 	private SaveService saver;
 	SaveContainer savedstate;
+	UserSettings settings;
 	private boolean canresume = false;
 	
     /** Called when the activity is first created. */
@@ -63,6 +65,8 @@ public class MainMenu extends Activity {
         			PlayGameIntent.putExtra("RESUME", false);
         			Log.d("MainMenu","nie ma sava");
         		}
+        		//passing the settings to the main game screen
+        		PlayGameIntent.putExtra("SETTINGS", settings);
         			
         		
         		startActivity(PlayGameIntent);
@@ -78,6 +82,7 @@ public class MainMenu extends Activity {
 			public void onClick(View v) {
         		Intent NewGameIntent = new Intent(MainMenu.this,GameStart.class);
         		NewGameIntent.putExtra("RESUME", false);
+        		NewGameIntent.putExtra("SETTINGS", settings);
         		startActivity(NewGameIntent);
         	}
         });
@@ -92,6 +97,7 @@ private void readState() {
 	saver = new SaveService(MainMenu.this);
 	saver.existing();
     savedstate = saver.readLastState();
+    settings = saver.readSettings("user_settings");
     canresume = (savedstate!=null);
 	}
 

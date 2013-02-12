@@ -1,7 +1,5 @@
 package com.gra.menu;
 
-import com.gra.R;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,17 +10,30 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.gra.R;
+import com.gra.zapisy.AchievementsHolder;
+import com.gra.zapisy.SaveService;
+import com.gra.zapisy.UserSettings;
 
 enum achievementType{novice, apprentice, adept, master, isdp, dead, lover, casanova, alien, collector, duck, secret};
 
-public class OptionsTab3 extends Activity implements OnClickListener{
+public class OptionsTab3 
+		extends Activity 
+		implements OnClickListener{
+	
+	//zapis settingsow
+	SaveService saver;
+	
+	UserSettings savedSettings;
+	
+	 
+     
+	
 	
 	//obrazki przedtsawiajace achievementy
 	private ImageView achievement11;
@@ -54,6 +65,9 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab3layout);
+        
+        saver = new SaveService(OptionsTab3.this);
+        loadSettings();
         
         //inicjalizacja obrazkow
         achievement11 = (ImageView) findViewById(R.id.tab3_row1col1);
@@ -103,6 +117,8 @@ public class OptionsTab3 extends Activity implements OnClickListener{
         info.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
     }
 	
+
+
 	private void showInfo(achievementType type, ImageView v) {
 		switch(type){
 		case novice:
@@ -294,5 +310,17 @@ public class OptionsTab3 extends Activity implements OnClickListener{
 		if(holder.isUpgradeMaster()) enableAchievement(3, 0);
 		if(holder.isTheSecretAchievement()) enableAchievement(3, 1);
 		if(holder.isAlienInvasion()) enableAchievement(3, 2);
+	}
+	
+	private void loadSettings() {
+
+		 UserSettings saved = saver.readSettings("user_settings");
+		 if (saved==null) {
+			 saved = new UserSettings();	
+		 }
+		 savedSettings=saved;
+		 
+		 fillAchievementHolder(savedSettings.getAchievements());
+	
 	}
 }

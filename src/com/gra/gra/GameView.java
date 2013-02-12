@@ -3,9 +3,6 @@ package com.gra.gra;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gra.R;
-import com.gra.menu.AchievementsHolder;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +14,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.gra.R;
+import com.gra.zapisy.AchievementsHolder;
+import com.gra.zapisy.UserSettings;
 /**
  * 
  * @author Szpada
@@ -65,6 +66,10 @@ public class GameView extends SurfaceView{
 	private boolean thorn = false;
 	//achievementy gracza
 	private AchievementsHolder achievements;
+	
+	//ustawienia gracza
+	private UserSettings settings;
+	
 	//latajacy statek kosmiczny
 	private SpaceShip ship = null;
 	private boolean spaceShipReady = true;
@@ -713,7 +718,7 @@ public class GameView extends SurfaceView{
         		}
         	}
         	
-        	else if (upT)  {
+        	if (upT)  {
         		if (y<400) {
         			playermoving=false;	
         		}
@@ -1033,6 +1038,14 @@ public class GameView extends SurfaceView{
 	 */
 	public void setFlyingObjects(ArrayList<FlyingObject> flyingObjects) {
 		this.flyingObjects = flyingObjects;
+	}
+	
+	/**
+	 * @param inputSettings
+	 */
+	public void setSettings(UserSettings inputSettings) {
+		this.settings=inputSettings;
+		this.achievements=inputSettings.getAchievements();
 	}
 }
     

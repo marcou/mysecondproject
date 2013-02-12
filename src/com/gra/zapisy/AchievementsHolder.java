@@ -1,4 +1,4 @@
-package com.gra.menu;
+package com.gra.zapisy;
 
 import java.io.Serializable;
 

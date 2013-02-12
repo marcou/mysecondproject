@@ -10,6 +10,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 import com.gra.R;
+import com.gra.zapisy.UserSettings;
  
 public class Options extends TabActivity {
 	

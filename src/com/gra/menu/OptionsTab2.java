@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 
 import com.gra.R;
 import com.gra.zapisy.SaveService;
+import com.gra.zapisy.UserSettings;
 
 public class OptionsTab2 extends Activity{
 	
@@ -208,8 +209,6 @@ public class OptionsTab2 extends Activity{
 	
 
 	private void loadSettings() {
-//		saver = new SaveService(OptionsTab2.this);
-		  new UserSettings();
 		 UserSettings saved = saver.readSettings("user_settings");
 		 if (saved==null) {
 			 saved = new UserSettings();	
@@ -223,8 +222,6 @@ public class OptionsTab2 extends Activity{
 	}
 	
 	private void saveState() {
-//		saver = new SaveService(OptionsTab2.this);
-//		UserSettings savedSettings = new UserSettings();
 		savedSettings.setCharacter(playerPosition);
 		savedSettings.setEarth(earthPosition);
         saver.saveSettings(savedSettings, "user_settings");

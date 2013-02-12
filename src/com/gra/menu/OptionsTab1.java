@@ -1,9 +1,12 @@
 package com.gra.menu;
 
 import com.gra.R;
+import com.gra.zapisy.SaveService;
+import com.gra.zapisy.UserSettings;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -14,9 +17,17 @@ public class OptionsTab1 extends Activity{
 	
 	private ImageView controlls;
 	
+	//zapis settingsow
+	SaveService saver;
+	
+	UserSettings savedSettings;
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab1layout);
+        
+        saver = new SaveService(OptionsTab1.this);
+        loadSettings();
         
         controlls = (ImageView) findViewById(R.id.tab1_controllImage);
         
@@ -48,4 +59,27 @@ public class OptionsTab1 extends Activity{
 			}
 		});
     }
+	
+	protected void onPause() {
+    	super.onPause();
+    	Log.d("OptionsTab", "MYonPause is called");
+    	saveState();
+	}
+	
+	
+
+	private void loadSettings() {
+		 UserSettings saved = saver.readSettings("user_settings");
+		 if (saved==null) {
+			 saved = new UserSettings();	
+		 }
+		 savedSettings=saved;
+		 
+	
+	}
+	
+	private void saveState() {
+        saver.saveSettings(savedSettings, "user_settings");
+        
+	}
 }

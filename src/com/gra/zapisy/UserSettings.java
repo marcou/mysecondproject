@@ -1,4 +1,4 @@
-package com.gra.menu;
+package com.gra.zapisy;
 
 import java.io.Serializable;
 
@@ -33,6 +33,7 @@ public class UserSettings implements Serializable {
 	private AchievementsHolder achievements;
 	
 	public UserSettings(){
+		achievements = new AchievementsHolder();
 	}
 	
 	public UserSettings(int character, int earth, boolean acelerometer,
@@ -43,6 +44,7 @@ public class UserSettings implements Serializable {
 		this.invisibleButtons = invisibleButtons;
 		this.progress = progress;
 		this.maxProgress = maxProgress;
+		achievements = new AchievementsHolder();
 	}
 
 	public int getCharacter() {
@@ -168,6 +170,6 @@ public class UserSettings implements Serializable {
 		if(gamesPlayed > 1900) progress += 190;
 		else progress += gamesPlayed/10;
 		
-		//punkty za ranking? (100)
+		//punkty za ranking? (100) ranking-sranking kurwa
 	}
 }
