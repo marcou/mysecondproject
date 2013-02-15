@@ -677,5 +677,14 @@ public class Player implements Serializable{
 	public void setMaxLife(int maxLife) {
 		this.maxLife = maxLife;
 	}
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+		this.default_speed = speed;
+	}
 	
 }

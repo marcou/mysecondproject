@@ -970,6 +970,26 @@ public class GameView extends SurfaceView{
 		Rect dst = new Rect(x - money_bmp.getWidth()/(m_columns * 2), y - money_bmp.getHeight()/(m_rows * 2), x + money_bmp.getWidth()/(m_columns * 2), y + money_bmp.getHeight()/(m_rows * 2));
 		canvas.drawBitmap(money_bmp, src, dst, paint);
 	}
+    
+    public void updateGameSettings(){
+    	Log.d("GAMEVIEW", "WSZEDLEM DO UPDATESETTINGS");
+    	if(settings != null){
+	    	earth.setRadius(settings.getEarthStats()[settings.getEarth()][2] * 25);
+	    	Log.d("GAMEVIEW", "=========1===============");
+	    	earth.setGravity((double)settings.getEarthStats()[settings.getEarth()][1] * 1.2);
+	    	Log.d("GAMEVIEW", "=========2===============");
+			player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
+			Log.d("GAMEVIEW", "=========3===============");
+			player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
+			Log.d("GAMEVIEW", "=========4===============");
+			player.setSpeed((double)settings.getPlayerStats()[settings.getCharacter()][1] * 2.5);
+			Log.d("GAMEVIEW", "=========5===============");
+			for(int i = 0; i < flyingObjects.size(); i++){
+				flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
+			}
+    	}
+    }
+    
     /************************************************
      * 	NIE UZYWAM TEGO ALE Z SENTYMENTU ZOSTAWIE	*
      ************************************************/
@@ -1046,6 +1066,8 @@ public class GameView extends SurfaceView{
 	public void setSettings(UserSettings inputSettings) {
 		this.settings=inputSettings;
 		this.achievements=inputSettings.getAchievements();
+		
+		updateGameSettings();
 	}
 }
     
