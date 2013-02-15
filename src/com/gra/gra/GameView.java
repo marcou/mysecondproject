@@ -708,7 +708,7 @@ public class GameView extends SurfaceView{
     	}
     	
 
-        Log.d("TOUCH", Integer.toString(touchInd));
+//        Log.d("TOUCH", Integer.toString(touchInd));
         
         //jesli player zyje
         if(player.getLife() > 0){
@@ -769,7 +769,7 @@ public class GameView extends SurfaceView{
       
 	        
 	        else {
-	        	Log.d(VIEW_LOG_TAG,"Sth else Action " + Integer.toString(event.getActionMasked()));
+//	        	Log.d(VIEW_LOG_TAG,"Sth else Action " + Integer.toString(event.getActionMasked()));
 	        	
 	        	
 	        	 
@@ -983,10 +983,6 @@ public class GameView extends SurfaceView{
     public void updateGameSettings(){
     	Log.d("GAMEVIEW", "WSZEDLEM DO UPDATESETTINGS");
     	if(settings != null){
-    		Log.d("UP-SETTINGS", "ziemia numer " + Integer.toString(settings.getEarth()));
-    		Log.d("UP-SETTINGS", "ziemia promien " + Integer.toString(settings.getEarthStats()[0][2]));
-    		Log.d("UP-SETTINGS", "ziemia promien def " + Integer.toString(earth.getRadius()));
-    		
 	    	earth.setRadius((settings.getEarthStats()[settings.getEarth()][2]) * 25);
 	    	Log.d("GAMEVIEW", "=========1===============");
 	    	earth.setGravity((double)settings.getEarthStats()[settings.getEarth()][1] * 1.2);
