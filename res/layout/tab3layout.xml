@@ -150,6 +150,12 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical|center"
                 android:text="@string/acv_novice" />
+
+            <TextView
+                android:id="@+id/tab3_achievementProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
 
         </LinearLayout>
 

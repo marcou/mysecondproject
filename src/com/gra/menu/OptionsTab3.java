@@ -30,11 +30,7 @@ public class OptionsTab3
 	SaveService saver;
 	
 	UserSettings savedSettings;
-	
-	 
-     
-	
-	
+
 	//obrazki przedtsawiajace achievementy
 	private ImageView achievement11;
 	private ImageView achievement12;
@@ -57,6 +53,8 @@ public class OptionsTab3
 	private TextView info;
 	//nazwa achievementu
 	private TextView title;
+	//postep w zdobywaniu achievementu
+	private TextView progress;
 	//tablica zweirajaca id obrazow achievementow
 	private int array[][];
 	
@@ -67,7 +65,6 @@ public class OptionsTab3
         setContentView(R.layout.tab3layout);
         
         saver = new SaveService(OptionsTab3.this);
-        loadSettings();
         
         //inicjalizacja obrazkow
         achievement11 = (ImageView) findViewById(R.id.tab3_row1col1);
@@ -105,16 +102,23 @@ public class OptionsTab3
         	}
         }
         
-        enableAchievement(0, 0);
+        loadSettings();
         
         //podlgad achievementu
         preview = (ImageView) findViewById(R.id.tab3_achievementPreview);
         info = (TextView) findViewById(R.id.tab3_achievementInfo);
         title = (TextView) findViewById(R.id.tab3_achievementTitle);
+        progress = (TextView) findViewById(R.id.tab3_achievementProgress);
         
         title.setTextColor(Color.GREEN);
         title.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
         info.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+        progress.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+        
+        preview.setImageDrawable(achievement11.getDrawable());
+        info.setText(R.string.acv_novice);
+        title.setText(R.string.acv_novicetitle);
+		progress.setText("");
     }
 	
 
@@ -125,61 +129,73 @@ public class OptionsTab3
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_novice);
 			title.setText(R.string.acv_novicetitle);
+			progress.setText("");
 			break;
 		case apprentice:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_apprentice);
 			title.setText(R.string.acv_apprenticetitle);
+			progress.setText("(" + savedSettings.getAchievements().getUpgrades10() + "/2)");
 			break;
 		case adept:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_adept);
 			title.setText(R.string.acv_adepttitle);
+			progress.setText("(" + savedSettings.getAchievements().getUpgrades20() + "/3)");
 			break;
 		case master:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_master);
 			title.setText(R.string.acv_mastertitle);
+			progress.setText("(" + savedSettings.getAchievements().getUpgrades30() + "/4)");
 			break;
 		case alien:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_alien);
 			title.setText(R.string.acv_alientitle);
+			progress.setText("(" + savedSettings.getAchievements().getAliens() + "/5)");
 			break;
 		case lover:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_lover);
 			title.setText(R.string.acv_lovertitle);
+			progress.setText("(" + savedSettings.getAchievements().getHearts() + "/50)");
 			break;
 		case casanova:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_casanova);
 			title.setText(R.string.acv_casanovatitle);
+			progress.setText("(" + savedSettings.getAchievements().getHearts() + "/250)");
 			break;
 		case collector:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_collector);
 			title.setText(R.string.acv_collectortitle);
+			progress.setText("");
 			break;
 		case isdp:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_isdp);
 			title.setText(R.string.acv_isdptitle);
+			progress.setText("(" + savedSettings.getAchievements().getDeaths() + "/100)");
 			break;
 		case dead:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_dead);
 			title.setText(R.string.acv_deadtitle);
+			progress.setText("(" + savedSettings.getAchievements().getDeaths() + "/1000)");
 			break;
 		case duck:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_duck);
 			title.setText(R.string.acv_ducktitle);
+			progress.setText("(" + savedSettings.getAchievements().getDuck() + "/10)");
 			break;
 		case secret:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_secret);
 			title.setText(R.string.acv_secrettitle);
+			progress.setText("");
 			break;
 		}
 	}
