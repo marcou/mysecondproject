@@ -723,7 +723,10 @@ public class GameView extends SurfaceView{
         	
         	if (upT)  {
         		if (y<400) {
-        			playermoving=false;	
+        			if ((x < 240 && !clockwisedirection) || (x >= 240 && clockwisedirection)) {
+        				playermoving=false;
+        			}
+        				
         		}
         		else if (y>=400) {
         			playerjumping=false;	
@@ -735,7 +738,7 @@ public class GameView extends SurfaceView{
         		if (y>=400 && player.isOn_ground()) {
 	        		player.jump();
 	    			playerjumping = true;
-        		}
+        		} // bag/hack z podwojnym skokiem powodujacym ruh
         		else if (x < 240) {
         			clockwisedirection = false;
         			playermoving = true;
@@ -752,13 +755,15 @@ public class GameView extends SurfaceView{
 	    			playerjumping = true;
 	    			playermoving=false;
         		}
-        		else if (x < 240 && clockwisedirection) {
-        			clockwisedirection = false;
-        			playermoving = true;
-        		}
-        		else if (x >= 240 && !clockwisedirection) {
-        			clockwisedirection = true;
-        			playermoving = true;
+        		else if (y<400) {
+        			if 		(x < 240 && (clockwisedirection || !playermoving)) {
+        				clockwisedirection = false;
+        				playermoving = true;
+        			}
+        			else if (x >= 240 && (!clockwisedirection || !playermoving)) {
+        				clockwisedirection = true;
+        				playermoving = true;
+        			}
         		}
         	}
       
@@ -943,6 +948,7 @@ public class GameView extends SurfaceView{
     		achievements.addDeath();
     		canvas.drawText("UMARLES! " , earth.getX() - 32, earth.getY() - 32, paint); 
     		canvas.drawText("ZDOBYLES : " + player.getPoints()+ " PUNKTOW", earth.getX() - 64, earth.getY(), paint);
+    		playermoving = false;
     	}
     	paint.reset();
     }
