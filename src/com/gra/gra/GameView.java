@@ -273,19 +273,19 @@ public class GameView extends SurfaceView{
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
     	
-    	Asteroid a1 = new Asteroid(flyingObjects, -50,		850, 	1, 		90, 	5, 		10,		1);
-    	Asteroid a2 = new Asteroid(flyingObjects, -200, 	500, 	2, 		0, 		5, 		10,		1);
-    	Asteroid a3 = new Asteroid(flyingObjects, 30, 		700, 	1, 		40, 	5, 		10,		1);
-    	
-    	Money m1 = new Money	(flyingObjects, -100, 	-100, 	1, 		0, 		50, 	10);
-    	Money m2 = new Money	(flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
-    	Money m3 = new Money	(flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
-    	Money m4 = new Money	(flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
-    													//x		y		speed	angle	upgrade type
-    	Upgrade  u1 = new Upgrade(flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.life);
-    	Upgrade  u2 = new Upgrade(flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.life);
-    	Upgrade  u3 = new Upgrade(flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.life);
-    	
+//    	Asteroid a1 = new Asteroid(flyingObjects, -50,		850, 	1, 		90, 	5, 		10,		1);
+//    	Asteroid a2 = new Asteroid(flyingObjects, -200, 	500, 	2, 		0, 		5, 		10,		1);
+//    	Asteroid a3 = new Asteroid(flyingObjects, 30, 		700, 	1, 		40, 	5, 		10,		1);
+//    	
+//    	Money m1 = new Money	(flyingObjects, -100, 	-100, 	1, 		0, 		50, 	10);
+//    	Money m2 = new Money	(flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
+//    	Money m3 = new Money	(flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
+//    	Money m4 = new Money	(flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
+//    													//x		y		speed	angle	upgrade type
+//    	Upgrade  u1 = new Upgrade(flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.life);
+//    	Upgrade  u2 = new Upgrade(flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.life);
+//    	Upgrade  u3 = new Upgrade(flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.life);
+//    	
 //    	flyingObjects.add(a1);
 //    	flyingObjects.add(a2);
 //    	flyingObjects.add(a3);
