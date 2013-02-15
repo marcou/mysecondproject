@@ -98,6 +98,7 @@ private void readState() {
 	saver.existing();
     savedstate = saver.readLastState();
     settings = saver.readSettings("user_settings");
+//    if (settings == null) settings = new UserSettings(); //in case it's a first game or something -> przeniesione do gameview
     canresume = (savedstate!=null);
 	}
 

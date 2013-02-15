@@ -12,27 +12,40 @@ import com.gra.R;
  */
 public class UserSettings implements Serializable {
 	//number wybranej postaci
-	private int character = 0;
+	private int character ;
 	//numer wybranej planety
-	private int earth = 0;
+	private int earth;
 	//typ sterowania
-	private boolean accelerometer = false;
+	private boolean accelerometer;
 	//przezroczyste przyciski
-	private boolean invisibleButtons = true;
+	private boolean invisibleButtons;
 	//postep gracza
-	private int progress = 0;
+	private int progress;
 	//maksymalny postep
-	private int maxProgress = 1000;
+	private int maxProgress;
 	//liczba rozegranych gier
-	private int gamesPlayed = 0;
+	private int gamesPlayed;
 	//statystyki postaci 			|BITMAP|SPEED|LIFE|UPGRADE|
-	private int[][] playerStats = {{R.drawable.jez1,1,1,1},{R.drawable.jez2,5,1,1},{R.drawable.jez3,1,3,1},{R.drawable.jez4,2,1,3},{R.drawable.jez3,5,1,1},{R.drawable.jez4,3,4,1}};
+	private  int[][] playerStats= {{R.drawable.jez1,1,1,1},{R.drawable.jez2,5,1,1},{R.drawable.jez3,1,3,1},{R.drawable.jez4,2,1,3},{R.drawable.jez3,5,1,1},{R.drawable.jez4,3,4,1}};
 	//statystyki planety			|BITMAP|GRAVITY|SIZE|
-	private int[][] earthStats = {{R.drawable.ziemia1,1,1},{R.drawable.ziemia2,5,5},{R.drawable.ziemia3,1,3},{R.drawable.ziemia1,2,1},{R.drawable.ziemia2,4,1},{R.drawable.ziemia3,3,3}};
+	private  int[][] earthStats= {{R.drawable.ziemia1,1,1},{R.drawable.ziemia2,5,5},{R.drawable.ziemia3,1,3},{R.drawable.ziemia1,2,1},{R.drawable.ziemia2,4,1},{R.drawable.ziemia3,3,3}};
 	//informacje o acziwmentach
 	private AchievementsHolder achievements;
 	
 	public UserSettings(){
+		character = 0;
+		earth = 0;
+		accelerometer = false;
+		invisibleButtons = true;
+		progress = 0;
+		maxProgress = 1000;
+		gamesPlayed = 0;
+		
+		//statystyki postaci 			|BITMAP|SPEED|LIFE|UPGRADE|
+//		playerStats = {{R.drawable.jez1,1,1,1},{R.drawable.jez2,5,1,1},{R.drawable.jez3,1,3,1},{R.drawable.jez4,2,1,3},{R.drawable.jez3,5,1,1},{R.drawable.jez4,3,4,1}};
+//		//statystyki planety			|BITMAP|GRAVITY|SIZE|
+//		earthStats = {{R.drawable.ziemia1,1,1},{R.drawable.ziemia2,5,5},{R.drawable.ziemia3,1,3},{R.drawable.ziemia1,2,1},{R.drawable.ziemia2,4,1},{R.drawable.ziemia3,3,3}};
+		
 		achievements = new AchievementsHolder();
 	}
 	

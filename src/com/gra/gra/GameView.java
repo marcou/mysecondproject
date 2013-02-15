@@ -267,6 +267,9 @@ public class GameView extends SurfaceView{
     	earth = new Earth	(240, 	400, 	2000, 	75, 	2.8);
     									//x		y		mass	radius	angle
     	player = new Player	(240, 	290, 	1, 		10, 	270);
+    	
+    	updateGameSettings();
+    	
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
     	
@@ -974,7 +977,11 @@ public class GameView extends SurfaceView{
     public void updateGameSettings(){
     	Log.d("GAMEVIEW", "WSZEDLEM DO UPDATESETTINGS");
     	if(settings != null){
-	    	earth.setRadius(settings.getEarthStats()[settings.getEarth()][2] * 25);
+    		Log.d("UP-SETTINGS", "ziemia numer " + Integer.toString(settings.getEarth()));
+    		Log.d("UP-SETTINGS", "ziemia promien " + Integer.toString(settings.getEarthStats()[0][2]));
+    		Log.d("UP-SETTINGS", "ziemia promien def " + Integer.toString(earth.getRadius()));
+    		
+	    	earth.setRadius((settings.getEarthStats()[settings.getEarth()][2]) * 25);
 	    	Log.d("GAMEVIEW", "=========1===============");
 	    	earth.setGravity((double)settings.getEarthStats()[settings.getEarth()][1] * 1.2);
 	    	Log.d("GAMEVIEW", "=========2===============");
@@ -1064,10 +1071,29 @@ public class GameView extends SurfaceView{
 	 * @param inputSettings
 	 */
 	public void setSettings(UserSettings inputSettings) {
-		this.settings=inputSettings;
-		this.achievements=inputSettings.getAchievements();
+		if (inputSettings!=null) {
+			this.settings=inputSettings;
+		}
+		else {
+			this.settings = new UserSettings();
+		}
+		this.achievements=settings.getAchievements();
 		
-		updateGameSettings();
+		
+	}
+
+	/**
+	 * @return the achievements
+	 */
+	public AchievementsHolder getAchievements() {
+		return achievements;
+	}
+
+	/**
+	 * @return the settings
+	 */
+	public UserSettings getSettings() {
+		return settings;
 	}
 }
     
