@@ -35,4 +35,5 @@
 	<string name="acv_duck">Get hit in the air 10 times</string>
 	<string name="acv_secrettitle">The Secret achievement</string>
 	<string name="acv_secret">"?"</string>
+	<string name="score">Score:</string>
 </resources>

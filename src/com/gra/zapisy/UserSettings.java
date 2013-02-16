@@ -31,6 +31,8 @@ public class UserSettings implements Serializable {
 	private  int[][] earthStats= {{R.drawable.ziemia1,1,1},{R.drawable.ziemia2,5,5},{R.drawable.ziemia3,1,3},{R.drawable.ziemia1,2,1},{R.drawable.ziemia2,4,1},{R.drawable.ziemia3,3,3}};
 	//informacje o acziwmentach
 	private AchievementsHolder achievements;
+	//wynik gracza
+	private int score;
 	
 	public UserSettings(){
 		character = 0;
@@ -40,7 +42,7 @@ public class UserSettings implements Serializable {
 		progress = 0;
 		maxProgress = 1000;
 		gamesPlayed = 0;
-		
+		score = 0;
 		//statystyki postaci 			|BITMAP|SPEED|LIFE|UPGRADE|
 //		playerStats = {{R.drawable.jez1,1,1,1},{R.drawable.jez2,5,1,1},{R.drawable.jez3,1,3,1},{R.drawable.jez4,2,1,3},{R.drawable.jez3,5,1,1},{R.drawable.jez4,3,4,1}};
 //		//statystyki planety			|BITMAP|GRAVITY|SIZE|
@@ -201,4 +203,13 @@ public class UserSettings implements Serializable {
 	public void setEarthStats(int[][] earthStats) {
 		this.earthStats = earthStats;
 	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
 }

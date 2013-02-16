@@ -3,55 +3,55 @@
 android:id="@+id/widget32"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
-android:background="@drawable/background"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
-<TableLayout
-android:id="@+id/widget28"
-android:layout_width="295dp"
-android:layout_height="250dp"
-android:orientation="vertical"
-android:layout_centerVertical="true"
-android:layout_centerHorizontal="true"
->
-<Button
-android:id="@+id/Resume"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:background="@drawable/resume_button"
->
-</Button>
-<TextView
-android:id="@+id/widget34"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/ScoreTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:text="@string/score"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/Score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="35dp" android:layout_gravity="center_vertical|center_horizontal"/>
+
+        <Button
+            android:id="@+id/Resume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="@drawable/resume" />
+
+        <Button
+            android:id="@+id/StartNew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="@drawable/newgame" />
+
+        <Button
+            android:id="@+id/Options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.17"
+            android:background="@drawable/options"
+            android:text=" " />
 
->
-</TextView>
-
-<Button
-android:id="@+id/StartNew"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:background="@drawable/startgame_button" 
->
-</Button>
-<TextView
-android:id="@+id/widget38"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
->
-</TextView>
-
-</TableLayout>
-
-<Button
-    android:id="@+id/button1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignLeft="@+id/widget28"
-    android:layout_alignParentBottom="true"
-    android:layout_marginBottom="131dp"
-    android:text= "@string/options" />
+    </LinearLayout>
 
 </RelativeLayout>
