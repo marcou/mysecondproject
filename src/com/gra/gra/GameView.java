@@ -985,6 +985,10 @@ public class GameView extends SurfaceView{
     	if(settings != null){
 	    	earth.setRadius((settings.getEarthStats()[settings.getEarth()][2]) * 25);
 	    	earth.setGravity((double)settings.getEarthStats()[settings.getEarth()][1] * 1.2);
+	    	//podstawowe wartrosci grawitacji i promienia
+	    	earth.setDefault_gravity(earth.getGravity());
+	    	earth.setDefault_radius(earth.getRadius());
+	    	
 			player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
 			player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
 			player.setSpeed((double)settings.getPlayerStats()[settings.getCharacter()][1] * 2.5);

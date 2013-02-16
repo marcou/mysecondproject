@@ -159,7 +159,18 @@ public class Earth {
 	public void setFrames(int frames) {
 		this.frames = frames;
 	}
-	
+	public int getDefault_radius() {
+		return default_radius;
+	}
+	public void setDefault_radius(int default_radius) {
+		this.default_radius = default_radius;
+	}
+	public double getDefault_gravity() {
+		return default_gravity;
+	}
+	public void setDefault_gravity(double default_gravity) {
+		this.default_gravity = default_gravity;
+	}
 	/************************************************
 	 *        METODY DO TRYBU TIME ATTACK			*
 	 ************************************************/
