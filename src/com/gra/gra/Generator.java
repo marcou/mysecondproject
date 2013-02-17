@@ -61,7 +61,7 @@ public class Generator {
     	
     	if(points < threshold_1){
     		asteroid_count = 1;
-    		money_count = 6;
+    		money_count = 4;
     		upgrade_count = 0;
     		
     		asteroid_difficulty = 1;
@@ -69,7 +69,7 @@ public class Generator {
     	}
     	else if(points <threshold_2){
     		asteroid_count = 1;
-    		money_count = 8;
+    		money_count = 5;
     		upgrade_count = 0;
     		
     		asteroid_difficulty = 1;
@@ -77,7 +77,7 @@ public class Generator {
     	}
     	else if(points <threshold_3){
     		asteroid_count = 2;
-    		money_count = 10;
+    		money_count = 6;
     		upgrade_count = 1;
     		
     		asteroid_difficulty = 2;
@@ -87,7 +87,7 @@ public class Generator {
     	else if(points <threshold_4){
     		asteroid_count = 3;
     		money_count = 10;
-    		upgrade_count = 1;
+    		upgrade_count = 2;
     		
     		asteroid_difficulty = 3;
     		money_value = 16;
@@ -98,7 +98,7 @@ public class Generator {
     	else if(points <threshold_5){
     		asteroid_count = 4;
     		money_count = 8;
-    		upgrade_count = 1;
+    		upgrade_count = 2;
     		
     		asteroid_difficulty = 4;
     		money_value = 32;
@@ -109,7 +109,7 @@ public class Generator {
     	else if(points <threshold_6){
     		asteroid_count = 4;
     		money_count = 6;
-    		upgrade_count = 1;
+    		upgrade_count = 2;
     		
     		asteroid_difficulty = 5;
     		money_value = 64;
@@ -120,7 +120,7 @@ public class Generator {
     	else if(points <threshold_7){
     		asteroid_count = 4;
     		money_count = 4;
-    		upgrade_count = 1;
+    		upgrade_count = 2;
     		
     		asteroid_difficulty = 7;
     		money_value = 128;
@@ -131,7 +131,7 @@ public class Generator {
     	else{
     		asteroid_count = 5;
     		money_count = 2;
-    		upgrade_count = 2;
+    		upgrade_count = 3;
     		
     		asteroid_difficulty = 10;
     		money_value = 256;

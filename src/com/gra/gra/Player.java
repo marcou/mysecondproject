@@ -56,7 +56,7 @@ public class Player implements Serializable{
 	private int earth_radius;	//promien okregu po jakim ma siê poruszaæ nasz obiekt
 	private boolean on_ground = true;	//czy dotyka ziemi
 	
-	private long points = 0;	//punkty gracza
+	private long points = 100000;	//punkty gracza
 	private int multiplier = 1;		//mnoznik punktow
 	
 	private boolean armagedon = false;

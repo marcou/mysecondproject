@@ -399,7 +399,7 @@ public class GameView extends SurfaceView{
     	//wersja ze spritami
     	drawSprite(canvas, (int)earth.getX(), (int)earth.getY(), e_columns, e_rows, earth_bmp.getWidth()/e_columns, earth_bmp.getHeight()/e_rows, earth.getCurrentFrame(), earth_bmp, 0, earth.getRadius()/100.0f);
     	earth.update();
-    	drawSprite(canvas, (int)player.getX(), (int)player.getY(), p_columns, p_rows, player_bmp.getWidth()/p_columns, player_bmp.getHeight()/p_rows, player.getCurrentFrame(), player_bmp,0, 1.0f);
+    	drawSprite(canvas, (int)player.getX(), (int)player.getY(), p_columns, p_rows, player_bmp.getWidth()/p_columns, player_bmp.getHeight()/p_rows, player.getCurrentFrame(), player_bmp,0, (float)player.getRadius()/10.0f);
     	player.update();
     	//player.onDraw(canvas);
     	
@@ -437,10 +437,10 @@ public class GameView extends SurfaceView{
     			//rysowanie asteroid
     			if(flyingObjects.get(i) instanceof Asteroid){
     				if(flyingObjects.get(i) instanceof MoneyAsteroid){
-        				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	moa_columns, moa_rows,  mosteroid_bmp.getWidth()/moa_columns, mosteroid_bmp.getHeight()/moa_rows,  flyingObjects.get(i).getCurrentFrame(), mosteroid_bmp, (float)flyingObjects.get(i).getAngle(), 1.0f);
+        				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	moa_columns, moa_rows,  mosteroid_bmp.getWidth()/moa_columns, mosteroid_bmp.getHeight()/moa_rows,  flyingObjects.get(i).getCurrentFrame(), mosteroid_bmp, (float)flyingObjects.get(i).getAngle(), 0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/2.0f);
         			}
     				else{
-    					drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(), 1.0f);
+    					drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(),  0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/2.0f);
     				}
     			}
     			//rysowanie hajsu
@@ -936,18 +936,24 @@ public class GameView extends SurfaceView{
     public void drawPoints(Canvas canvas){
     	paint.setTextSize(20);
     	paint.setAntiAlias(true);
+    	paint.setColor(Color.GREEN);
+    	int yPosition = 50;
+    	int xPosition = 200;
     	//jesli gracz zyje
     	if(player.getLife() > 0){
 	    	//jesli gracz ma wiecej niz 10k skroc liczbe punktow
 	    	if(player.getPoints() > 10000){
-	    		canvas.drawText("POINTS : " + player.getPoints()/1000 + " K", earth.getX() - 64, earth.getY(), paint);
+	    		//canvas.drawText("POINTS : " + player.getPoints()/1000 + " K", earth.getX() - 64, earth.getY(), paint);
+	    		canvas.drawText("POINTS : " + player.getPoints()/1000 + " K", xPosition, yPosition, paint);
 	    	}
 	    	//jesli gracz ma wiecej niz 10M skroc liczbe punktow
 	    	else if(player.getPoints() > 10000000){
-	    		canvas.drawText("POINTS : " + player.getPoints()/1000000 + " M", earth.getX() - 64, earth.getY(), paint);
+	    		//canvas.drawText("POINTS : " + player.getPoints()/1000000 + " M", earth.getX() - 64, earth.getY(), paint);
+	    		canvas.drawText("POINTS : " + player.getPoints()/1000000 + " M", xPosition, yPosition, paint);
 	    	}
 	    	else{
-	    		canvas.drawText("POINTS : " + player.getPoints(), earth.getX() - 64, earth.getY(), paint);
+	    		//canvas.drawText("POINTS : " + player.getPoints(), earth.getX() - 64, earth.getY(), paint);
+	    		canvas.drawText("POINTS : " + player.getPoints(), xPosition, yPosition, paint);
 	    	}
     	}
     	else{
@@ -990,8 +996,8 @@ public class GameView extends SurfaceView{
     	Log.d("GAMEVIEW", "WSZEDLEM DO UPDATESETTINGS");
     	if(settings != null){
     		//ZIEMIA
-	    	earth.setRadius((settings.getEarthStats()[settings.getEarth()][2]) * 35);
-	    	earth.setGravity((double)settings.getEarthStats()[settings.getEarth()][1] * 1.4);
+	    	earth.setRadius(20 + (settings.getEarthStats()[settings.getEarth()][2]) * 15);
+	    	earth.setGravity(2.0 + (double)settings.getEarthStats()[settings.getEarth()][1] * 0.4);
 	    	//podstawowe wartrosci grawitacji i promienia
 	    	earth.setDefault_gravity(earth.getGravity());
 	    	earth.setDefault_radius(earth.getRadius());
@@ -1001,7 +1007,7 @@ public class GameView extends SurfaceView{
 	    	//GRACZ
 			player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
 			player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
-			player.setSpeed((double)settings.getPlayerStats()[settings.getCharacter()][1] * 2.0);
+			player.setSpeed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 1.0);
 			
 			//OBIEKTY LATAJACE
 			for(int i = 0; i < flyingObjects.size(); i++){
