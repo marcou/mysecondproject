@@ -741,6 +741,7 @@ public class GameView extends SurfaceView{
         		if (y>=400 && player.isOn_ground()) {
 	        		player.jump();
 	    			playerjumping = true;
+	    			achievementLog();
         		} // bag/hack z podwojnym skokiem powodujacym ruh
         		else if (x < 240) {
         			clockwisedirection = false;

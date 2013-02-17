@@ -29,20 +29,38 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="35dp" android:layout_gravity="center_vertical|center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginTop="50dp">
+        </LinearLayout>
 
         <Button
             android:id="@+id/Resume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.20"
-            android:background="@drawable/resume" />
+            android:background="@drawable/resume" android:layout_marginLeft="60dp" android:layout_marginRight="60dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginTop="50dp">
+        </LinearLayout>
 
         <Button
             android:id="@+id/StartNew"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.20"
-            android:background="@drawable/newgame" />
+            android:background="@drawable/newgame" android:layout_marginRight="60dp" android:layout_marginLeft="60dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginTop="50dp">
+        </LinearLayout>
 
         <Button
             android:id="@+id/Options"
@@ -50,7 +68,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_height="wrap_content"
             android:layout_weight="0.17"
             android:background="@drawable/options"
-            android:text=" " />
+            android:text=" " android:layout_marginLeft="60dp" android:layout_marginRight="60dp"/>
 
     </LinearLayout>
 
