@@ -32,7 +32,7 @@ public class UserSettings implements Serializable {
 	//informacje o acziwmentach
 	private AchievementsHolder achievements;
 	//wynik gracza
-	private int score;
+	private long score;
 	
 	public UserSettings(){
 		character = 0;
@@ -204,11 +204,11 @@ public class UserSettings implements Serializable {
 		this.earthStats = earthStats;
 	}
 
-	public int getScore() {
+	public long getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(long score) {
 		this.score = score;
 	}
 	

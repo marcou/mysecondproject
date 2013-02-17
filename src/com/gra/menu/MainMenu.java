@@ -46,7 +46,7 @@ public class MainMenu extends Activity {
         score.setTextColor(Color.GREEN);
         score.setText("0");
         if(settings != null){
-        	score.setText(Integer.toString(settings.getScore()));
+        	score.setText(Long.toString(settings.getScore()));
         }
         
         score.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
