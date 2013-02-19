@@ -437,10 +437,10 @@ public class GameView extends SurfaceView{
     			//rysowanie asteroid
     			if(flyingObjects.get(i) instanceof Asteroid){
     				if(flyingObjects.get(i) instanceof MoneyAsteroid){
-        				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	moa_columns, moa_rows,  mosteroid_bmp.getWidth()/moa_columns, mosteroid_bmp.getHeight()/moa_rows,  flyingObjects.get(i).getCurrentFrame(), mosteroid_bmp, (float)flyingObjects.get(i).getAngle(), 0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/2.0f);
+        				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	moa_columns, moa_rows,  mosteroid_bmp.getWidth()/moa_columns, mosteroid_bmp.getHeight()/moa_rows,  flyingObjects.get(i).getCurrentFrame(), mosteroid_bmp, (float)flyingObjects.get(i).getAngle(), 0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/6.0f);
         			}
     				else{
-    					drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(),  0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/2.0f);
+    					drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(),  0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/6.0f);
     				}
     			}
     			//rysowanie hajsu

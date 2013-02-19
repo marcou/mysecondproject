@@ -136,36 +136,43 @@ public class OptionsTab3
 			info.setText(R.string.acv_apprentice);
 			title.setText(R.string.acv_apprenticetitle);
 			progress.setText("(" + savedSettings.getAchievements().getUpgrades10() + "/2)");
+			if(savedSettings.getAchievements().getUpgrades10() > 2) progress.setText("(2/2)");
+			
 			break;
 		case adept:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_adept);
 			title.setText(R.string.acv_adepttitle);
 			progress.setText("(" + savedSettings.getAchievements().getUpgrades20() + "/3)");
+			if(savedSettings.getAchievements().getUpgrades20() > 3) progress.setText("(3/3)");
 			break;
 		case master:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_master);
 			title.setText(R.string.acv_mastertitle);
 			progress.setText("(" + savedSettings.getAchievements().getUpgrades30() + "/4)");
+			if(savedSettings.getAchievements().getUpgrades30() > 4) progress.setText("(4/4)");
 			break;
 		case alien:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_alien);
 			title.setText(R.string.acv_alientitle);
 			progress.setText("(" + savedSettings.getAchievements().getAliens() + "/5)");
+			if(savedSettings.getAchievements().getAliens() > 5) progress.setText("(5/5)");
 			break;
 		case lover:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_lover);
 			title.setText(R.string.acv_lovertitle);
 			progress.setText("(" + savedSettings.getAchievements().getHearts() + "/50)");
+			if(savedSettings.getAchievements().getHearts() > 50) progress.setText("(50/50)");
 			break;
 		case casanova:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_casanova);
 			title.setText(R.string.acv_casanovatitle);
 			progress.setText("(" + savedSettings.getAchievements().getHearts() + "/250)");
+			if(savedSettings.getAchievements().getHearts() > 250) progress.setText("(250/250)");
 			break;
 		case collector:
 			preview.setImageDrawable(v.getDrawable());
@@ -178,18 +185,21 @@ public class OptionsTab3
 			info.setText(R.string.acv_isdp);
 			title.setText(R.string.acv_isdptitle);
 			progress.setText("(" + savedSettings.getAchievements().getDeaths() + "/100)");
+			if(savedSettings.getAchievements().getDeaths() > 100) progress.setText("(100/100)");
 			break;
 		case dead:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_dead);
 			title.setText(R.string.acv_deadtitle);
 			progress.setText("(" + savedSettings.getAchievements().getDeaths() + "/1000)");
+			if(savedSettings.getAchievements().getDeaths() > 1000) progress.setText("(1000/1000)");
 			break;
 		case duck:
 			preview.setImageDrawable(v.getDrawable());
 			info.setText(R.string.acv_duck);
 			title.setText(R.string.acv_ducktitle);
 			progress.setText("(" + savedSettings.getAchievements().getDuck() + "/10)");
+			if(savedSettings.getAchievements().getDuck() > 10) progress.setText("(10/10)");
 			break;
 		case secret:
 			preview.setImageDrawable(v.getDrawable());
