@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 import com.gra.R;
 import com.gra.zapisy.AchievementsHolder;
 import com.gra.zapisy.UserSettings;
+import com.gra.zapisy.achievementType;
 /**
  * 
  * @author Szpada
@@ -530,11 +531,11 @@ public class GameView extends SurfaceView{
     					showInfo(((Upgrade) flyingObjects.get(i)).getType());
     					drawUpgrade(canvas, info_speed);
     					//dodaj achievement (podniesiony upgrade)
-    					achievements.addUpgrade(((Upgrade) flyingObjects.get(i)).getType());
+    					showAchievementInfo(achievements.addUpgrade(((Upgrade) flyingObjects.get(i)).getType()));
     				}
     				//jesli obiekt to asteroida lub asterodia z kasa to sprawdz czy gracz dostal w locie (duck hunter achievement)
     				else if(flyingObjects.get(i) instanceof Asteroid || flyingObjects.get(i) instanceof MoneyAsteroid){
-    					if(!player.isOn_ground()) achievements.addDuck();
+    					if(!player.isOn_ground()) showAchievementInfo(achievements.addDuck());
     				}
         			player.resolveCollision(flyingObjects.get(i));
         		}
@@ -718,7 +719,7 @@ public class GameView extends SurfaceView{
         	//jesli statek jest na ekranie to w pierwszej kolejnosci sprawdz kolizje z nim
         	if(ship != null){
         		if(ship.checkCollision(x, y)){
-        			achievements.addAlien();
+        			showAchievementInfo(achievements.addAlien());
         			temps.add(new TempSprite(temps,ship.getX() - (ship.getX() - ship.getX())/2, ship.getY() - (ship.getY() - ship.getY())/2, tempType.explosion));
         			ship = null;
         		}
@@ -871,6 +872,63 @@ public class GameView extends SurfaceView{
 			info_life = default_info_life;
 			info = false;
 		}
+    }
+    
+    public void showAchievementInfo(achievementType type){
+    	if(type == null) return;
+    	//wyzerowanie frame-a i life-a
+    	info_current_frame = 0;
+    	info_life = default_info_life;
+    	switch(type){
+    	case adept:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case apprentice:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case alien:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case casanova:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case collector:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case dead:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case duck:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case isdp:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case lover:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case master:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case novice:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	case secret:
+    		this.info = true;
+    		this.info_bmp = info_money_rain;
+    		break;
+    	}
     }
     
     public void showInfo(upgradeType type){
@@ -1094,6 +1152,7 @@ public class GameView extends SurfaceView{
 			this.settings=inputSettings;
 		}
 		else {
+			Log.d("GameView", "SETTINGSY ZJEBANE");
 			this.settings = new UserSettings();
 		}
 		this.achievements=settings.getAchievements();

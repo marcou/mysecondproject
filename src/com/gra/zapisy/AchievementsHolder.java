@@ -9,7 +9,8 @@ import com.gra.gra.upgradeType;
  * @author Szpada
  *
  * Klasa przechowujaca skladowe achievementow - jest uzupelniana podczas gry i wykorzystywana
- * do aktualizacji progressu i achievementow w opcjach
+ * do aktualizacji progressu i achievementow w opcjach. Wszystkei metody dodajace skladowe achievementow
+ * zwracaja achievementType (enum) dzieki czemu mozna w grze od razu wyswietlic info ze zdobytym achievemenetem 
  * 
  * Achievementy (z pedalskimi nazwami):
  * 1. Upgrade Novice - collect 5 upgrades in one game
@@ -87,7 +88,9 @@ public class AchievementsHolder implements Serializable{
 		playerAlreadyDead = false;
 	}
 
-	public void addUpgrade(upgradeType type){
+	public achievementType addUpgrade(upgradeType type){
+		//achievementType zwracany przez metode
+		achievementType acvType = null;
 		//collector
 		allUpgrades[type.ordinal()] = true;
 		collector = true;
@@ -98,48 +101,92 @@ public class AchievementsHolder implements Serializable{
 			}
 		}
 		//jesli upgrade jest serduszkiem dodaj skladowa achievementu HEART
-		if(type == upgradeType.life) addHeart();
+		if(type == upgradeType.life){
+			acvType = addHeart();
+		}
 		
 		oneGameUpgrades++;
 		if(oneGameUpgrades % 10 == 0) upgrades10++;
 		if(oneGameUpgrades % 20 == 0) upgrades20++;
 		if(oneGameUpgrades % 30 == 0) upgrades30++;
 		//Upgrade Novice 
-		if(oneGameUpgrades >= 5) upgradeNovice = true;
+		if(oneGameUpgrades >= 5){
+			upgradeNovice = true;
+			acvType = achievementType.novice;
+		}
 		//Upgrade Apprentice 
-		if(upgrades10 >= 2) upgradeApprentice = true;
+		if(upgrades10 >= 2){
+			upgradeApprentice = true;
+			acvType = achievementType.apprentice;
+		}
 		//Upgrade Adept 
-		if(upgrades20 >= 3) upgradeAdept = true;
+		if(upgrades20 >= 3){
+			upgradeAdept = true;
+			acvType = achievementType.adept;
+		}
 		//Upgrade Master 
-		if(upgrades30 >= 4) upgradeMaster = true;
+		if(upgrades30 >= 4){
+			upgradeMaster = true;
+			acvType = achievementType.master;
+		}
+		return acvType;
 	}
 	
-	public void addDeath(){
+	public achievementType addDeath(){
+		//achievementType zwracany przez metode
+		achievementType acvType = null;
 		if(!playerAlreadyDead){
 			deaths++;
 			//I see dead people
-			if(deaths >= 100) iSeeDeadPeople = true;
+			if(deaths >= 100){
+				iSeeDeadPeople = true;
+				acvType = achievementType.isdp;
+			}
 			//Walking dead
-			if(deaths >= 1000) walkingDead = true;
-			
+			if(deaths >= 1000){
+				walkingDead = true;
+				acvType = achievementType.dead;
+			}
 			playerAlreadyDead = true;
 		}
+		return acvType;
 	}
 	
-	public void addHeart(){
+	public achievementType addHeart(){
+		//achievementType zwracany przez metode
+		achievementType acvType = null;
 		hearts++;
-		if(hearts >= 50) lover = true;
-		if(hearts >= 250) casanova = true;
+		if(hearts >= 50){
+			lover = true;
+			acvType = achievementType.lover;
+		}
+		if(hearts >= 250){
+			casanova = true;
+			acvType = achievementType.casanova;
+		}
+		return acvType;
 	}
 	
-	public void addAlien(){
+	public achievementType addAlien(){
+		//achievementType zwracany przez metode
+		achievementType acvType = null;
 		aliens++;
-		if(aliens >= 5) alienInvasion = true;
+		if(aliens >= 5){
+			alienInvasion = true;
+			acvType = achievementType.alien;
+		}
+		return acvType;
 	}
 	
-	public void addDuck(){
+	public achievementType addDuck(){
+		//achievementType zwracany przez metode
+		achievementType acvType = null;
 		duck++;
-		if(duck >= 10) duckHunter = true;
+		if(duck >= 10){
+			duckHunter = true;
+			acvType = achievementType.duck;
+		}
+		return acvType;
 	}
 	
 	//wyczysc tymczasowe dane jak : liczbe upgradow zebranych w danej grze, tablice

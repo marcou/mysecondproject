@@ -19,8 +19,7 @@ import com.gra.R;
 import com.gra.zapisy.AchievementsHolder;
 import com.gra.zapisy.SaveService;
 import com.gra.zapisy.UserSettings;
-
-enum achievementType{novice, apprentice, adept, master, isdp, dead, lover, casanova, alien, collector, duck, secret};
+import com.gra.zapisy.achievementType;
 
 public class OptionsTab3 
 		extends Activity 

@@ -56,7 +56,7 @@ public class Player implements Serializable{
 	private int earth_radius;	//promien okregu po jakim ma siê poruszaæ nasz obiekt
 	private boolean on_ground = true;	//czy dotyka ziemi
 	
-	private long points = 100000;	//punkty gracza
+	private long points = 0;	//punkty gracza
 	private int multiplier = 1;		//mnoznik punktow
 	
 	private boolean armagedon = false;
@@ -164,8 +164,8 @@ public class Player implements Serializable{
 			this.life += player_life;	
 		}
 		else{
-			//jesli ma full life to podwoj punkty
-			this.points *= 2;
+			//jesli ma full life to dodaj 1000 punktów
+			this.points += (points/maxLife * 100);
 		}
 		
 	}
