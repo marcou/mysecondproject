@@ -415,7 +415,7 @@ public class GameView extends SurfaceView{
     	
     	//rysowanie statku kosmicznego
     	if(ship != null){
-    		drawSprite(canvas, (int)ship.getX(), (int)ship.getY(), 1, 1, ship.getWidth(), ship.getHeight(), 0, spaceShip_bmp, 270, 1.0f);
+    		drawSprite(canvas, (int)ship.getX(), (int)ship.getY(), 1, 1, ship.getWidth(), ship.getHeight(), 0, spaceShip_bmp, ship.getAngle(), ship.getScale());
     		ship.move();
     		if(ship.getX() > this.area_w || ship.getY() > this.area_h) ship = null;
     	}
@@ -583,7 +583,7 @@ public class GameView extends SurfaceView{
     		
     		//jesli gracz ma pelnego lajfa i ponad 10k punktow to ma szanse, ¿e pojawi sie statek kosmiczny
     		if(spaceShipReady && player.getPoints() >= 10 && player.getLife() == player.getMaxLife()){
-    			ship = new SpaceShip(-100, 100, 128, 128);
+    			ship = new SpaceShip(100, 100, 128, 128);
     			spaceShipReady = false;
     		}
     		
