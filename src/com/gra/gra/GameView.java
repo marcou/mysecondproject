@@ -38,7 +38,7 @@ public class GameView extends SurfaceView{
 	
 	private Generator generator;		//generator obiektow latajacych
 	
-	private int default_world_timer = 60;
+	private int default_world_timer = 80;
 	private int world_timer = default_world_timer;	//timer swiata, po tym czasie (logicznym) odpalany jest generator
 	
 	//Pole gry (wieksze od ekranu) na ktorym generuje sie obiekty tak zeby gracz ich nie widzial (nie moga sie przeca nagle pojawiac)
@@ -209,8 +209,8 @@ public class GameView extends SurfaceView{
                }
                //@Override
                public void surfaceCreated(SurfaceHolder holder) {
-            	   createSprites();
             	   createGenerator();
+            	   createSprites();
             	   thread.setRunning(true);
             	   thread.start();
 	            }
@@ -268,6 +268,8 @@ public class GameView extends SurfaceView{
     	earth = new Earth	(240, 	400, 	2000, 	75, 	2.8);
     									//x		y		mass	radius	angle
     	player = new Player	(240, 	290, 	1, 		10, 	270);
+    	 
+    	createGenerator();
     	
     	updateGameSettings();
     	
@@ -1063,9 +1065,19 @@ public class GameView extends SurfaceView{
 			earth_bmp = BitmapFactory.decodeResource(getResources(), settings.getEarthStats()[settings.getEarth()][0]);
 	    	
 	    	//GRACZ
+			//statystyki ziemi
 			player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
 			player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
+			//predkosc gracza
 			player.setSpeed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 1.0);
+			//zycie gracza
+			player.setLife(settings.getPlayerStats()[settings.getCharacter()][2]);
+			player.setMaxLife(settings.getPlayerStats()[settings.getCharacter()][2]);
+			//upgrady gracza
+			player.setUpgradeLevel(settings.getPlayerStats()[settings.getCharacter()][3]);
+			
+			//GENERATOR
+			generator.setPlayerUpgradeMultiplier(settings.getPlayerStats()[settings.getCharacter()][3]);
 			
 			//OBIEKTY LATAJACE
 			for(int i = 0; i < flyingObjects.size(); i++){

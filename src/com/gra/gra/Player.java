@@ -72,6 +72,9 @@ public class Player implements Serializable{
 	
 	private boolean immortal = false;
 	
+	//poziom upgrade wybranego gracza (3 statystyka jeza w opcjach). Wplywa na dlugosc
+	//money rain i armagedonu
+	private int upgradeLevel;
 	
 	public Player(float x, float y,  int mass, int radius, int degree){
 		this.x = x;
@@ -86,6 +89,7 @@ public class Player implements Serializable{
 		this.default_speed = speed;
 		this.sucking_range = default_sucking_range;
 		
+		this.upgradeLevel = 0;
 	}
 	
 	public void onDraw(Canvas canvas){
@@ -164,8 +168,8 @@ public class Player implements Serializable{
 			this.life += player_life;	
 		}
 		else{
-			//jesli ma full life to dodaj 1000 punktów
-			this.points += (points/maxLife * 100);
+			//jesli ma full life to dodaj mu troche punktow
+			this.points += (points/(maxLife * 100));
 		}
 		
 	}
@@ -328,11 +332,13 @@ public class Player implements Serializable{
 			//jesli upgrade jest typu armagedon
 			if(((Upgrade) object).isArmagedon()){
 				armagedon = true;
-				armagedon_timer = ((Upgrade) object).getTime();
+				//armagedon_timer = 
+				setArmagedon_timer(((Upgrade) object).getTime());
 			}
 			if(((Upgrade) object).isMoney_rain()){
 				money_rain = true;
-				money_rain_timer = ((Upgrade) object).getTime();
+				//money_rain_timer = 
+				setMoney_rain_timer(((Upgrade) object).getTime());
 			}
 			((Upgrade) object).setLife(0);
 		}
@@ -504,7 +510,7 @@ public class Player implements Serializable{
 	}
 
 	public void setMoney_rain_timer(long money_rain_timer) {
-		this.money_rain_timer = money_rain_timer;
+		this.money_rain_timer = money_rain_timer + (this.upgradeLevel * 20);
 	}
 	
 	public long getImmortality_timer() {
@@ -686,5 +692,14 @@ public class Player implements Serializable{
 		this.speed = speed;
 		this.default_speed = speed;
 	}
+
+	public int getUpgradeLevel() {
+		return upgradeLevel;
+	}
+
+	public void setUpgradeLevel(int upgradeLevel) {
+		this.upgradeLevel = upgradeLevel;
+	}
+	
 	
 }

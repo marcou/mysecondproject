@@ -18,7 +18,10 @@ public class Generator {
 	private int area_w;
 	private int area_h;
 	
+	private int playerUpgradeMultiplier;
+	
 	public Generator() {
+		this.playerUpgradeMultiplier = 0;
 	}
 	
 	//==================================	GENERATOR	=====================================
@@ -78,7 +81,7 @@ public class Generator {
     	else if(points <threshold_3){
     		asteroid_count = 2;
     		money_count = 6;
-    		upgrade_count = 1;
+    		upgrade_count = playerUpgradeMultiplier/2;
     		
     		asteroid_difficulty = 2;
     		money_value = 8;
@@ -87,7 +90,7 @@ public class Generator {
     	else if(points <threshold_4){
     		asteroid_count = 3;
     		money_count = 10;
-    		upgrade_count = 2;
+    		upgrade_count = playerUpgradeMultiplier/2;
     		
     		asteroid_difficulty = 3;
     		money_value = 16;
@@ -98,7 +101,7 @@ public class Generator {
     	else if(points <threshold_5){
     		asteroid_count = 4;
     		money_count = 8;
-    		upgrade_count = 2;
+    		upgrade_count = playerUpgradeMultiplier/2;
     		
     		asteroid_difficulty = 4;
     		money_value = 32;
@@ -109,7 +112,7 @@ public class Generator {
     	else if(points <threshold_6){
     		asteroid_count = 4;
     		money_count = 6;
-    		upgrade_count = 2;
+    		upgrade_count = playerUpgradeMultiplier/2;
     		
     		asteroid_difficulty = 5;
     		money_value = 64;
@@ -120,7 +123,7 @@ public class Generator {
     	else if(points <threshold_7){
     		asteroid_count = 4;
     		money_count = 4;
-    		upgrade_count = 2;
+    		upgrade_count = playerUpgradeMultiplier/2;
     		
     		asteroid_difficulty = 7;
     		money_value = 128;
@@ -131,7 +134,7 @@ public class Generator {
     	else{
     		asteroid_count = 5;
     		money_count = 2;
-    		upgrade_count = 3;
+    		upgrade_count = playerUpgradeMultiplier/2 + 1;
     		
     		asteroid_difficulty = 10;
     		money_value = 256;
@@ -405,4 +408,14 @@ public class Generator {
     	}
     	return size;
     }
+
+	public int getPlayerUpgradeMultiplier() {
+		return playerUpgradeMultiplier;
+	}
+
+	public void setPlayerUpgradeMultiplier(int playerUpgradeMultiplier) {
+		this.playerUpgradeMultiplier = playerUpgradeMultiplier;
+	}
+    
+    
 }
