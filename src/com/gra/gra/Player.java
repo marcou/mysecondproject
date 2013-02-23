@@ -292,9 +292,14 @@ public class Player implements Serializable{
 		if(object instanceof Asteroid){
 			//kolizja gracza z moneto-asteroida
 			if (object instanceof MoneyAsteroid){
-				//setLife(5);
+				//jesli trafiony przez money asteroid to zabierz zycie i wlacz niesmeirtelnosc
+				if(!immortal){
+					setLife(getLife()-1);
+					immortal(40);
+				}
 			}
 			else{
+				//jesli trafiony przez asteroide to zabierz zycie, wlacz niesmeirtelnosc i zniszcz asteroide
 				((Asteroid) object).setLife(0);
 				if(!immortal){
 					setLife(getLife()-1);

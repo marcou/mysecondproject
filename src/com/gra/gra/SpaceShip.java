@@ -20,9 +20,9 @@ public class SpaceShip {
 	}
 	
 	public void move(){
-		this.x += speed * Math.sin(Math.toRadians(angle));
-		this.y += speed * Math.cos(Math.toRadians(angle));
-		this.angle += 1.0f;
+		this.x += speed * Math.cos(Math.toRadians(angle));
+		this.y += speed * Math.sin(Math.toRadians(angle));
+		this.angle += 0.1f;
 	}
 	
 	public boolean checkCollision(float x, float y){
@@ -71,7 +71,7 @@ public class SpaceShip {
 	}
 
 	public float getAngle() {
-		return angle - 90.0f;
+		return angle + 270.0f;
 	}
 
 	public void setAngle(float angle) {
