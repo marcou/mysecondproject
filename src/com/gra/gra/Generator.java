@@ -48,7 +48,7 @@ public class Generator {
     	
     	int asteroid_count = 0;	//liczba asteroid
     	int money_count = 0;	//liczba kasy
-    	int upgrade_count = 0;	//liczba upgradeow
+    	//int upgrade_count = 0;	//liczba upgradeow
     	int money_asteroid_count = 0;
     	int money_asteroid_quota = 0;
     	
@@ -65,7 +65,7 @@ public class Generator {
     	if(points < threshold_1){
     		asteroid_count = 1;
     		money_count = 4;
-    		upgrade_count = 0;
+    		//upgrade_count = 0;
     		
     		asteroid_difficulty = 1;
     		money_value = 1;
@@ -73,7 +73,7 @@ public class Generator {
     	else if(points <threshold_2){
     		asteroid_count = 1;
     		money_count = 5;
-    		upgrade_count = 0;
+    		//upgrade_count = 0;
     		
     		asteroid_difficulty = 1;
     		money_value = 4;
@@ -81,7 +81,7 @@ public class Generator {
     	else if(points <threshold_3){
     		asteroid_count = 2;
     		money_count = 6;
-    		upgrade_count = playerUpgradeMultiplier/2;
+    		//upgrade_count = playerUpgradeMultiplier/4;
     		
     		asteroid_difficulty = 2;
     		money_value = 8;
@@ -90,7 +90,7 @@ public class Generator {
     	else if(points <threshold_4){
     		asteroid_count = 3;
     		money_count = 10;
-    		upgrade_count = playerUpgradeMultiplier/2;
+    		//upgrade_count = playerUpgradeMultiplier/3;
     		
     		asteroid_difficulty = 3;
     		money_value = 16;
@@ -101,7 +101,7 @@ public class Generator {
     	else if(points <threshold_5){
     		asteroid_count = 4;
     		money_count = 8;
-    		upgrade_count = playerUpgradeMultiplier/2;
+    		//upgrade_count = playerUpgradeMultiplier/3;
     		
     		asteroid_difficulty = 4;
     		money_value = 32;
@@ -112,7 +112,7 @@ public class Generator {
     	else if(points <threshold_6){
     		asteroid_count = 4;
     		money_count = 6;
-    		upgrade_count = playerUpgradeMultiplier/2;
+    		//upgrade_count = playerUpgradeMultiplier/3 + 1;
     		
     		asteroid_difficulty = 5;
     		money_value = 64;
@@ -123,7 +123,7 @@ public class Generator {
     	else if(points <threshold_7){
     		asteroid_count = 4;
     		money_count = 4;
-    		upgrade_count = playerUpgradeMultiplier/2;
+    		//upgrade_count = playerUpgradeMultiplier/3 + 1;
     		
     		asteroid_difficulty = 7;
     		money_value = 128;
@@ -134,7 +134,7 @@ public class Generator {
     	else{
     		asteroid_count = 5;
     		money_count = 2;
-    		upgrade_count = playerUpgradeMultiplier/2 + 1;
+    		//upgrade_count = playerUpgradeMultiplier/2 + 1;
     		
     		asteroid_difficulty = 10;
     		money_value = 256;
@@ -166,9 +166,9 @@ public class Generator {
         	if(money_count >= 1){
         		money_count = rand.nextInt(money_count);
         	}
-        	if(upgrade_count >= 1){
-        		upgrade_count = rand.nextInt(upgrade_count);
-        	}
+        	//if(upgrade_count >= 1){
+        	//	upgrade_count = rand.nextInt(upgrade_count);
+        	//}
         	if(money_asteroid_count >= 1){
         		money_asteroid_count = rand.nextInt(money_asteroid_count);
         	}
@@ -197,19 +197,83 @@ public class Generator {
     		Money money = new Money(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), money_value + 1, 5);
     		objects.add(money);
     	}
-		for(int i = 0; i < upgrade_count; i++){
+		/*for(int i = 0; i < upgrade_count; i++){
+			type = calculateType();
+			prop = calculateProperties();
+    		Upgrade upgrade = new Upgrade(objects, prop.getX(), prop.getY(), rand.nextInt(6), prop.getAngle(),type);
+    		objects.add(upgrade);
+		}*/
+		for(int i = 0; i < money_asteroid_count; i++){
+    		prop = calculateProperties();
+//    		MoneyAsteroid money_asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, money_asteroid_quota, money_value);
+    		MoneyAsteroid money_asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, 1 + money_asteroid_quota/6, money_value, money_asteroid_quota);
+    		objects.add(money_asteroid);
+    	}
+		return objects;
+    }
+    
+    public List<FlyingObject> generateUpgrades(long points, boolean armagedon, boolean money_rain){
+    	//wyczyszczenie listy obiektow
+    	this.objects.clear();
+    	
+    	if(armagedon || money_rain){
+    		return objects;
+    	}
+    	//progi punktowe wedlug ktorych ustawiane sa fale wrogow
+    	int threshold_1 = 10;
+    	int threshold_2 = 50;
+    	int threshold_3 = 250;
+    	int threshold_4 = 1250;
+    	int threshold_5 = 6000;
+    	int threshold_6 = 10000;
+    	int threshold_7 = 1000000;
+    	
+    	Random rand = new Random();
+    	
+    	int upgrade_count = 0;
+    	
+    	if(points < threshold_1){
+    		upgrade_count = 0;
+    	}
+    	else if(points <threshold_2){
+    		upgrade_count = 1;
+    	}
+    	else if(points <threshold_3){
+    		upgrade_count = 1;
+    	}
+    	else if(points <threshold_4){
+    		upgrade_count = 2;
+    	}
+    	else if(points <threshold_5){
+    		upgrade_count = 2;
+    	}
+    	else if(points <threshold_6){
+    		upgrade_count = 3;
+    	}
+    	else if(points <threshold_7){
+    		upgrade_count = 3;
+    	}
+    	else{
+    		upgrade_count = 4;
+    	}
+    	
+    	if(upgrade_count >= 1){
+    		upgrade_count = rand.nextInt(upgrade_count);
+    	}
+    	
+    	//typ upgrejdu (musi zostac zainicjowany)
+		upgradeType type = upgradeType.speed;
+		//wlasciwosci obiektow
+		Properties prop;
+    			
+    	for(int i = 0; i < upgrade_count; i++){
 			type = calculateType();
 			prop = calculateProperties();
     		Upgrade upgrade = new Upgrade(objects, prop.getX(), prop.getY(), rand.nextInt(6), prop.getAngle(),type);
     		objects.add(upgrade);
 		}
-		for(int i = 0; i < money_asteroid_count; i++){
-    		prop = calculateProperties();
-//    		MoneyAsteroid money_asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, money_asteroid_quota, money_value);
-    		MoneyAsteroid money_asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, money_asteroid_quota/6, money_value, money_asteroid_quota);
-    		objects.add(money_asteroid);
-    	}
-		return objects;
+    	
+    	return objects;
     }
     
     public upgradeType calculateType(){

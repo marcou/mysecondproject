@@ -41,6 +41,9 @@ public class GameView extends SurfaceView{
 	private int default_world_timer = 80;
 	private int world_timer = default_world_timer;	//timer swiata, po tym czasie (logicznym) odpalany jest generator
 	
+	private int default_upgrade_timer = 200;
+	private int upgrade_timer = default_upgrade_timer;	//timer po kotrym generowane sa upgrady
+	
 	//Pole gry (wieksze od ekranu) na ktorym generuje sie obiekty tak zeby gracz ich nie widzial (nie moga sie przeca nagle pojawiac)
 	private int area_x = - 200;
 	private int area_y = - 200;
@@ -335,8 +338,11 @@ public class GameView extends SurfaceView{
     	}
     	//SKALOWANIE
     	canvas.scale(this.w_factor, this.h_factor);
+    	
     	//odliczanie tajmera
     	world_timer--;
+    	upgrade_timer--;
+    	
     	canvas.save();
     	//skala do testowania generatora (generuje obiekty poza ekranem)
     	if (DEBUG_MODE) 
@@ -567,6 +573,10 @@ public class GameView extends SurfaceView{
     	/************************************************************************************
     	 * 							GENERATOR TU JEST ODPALANY								*
     	 ************************************************************************************/
+    	if(upgrade_timer <= 0){
+    		resetUpgradeTimer();
+    		flyingObjects.addAll(generator.generateUpgrades(player.getPoints(), player.isArmagedon(), player.isMoney_rain()));
+    	}
     	if(world_timer <= 0){
     		resetTimer();
     		//dodaj graczowi punkty za generacje (przezycie kolejnych x sekund)
@@ -647,6 +657,10 @@ public class GameView extends SurfaceView{
 	public void resetTimer(){
     	world_timer = default_world_timer;
     }
+	
+	public void resetUpgradeTimer(){
+		upgrade_timer = default_upgrade_timer;
+	}
     
     public void resolveGravity(){
     	if(!player.isOn_ground()){
@@ -1078,6 +1092,9 @@ public class GameView extends SurfaceView{
 			
 			//GENERATOR
 			generator.setPlayerUpgradeMultiplier(settings.getPlayerStats()[settings.getCharacter()][3]);
+			//co ile odpaln bedzie generator upgradow
+			upgrade_timer = default_upgrade_timer + (int)((((double)default_upgrade_timer)/4.0) * (5.0/(double)settings.getPlayerStats()[settings.getCharacter()][3]));
+			default_upgrade_timer = upgrade_timer;
 			
 			//OBIEKTY LATAJACE
 			for(int i = 0; i < flyingObjects.size(); i++){
