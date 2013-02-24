@@ -37,11 +37,13 @@ public class MoneyAsteroid extends Asteroid{
 		if(object instanceof Asteroid){
 			//zmniejsz ich rozmiary
 			setSize(getSize() - 1);
+			if(getSize() < 1) setLife(0);
+			
 			((Asteroid) object).setSize(((Asteroid) object).getSize() - 1);
 			
-			if(((Asteroid) object).getSize() > 0){
-				((Asteroid) object).setRadius(((Asteroid) object).getBasic_radius() * ((Asteroid) object).getSize());
-			}
+			if(((Asteroid) object).getSize() > 0) ((Asteroid) object).setRadius(((Asteroid) object).getBasic_radius() * ((Asteroid) object).getSize());
+			else ((Asteroid) object).setLife(0);
+				
 			Random rand = new Random();
 			super.setAngle(super.getAngle() - 180);//rand.nextInt(90) - 90);
 			((Asteroid) object).setAngle(((Asteroid) object).getAngle() - 180);//rand.nextInt(90) - 90);

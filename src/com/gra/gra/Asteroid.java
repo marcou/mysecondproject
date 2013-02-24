@@ -24,6 +24,11 @@ public class Asteroid extends FlyingObject {
 		
 		this.size = size;
 		
+		if(size > 3) this.size = 3;
+		else if(size < 1) this.size = 1;
+		
+		super.setRadius(radius * size);
+		
 		basic_radius = radius;
 
 	}
@@ -33,14 +38,16 @@ public class Asteroid extends FlyingObject {
 		if(object instanceof Asteroid){
 			//zmniejsz ich rozmiary
 			setSize(getSize() - 1);
+			if(getSize() < 1) setLife(0);
+			
 			((Asteroid) object).setSize(((Asteroid) object).getSize() - 1);
 			
 			if(getSize() > 0){
 				super.setRadius(basic_radius * getSize());
 			}
-			if(((Asteroid) object).getSize() > 0){
-				((Asteroid) object).setRadius(((Asteroid) object).getBasic_radius() * ((Asteroid) object).getSize());
-			}
+			if(((Asteroid) object).getSize() > 0)((Asteroid) object).setRadius(((Asteroid) object).getBasic_radius() * ((Asteroid) object).getSize());
+			else ((Asteroid) object).setLife(0);
+			
 			Random rand = new Random();
 			super.setAngle(super.getAngle() - 180);//rand.nextInt(90) - 90);
 			((Asteroid) object).setAngle(((Asteroid) object).getAngle() - 180);//rand.nextInt(90) - 90);
