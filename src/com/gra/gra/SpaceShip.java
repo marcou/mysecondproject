@@ -1,5 +1,7 @@
 package com.gra.gra;
 
+import java.util.Random;
+
 import android.util.Log;
 
 public class SpaceShip {
@@ -11,18 +13,22 @@ public class SpaceShip {
 	private float angle;
 	private float scale = 0.4f;
 	
+	//losowa potrzebna do obliczania kata
+	private Random rand;
+	
 	public SpaceShip(float x, float y, int height, int width){
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		angle = 0.0f;
+		this.angle = 0.0f;
+		this.rand = new Random();
 	}
 	
 	public void move(){
 		this.x += speed * Math.cos(Math.toRadians(angle));
 		this.y += speed * Math.sin(Math.toRadians(angle));
-		this.angle += 0.1f;
+		this.angle += 0.4f;//rand.nextFloat();
 	}
 	
 	public boolean checkCollision(float x, float y){

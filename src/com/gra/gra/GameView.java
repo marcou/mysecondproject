@@ -392,14 +392,13 @@ public class GameView extends SurfaceView{
 		}
 
     	paint.setColor(Color.BLACK);
-    	
-    	/*
-    	 * RYSOWANIE ZIEMI I PLAYER
-    	 */
-    	//wersja bez spriteow
-    	//earth.onDraw(canvas);
-    	//player.onDraw(canvas);
-    	//wersja ze spritami
+
+    	//rysowanie statku kosmicznego
+    	if(ship != null){
+    		drawSprite(canvas, (int)ship.getX(), (int)ship.getY(), 1, 1, ship.getWidth(), ship.getHeight(), 0, spaceShip_bmp, ship.getAngle(), ship.getScale());
+    		ship.move();
+    		if(ship.getX() > this.area_w || ship.getY() > this.area_h) ship = null;
+    	}
     	drawSprite(canvas, (int)earth.getX(), (int)earth.getY(), e_columns, e_rows, earth_bmp.getWidth()/e_columns, earth_bmp.getHeight()/e_rows, earth.getCurrentFrame(), earth_bmp, 0, earth.getRadius()/100.0f);
     	earth.update();
     	drawSprite(canvas, (int)player.getX(), (int)player.getY(), p_columns, p_rows, player_bmp.getWidth()/p_columns, player_bmp.getHeight()/p_rows, player.getCurrentFrame(), player_bmp,0, (float)player.getRadius()/10.0f);
@@ -412,13 +411,7 @@ public class GameView extends SurfaceView{
     			drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, 1.0f);
     		}
     	}
-    	
-    	//rysowanie statku kosmicznego
-    	if(ship != null){
-    		drawSprite(canvas, (int)ship.getX(), (int)ship.getY(), 1, 1, ship.getWidth(), ship.getHeight(), 0, spaceShip_bmp, ship.getAngle(), ship.getScale());
-    		ship.move();
-    		if(ship.getX() > this.area_w || ship.getY() > this.area_h) ship = null;
-    	}
+
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
     		//jesli obiekt sie zatrzymal (i jest poza ekranem) to go usun
     		if(flyingObjects.get(i).getSpeed() == 0.0 && !checkVissible(flyingObjects.get(i))){
@@ -583,7 +576,7 @@ public class GameView extends SurfaceView{
     		
     		//jesli gracz ma pelnego lajfa i ponad 10k punktow to ma szanse, ¿e pojawi sie statek kosmiczny
     		if(spaceShipReady && player.getPoints() >= 10 && player.getLife() == player.getMaxLife()){
-    			ship = new SpaceShip(100, 100, 128, 128);
+    			ship = new SpaceShip(-50, 100, 128, 128);
     			spaceShipReady = false;
     		}
     		
@@ -720,10 +713,13 @@ public class GameView extends SurfaceView{
         if(player.getLife() > 0){
         	//jesli statek jest na ekranie to w pierwszej kolejnosci sprawdz kolizje z nim
         	if(ship != null){
-        		if(ship.checkCollision(x, y)){
-        			showAchievementInfo(achievements.addAlien());
-        			temps.add(new TempSprite(temps,ship.getX() - (ship.getX() - ship.getX())/2, ship.getY() - (ship.getY() - ship.getY())/2, tempType.explosion));
-        			ship = null;
+        		//sprawdz kolizje ze statkiem tylko jesli nie jest on przysloniety przez ziemie (sprawdz kolizje z ziemia najpierw)
+        		if(!earth.checkCollision(x,y)){
+	        		if(ship.checkCollision(x, y)){
+	        			showAchievementInfo(achievements.addAlien());
+	        			temps.add(new TempSprite(temps,ship.getX() - (ship.getX() - ship.getX())/2, ship.getY() - (ship.getY() - ship.getY())/2, tempType.explosion));
+	        			ship = null;
+	        		}
         		}
         	}
         	

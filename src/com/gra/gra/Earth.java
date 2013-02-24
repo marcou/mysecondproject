@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 /**
  * 
@@ -89,6 +90,19 @@ public class Earth {
 	public void setPaint(Paint paint) {
 		this.paint = paint;
 	}
+	
+	public boolean checkCollision(float x, float y){
+		Log.d("Earth", "this.x : " + this.x);
+		Log.d("Earth", "this.y : " + this.y);
+		Log.d("Earth", "x : " + x);
+		Log.d("Earth", "y : " + y);
+		Log.d("Earth", "radius : " + this.radius);
+		if(Math.pow(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2), 0.5) <= this.radius){
+			return true;
+		}
+		return false;
+	}
+	
 	public void onDraw(Canvas canvas){
 		canvas.drawCircle(x, y, radius, paint);
 		update();
@@ -171,6 +185,7 @@ public class Earth {
 	public void setDefault_gravity(double default_gravity) {
 		this.default_gravity = default_gravity;
 	}
+
 	/************************************************
 	 *        METODY DO TRYBU TIME ATTACK			*
 	 ************************************************/
