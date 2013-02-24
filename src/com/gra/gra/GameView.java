@@ -88,53 +88,22 @@ public class GameView extends SurfaceView{
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
 	 */
 	private Bitmap spaceShip_bmp;
-	
 	private Bitmap player_bmp;
-	private int p_columns = 1;
-	private int p_rows = 1;
-	
 	private Bitmap heart_bmp;
 	private Bitmap lifebar_bmp;
-	
 	private Bitmap asteroid_bmp;
-	private int a_columns = 4;
-	private int a_rows = 3;
-	
 	private Bitmap money_bmp;
-	private int m_columns = 6;
-	private int m_rows = 1;
-	
 	private Bitmap upgrade_bmp;
-	private int u_columns = 1;
-	private int u_rows = 1;
-	
 	private Bitmap earth_bmp;
-	private int e_columns = 1;
-	private int e_rows = 1;
-	
 	private Bitmap thorn_bmp;
-	private int t_columns = 1;
-	private int t_rows = 1;
-	
 	private Bitmap smoke_bmp;
-	private int s_columns = 4;
-	private int s_rows = 4;
-	
 	private Bitmap explosion_bmp;
-	private int ex_columns = 4;
-	private int ex_rows = 4;
-	
 	private Bitmap background_bmp;
 	private int background_x = 0;
-	
 	private Bitmap mosteroid_bmp;	//money asteroid
-	private int moa_columns = 4;
-	private int moa_rows = 3;
 	
 	//Przy upgrejdach rysowany jest tylko najnowszy upgrade i jest on rysowany prosto z gameView (nie tworzy sie obiektu)
-	private int info_columns = 4;
-	private int info_rows = 4;
-	private int info_frames = info_columns * info_rows - 1;
+	private int info_frames;
 	private int info_current_frame = 0;
 	private int default_info_life = 30;
 	private int info_life = default_info_life;
@@ -295,23 +264,23 @@ public class GameView extends SurfaceView{
     	bitmaps.put(23,spaceShip_bmp);
 
     	bitmapProperties = new int[][]{	{3,4},	//asteroid
-    									{1,1},	//money
+    									{1,6},	//money
     									{1,1},	//upgrade
     									{1,1},	//earth
     									{1,1},	//thorn
     									{1,1},	//background
     									{4,4},	//smoke
     									{1,1},	//INFO.speed
-    									{1,1},	//INFO.x2
-    									{1,1},	//INFO.x3
-    									{1,1},	//INFO.x4
-    									{1,1},	//INFO
+    									{4,4},	//INFO.x2
+    									{4,4},	//INFO.x3
+    									{4,4},	//INFO.x4
+    									{4,4},	//INFO
     									{1,1},	//INFO.tiny
-    									{1,1},	//INFO.huge
-    									{1,1},	//INFO.armagedon
-    									{1,1},	//INFO.highGravity
-    									{1,1},	//INFO.lowGravity
-    									{1,1},	//INFO.moneyRain
+    									{4,4},	//INFO.huge
+    									{4,4},	//INFO.armagedon
+    									{4,4},	//INFO.highGravity
+    									{4,4},	//INFO.lowGravity
+    									{4,4},	//INFO.moneyRain
     									{4,4},	//explosion
     									{1,1},	//heart
     									{1,1},	//lifebar
@@ -342,10 +311,15 @@ public class GameView extends SurfaceView{
     		//klatki animacji dla obiektow latajacych
     		flyingObjects.get(i).setFrames(bitmapProperties[flyingObjects.get(i).getID()][0] * bitmapProperties[flyingObjects.get(i).getID()][1] - 1);
     	}
-    	player.setFrames((p_columns * p_rows) - 1);
+    	//ustaw liczbe klatek animacji gracza
+    	player.setFrames(bitmapProperties[player.getID()][0] * bitmapProperties[player.getID()][1] - 1);
+    	
     	if(temp_player != null){
     		this.player = temp_player;
     	}
+    	
+    	//klatki informacji
+    	info_frames = bitmapProperties[11][0] * bitmapProperties[11][1] - 1; 
     	
     	achievements = new AchievementsHolder();
     }
@@ -924,18 +898,18 @@ public class GameView extends SurfaceView{
     		info_life--;
     	}
     	else{
-    		srcX = (info_current_frame % (info_columns)) * (info_bmp.getWidth()/info_columns);
-    		if(info_rows % 2 == 0){
-    			row = info_current_frame / (info_rows);
+    		srcX = (info_current_frame % (bitmapProperties[11][1])) * (info_bmp.getWidth()/bitmapProperties[11][1]);
+    		if(bitmapProperties[11][0] % 2 == 0){
+    			row = info_current_frame / (bitmapProperties[11][0]);
         	}
         	else{
-        		row = info_current_frame / (info_rows + 1);
+        		row = info_current_frame / (bitmapProperties[11][0] + 1);
         	}
-    		row = info_current_frame / (info_rows);
-    		srcY = row * (info_bmp.getHeight()/info_rows);
+    		row = info_current_frame / (bitmapProperties[11][0]);
+    		srcY = row * (info_bmp.getHeight()/bitmapProperties[11][0]);
     	}
-    	Rect src = new Rect(srcX, srcY, srcX + info_bmp.getWidth()/info_columns, srcY + info_bmp.getHeight()/info_rows);
-		Rect dst = new Rect(x - info_bmp.getWidth()/(2 * info_columns), y - info_bmp.getHeight()/(2 * info_rows), x + info_bmp.getWidth()/(2 * info_columns), y + info_speed.getHeight()/(2 * info_rows));
+    	Rect src = new Rect(srcX, srcY, srcX + info_bmp.getWidth()/bitmapProperties[11][1], srcY + info_bmp.getHeight()/bitmapProperties[11][0]);
+		Rect dst = new Rect(x - info_bmp.getWidth()/(2 * bitmapProperties[11][1]), y - info_bmp.getHeight()/(2 * bitmapProperties[11][0]), x + info_bmp.getWidth()/(2 * bitmapProperties[11][1]), y + info_speed.getHeight()/(2 * bitmapProperties[11][0]));
 		canvas.drawBitmap(bmp, src, dst, paint);
 		if(info_life <= 0){
     		info_current_frame++;
@@ -1122,9 +1096,9 @@ public class GameView extends SurfaceView{
     	else{
     		srcX = 5;
     	}
-    	Rect src = new Rect(srcX * money_bmp.getWidth()/m_columns, srcY, srcX * money_bmp.getWidth()/m_columns + money_bmp.getWidth()/m_columns, srcY + money_bmp.getHeight()/m_rows);
-		Rect dst = new Rect(x - money_bmp.getWidth()/(m_columns * 2), y - money_bmp.getHeight()/(m_rows * 2), x + money_bmp.getWidth()/(m_columns * 2), y + money_bmp.getHeight()/(m_rows * 2));
-		canvas.drawBitmap(money_bmp, src, dst, paint);
+    	Rect src = new Rect(srcX * bitmaps.get(1).getWidth()/bitmapProperties[1][1], srcY, srcX * bitmaps.get(1).getWidth()/bitmapProperties[1][1] + bitmaps.get(1).getWidth()/bitmapProperties[1][1], srcY + bitmaps.get(1).getHeight()/bitmapProperties[1][0]);
+		Rect dst = new Rect(x - bitmaps.get(1).getWidth()/(bitmapProperties[1][1] * 2), y - bitmaps.get(1).getHeight()/(bitmapProperties[1][0] * 2), x + bitmaps.get(1).getWidth()/(bitmapProperties[1][1] * 2), y + bitmaps.get(1).getHeight()/(bitmapProperties[1][0] * 2));
+		canvas.drawBitmap(bitmaps.get(1), src, dst, paint);
 	}
     
     public void updateGameSettings(){
