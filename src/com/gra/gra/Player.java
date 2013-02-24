@@ -72,6 +72,11 @@ public class Player implements Serializable{
 	
 	private boolean immortal = false;
 	
+	//poziom alpha (przezroczystosc obiektu (na potrzeby niesmiertelnosci)
+	private int alpha;
+	//zliczanie alphy w dol
+	private boolean alphaDown;
+	
 	//poziom upgrade wybranego gracza (3 statystyka jeza w opcjach). Wplywa na dlugosc
 	//money rain i armagedonu
 	private int upgradeLevel;
@@ -90,6 +95,9 @@ public class Player implements Serializable{
 		this.sucking_range = default_sucking_range;
 		
 		this.upgradeLevel = 0;
+		
+		this.alpha = 255;
+		this.alphaDown = true;
 	}
 	
 	public void onDraw(Canvas canvas){
@@ -133,9 +141,12 @@ public class Player implements Serializable{
 			this.sucking_range = default_sucking_range;
 		}
 		if(immortality_timer > 0){
+			immortalityGlow();
 			immortality_timer--;
 		}
 		else{
+			alpha = 255;
+			alphaDown = true;
 			immortality_timer = 0;
 			immortal = false;
 		}
@@ -143,6 +154,23 @@ public class Player implements Serializable{
 		
 		if(getCurrentFrame() > getFrames()){
 			setCurrentFrame(0);
+		}
+	}
+	
+	public void immortalityGlow(){
+		if(alphaDown){
+			alpha -= 40;
+			if(alpha < 0) {
+				alpha = 0;
+				alphaDown = false;
+			}
+		}
+		else{
+			alpha += 40;
+			if(alpha > 255){
+				alpha = 255;
+				alphaDown = true;
+			}
 		}
 	}
 	
@@ -295,7 +323,7 @@ public class Player implements Serializable{
 				//jesli trafiony przez money asteroid to zabierz zycie i wlacz niesmeirtelnosc
 				if(!immortal){
 					setLife(getLife()-1);
-					immortal(40);
+					immortal(160);
 				}
 			}
 			else{
@@ -303,7 +331,7 @@ public class Player implements Serializable{
 				((Asteroid) object).setLife(0);
 				if(!immortal){
 					setLife(getLife()-1);
-					immortal(40);
+					immortal(160);
 				}
 			}
 		}
@@ -351,7 +379,7 @@ public class Player implements Serializable{
 		else if(object instanceof GroundEnemy){
 			if(!immortal){
 				setLife(getLife()-1);
-				immortal(40);
+				immortal(160);
 			}
 		}
 	}
@@ -706,7 +734,19 @@ public class Player implements Serializable{
 		this.upgradeLevel = upgradeLevel;
 	}
 	
+	
+	
+	public int getAlpha() {
+		return alpha;
+	}
+
+	public void setAlpha(int alpha) {
+		this.alpha = alpha;
+	}
+
 	public int getID(){
 		return 21;
 	}
+	
+	
 }

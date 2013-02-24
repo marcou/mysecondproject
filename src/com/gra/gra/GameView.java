@@ -405,7 +405,7 @@ public class GameView extends SurfaceView{
     	drawSSprite(canvas, (int)earth.getX(), (int)earth.getY(), earth.getID(), earth.getCurrentFrame(), 0, earth.getRadius()/100.0f, 255);
     	earth.update();
     	//drawSprite(canvas, (int)player.getX(), (int)player.getY(), p_columns, p_rows, player_bmp.getWidth()/p_columns, player_bmp.getHeight()/p_rows, player.getCurrentFrame(), player_bmp,0, (float)player.getRadius()/10.0f);
-    	drawSSprite(canvas, (int)player.getX(), (int)player.getY(), player.getID(), player.getCurrentFrame(), 0, (float)player.getRadius()/10.0f, 255);
+    	drawSSprite(canvas, (int)player.getX(), (int)player.getY(), player.getID(), player.getCurrentFrame(), 0, (float)player.getRadius()/10.0f, player.getAlpha());
     	player.update();
     	//player.onDraw(canvas);
     	

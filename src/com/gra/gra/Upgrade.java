@@ -46,32 +46,32 @@ public class Upgrade extends FlyingObject {
 		switch(type){
 		case speed:
 			this.player_speed = 2;
-			this.time = 100;
+			this.time = 400;
 			this.tag = "SPEED";
 			break;
 		case high_gravity:
 			this.earth_gravity = 2.0;
-			this.time = 100;
+			this.time = 400;
 			this.tag = "HIGH GRAVITY";
 			break;
 		case low_gravity:
 			this.earth_gravity = 0.5;
-			this.time = 100;
+			this.time = 400;
 			this.tag = "LOW GRAVITY";
 			break;
 		case huge_player:
 			this.player_radius = 2.0;
-			this.time = 100;
+			this.time = 400;
 			this.tag = "HUGE PLAYER";
 			break;
 		case tiny_player:
 			this.player_radius = 0.5;
-			this.time = 100;
+			this.time = 400;
 			this.tag = "TINY PLAYER";
 			break;
 		case ultra_suck:
 			this.player_sucking_range = 4;
-			this.time = 100;
+			this.time = 400;
 			this.tag = "ULTRA SUCK";
 			break;
 		//time w przypadku armagedonu i money_rain oznacza przez ile generacji (generacja co jakis czas) bedzie dzialal ten upgrade
@@ -87,26 +87,26 @@ public class Upgrade extends FlyingObject {
 			break;
 		case x2:
 			this.player_point_multiplier = 2;
-			this.time = 100;
+			this.time = 400;
 			this.tag = "X2";
 			break;
 		case x3:
 			this.player_point_multiplier = 3;
-			this.time = 100;
+			this.time = 400;
 			this.tag = "X3";
 			break;
 		case x4:
 			this.player_point_multiplier = 4;
-			this.time = 100;
+			this.time = 400;
 			this.tag = "X4";
 			break;
 		case immortality:
 			this.player_immortality = true;
-			this.time = 80;
+			this.time = 320;
 			this.tag = "IMMORTALITY";
 		case life:
 			this.player_life = 1;
-			this.time = 80;
+			this.time = 320;
 			this.tag = "LIFE";
 		}
 	}
