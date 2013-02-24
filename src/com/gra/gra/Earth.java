@@ -185,6 +185,10 @@ public class Earth {
 	public void setDefault_gravity(double default_gravity) {
 		this.default_gravity = default_gravity;
 	}
+	
+	public int getID(){
+		return 3;
+	}
 
 	/************************************************
 	 *        METODY DO TRYBU TIME ATTACK			*

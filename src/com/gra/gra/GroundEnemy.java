@@ -61,4 +61,9 @@ public class GroundEnemy extends FlyingObject{
 		update();
 		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
 	}
+
+	@Override
+	public int getID() {
+		return 4;
+	}
 }

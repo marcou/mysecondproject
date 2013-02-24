@@ -1,6 +1,7 @@
 package com.gra.gra;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -78,7 +79,11 @@ public class GameView extends SurfaceView{
 	private SpaceShip ship = null;
 	private boolean spaceShipReady = true;
 	
-	//
+	//HashMapa zaweirajaca bitmapy dla danych ID
+	private HashMap<Integer, Bitmap> bitmaps;
+	//Tablica zawierajaca liczbe kolumn i wierszy (dla animacji) ID rowne temu z hashmapy
+	private int[][] bitmapProperties;
+	
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
 	 */
@@ -262,6 +267,59 @@ public class GameView extends SurfaceView{
     	mosteroid_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.money_asteroids);
     	spaceShip_bmp = BitmapFactory.decodeResource(this.getResources(), R.drawable.spaceship);
     	
+    	bitmaps = new HashMap<Integer, Bitmap>();
+    	
+    	bitmaps.put(0, asteroid_bmp);
+    	bitmaps.put(1, money_bmp);
+    	bitmaps.put(2,upgrade_bmp);
+    	bitmaps.put(3,earth_bmp);
+    	bitmaps.put(4,thorn_bmp);
+    	bitmaps.put(5,background_bmp);
+    	bitmaps.put(6,smoke_bmp);
+    	bitmaps.put(7,info_speed);
+    	bitmaps.put(8,info_x2);
+    	bitmaps.put(9,info_x3);
+    	bitmaps.put(10,info_x4);
+    	bitmaps.put(11,info_bmp);
+    	bitmaps.put(12,info_tiny);
+    	bitmaps.put(13,info_huge);
+    	bitmaps.put(14,info_armagedon);
+    	bitmaps.put(15,info_high_gravity);
+    	bitmaps.put(16,info_low_gravity);
+    	bitmaps.put(17,info_money_rain);
+    	bitmaps.put(18,explosion_bmp);
+    	bitmaps.put(19,heart_bmp);
+    	bitmaps.put(20,lifebar_bmp);
+    	bitmaps.put(21,player_bmp);
+    	bitmaps.put(22,mosteroid_bmp);
+    	bitmaps.put(23,spaceShip_bmp);
+
+    	bitmapProperties = new int[][]{	{3,4},	//asteroid
+    									{1,1},	//money
+    									{1,1},	//upgrade
+    									{1,1},	//earth
+    									{1,1},	//thorn
+    									{1,1},	//background
+    									{4,4},	//smoke
+    									{1,1},	//INFO.speed
+    									{1,1},	//INFO.x2
+    									{1,1},	//INFO.x3
+    									{1,1},	//INFO.x4
+    									{1,1},	//INFO
+    									{1,1},	//INFO.tiny
+    									{1,1},	//INFO.huge
+    									{1,1},	//INFO.armagedon
+    									{1,1},	//INFO.highGravity
+    									{1,1},	//INFO.lowGravity
+    									{1,1},	//INFO.moneyRain
+    									{4,4},	//explosion
+    									{1,1},	//heart
+    									{1,1},	//lifebar
+    									{1,1},	//player
+    									{3,4},	//moneyAsteroid
+    									{1,1},	//spaceship
+    									};
+    	
     	Log.d("START PROGRAMU", "=============================================");
     	Log.d("==============", "=============================================");
     	Log.d("START PROGRAMU", "=============================================");
@@ -279,47 +337,10 @@ public class GameView extends SurfaceView{
     	player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
     	player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
     	
-//    	Asteroid a1 = new Asteroid(flyingObjects, -50,		850, 	1, 		90, 	5, 		10,		1);
-//    	Asteroid a2 = new Asteroid(flyingObjects, -200, 	500, 	2, 		0, 		5, 		10,		1);
-//    	Asteroid a3 = new Asteroid(flyingObjects, 30, 		700, 	1, 		40, 	5, 		10,		1);
-//    	
-//    	Money m1 = new Money	(flyingObjects, -100, 	-100, 	1, 		0, 		50, 	10);
-//    	Money m2 = new Money	(flyingObjects, 235, 	650, 	0, 		0, 		50, 	10);
-//    	Money m3 = new Money	(flyingObjects, 40, 		500, 	0, 		0, 		50, 	10);
-//    	Money m4 = new Money	(flyingObjects, 420, 	450, 	0, 		0, 		50, 	10);
-//    													//x		y		speed	angle	upgrade type
-//    	Upgrade  u1 = new Upgrade(flyingObjects, 400, 		-80, 	2, 		0, 		upgradeType.life);
-//    	Upgrade  u2 = new Upgrade(flyingObjects, 400, 		600, 	1, 		0, 		upgradeType.life);
-//    	Upgrade  u3 = new Upgrade(flyingObjects, 20, 		200, 	1, 		0, 		upgradeType.life);
-//    	
-//    	flyingObjects.add(a1);
-//    	flyingObjects.add(a2);
-//    	flyingObjects.add(a3);
-//    	
-//    	flyingObjects.add(m1);
-//    	flyingObjects.add(m2);
-//    	flyingObjects.add(m3);
-//    	flyingObjects.add(m4);
-//    	
-//    	flyingObjects.add(u1);
-//    	flyingObjects.add(u2);
-//    	flyingObjects.add(u3);
-    	
     	for(int i = 0; i < flyingObjects.size(); i++){
     		flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
-    		
-    		if(flyingObjects.get(i) instanceof Asteroid){
-				flyingObjects.get(i).setBmpData(a_columns, a_rows);
-			}
-			else if(flyingObjects.get(i) instanceof Money){
-				flyingObjects.get(i).setBmpData(m_columns, m_rows);
-			}
-			else if(flyingObjects.get(i) instanceof Upgrade){
-				flyingObjects.get(i).setBmpData(u_columns, u_rows);
-			}
-			else if(flyingObjects.get(i) instanceof GroundEnemy){
-				flyingObjects.get(i).setBmpData(t_columns, t_rows);
-			}
+    		//klatki animacji dla obiektow latajacych
+    		flyingObjects.get(i).setFrames(bitmapProperties[flyingObjects.get(i).getID()][0] * bitmapProperties[flyingObjects.get(i).getID()][1] - 1);
     	}
     	player.setFrames((p_columns * p_rows) - 1);
     	if(temp_player != null){
@@ -401,20 +422,24 @@ public class GameView extends SurfaceView{
 
     	//rysowanie statku kosmicznego
     	if(ship != null){
-    		drawSprite(canvas, (int)ship.getX(), (int)ship.getY(), 1, 1, ship.getWidth(), ship.getHeight(), 0, spaceShip_bmp, ship.getAngle(), ship.getScale());
+    		//drawSprite(canvas, (int)ship.getX(), (int)ship.getY(), 1, 1, ship.getWidth(), ship.getHeight(), 0, spaceShip_bmp, ship.getAngle(), ship.getScale());
+    		drawSSprite(canvas, (int)ship.getX(), (int)ship.getY(), ship.getID(), ship.getCurrentFrame(), ship.getAngle(), ship.getScale(), 255);
     		ship.move();
     		if(ship.getX() > this.area_w || ship.getY() > this.area_h) ship = null;
     	}
-    	drawSprite(canvas, (int)earth.getX(), (int)earth.getY(), e_columns, e_rows, earth_bmp.getWidth()/e_columns, earth_bmp.getHeight()/e_rows, earth.getCurrentFrame(), earth_bmp, 0, earth.getRadius()/100.0f);
+    	//drawSprite(canvas, (int)earth.getX(), (int)earth.getY(), e_columns, e_rows, earth_bmp.getWidth()/e_columns, earth_bmp.getHeight()/e_rows, earth.getCurrentFrame(), earth_bmp, 0, earth.getRadius()/100.0f);
+    	drawSSprite(canvas, (int)earth.getX(), (int)earth.getY(), earth.getID(), earth.getCurrentFrame(), 0, earth.getRadius()/100.0f, 255);
     	earth.update();
-    	drawSprite(canvas, (int)player.getX(), (int)player.getY(), p_columns, p_rows, player_bmp.getWidth()/p_columns, player_bmp.getHeight()/p_rows, player.getCurrentFrame(), player_bmp,0, (float)player.getRadius()/10.0f);
+    	//drawSprite(canvas, (int)player.getX(), (int)player.getY(), p_columns, p_rows, player_bmp.getWidth()/p_columns, player_bmp.getHeight()/p_rows, player.getCurrentFrame(), player_bmp,0, (float)player.getRadius()/10.0f);
+    	drawSSprite(canvas, (int)player.getX(), (int)player.getY(), player.getID(), player.getCurrentFrame(), 0, (float)player.getRadius()/10.0f, 255);
     	player.update();
     	//player.onDraw(canvas);
     	
     	//rysowanie dymu
     	for(int i = temps.size()-1; i >=0; i--){
     		if(temps.get(i).getType() == tempType.smoke){
-    			drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, 1.0f);
+    			//drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), s_columns, s_rows, smoke_bmp.getWidth()/s_columns, smoke_bmp.getHeight()/s_rows, temps.get(i).getCurrentFrame(), smoke_bmp, 0, 1.0f);
+    			drawSSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), temps.get(i).getID(), temps.get(i).getCurrentFrame(), 0, 1.0f, 255);
     		}
     	}
 
@@ -439,10 +464,12 @@ public class GameView extends SurfaceView{
     			//rysowanie asteroid
     			if(flyingObjects.get(i) instanceof Asteroid){
     				if(flyingObjects.get(i) instanceof MoneyAsteroid){
-        				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	moa_columns, moa_rows,  mosteroid_bmp.getWidth()/moa_columns, mosteroid_bmp.getHeight()/moa_rows,  flyingObjects.get(i).getCurrentFrame(), mosteroid_bmp, (float)flyingObjects.get(i).getAngle(), 0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/6.0f);
+        				//drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	moa_columns, moa_rows,  mosteroid_bmp.getWidth()/moa_columns, mosteroid_bmp.getHeight()/moa_rows,  flyingObjects.get(i).getCurrentFrame(), mosteroid_bmp, (float)flyingObjects.get(i).getAngle(), 0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/6.0f);
+        				drawSSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), ((MoneyAsteroid)flyingObjects.get(i)).getID(), flyingObjects.get(i).getCurrentFrame(), (float)flyingObjects.get(i).getAngle(), 0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/6.0f, 255);
         			}
     				else{
-    					drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(),  0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/6.0f);
+    					//drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), 	a_columns, a_rows,  asteroid_bmp.getWidth()/a_columns, asteroid_bmp.getHeight()/a_rows,  flyingObjects.get(i).getCurrentFrame(), asteroid_bmp, (float)flyingObjects.get(i).getAngle(),  0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/6.0f);
+    					drawSSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), ((Asteroid)flyingObjects.get(i)).getID(), flyingObjects.get(i).getCurrentFrame(), (float)flyingObjects.get(i).getAngle(), 0.5f + (float)((Asteroid)flyingObjects.get(i)).getSize()/6.0f, 255);
     				}
     			}
     			//rysowanie hajsu
@@ -452,10 +479,12 @@ public class GameView extends SurfaceView{
     			}
     			//rysowanie upgradeow
     			else if(flyingObjects.get(i) instanceof Upgrade){
-    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  u_columns, u_rows,  upgrade_bmp.getWidth()/u_columns, upgrade_bmp.getHeight()/u_rows,  flyingObjects.get(i).getCurrentFrame(), upgrade_bmp, (float)flyingObjects.get(i).getAngle(), 1.0f);
+    				//drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  u_columns, u_rows,  upgrade_bmp.getWidth()/u_columns, upgrade_bmp.getHeight()/u_rows,  flyingObjects.get(i).getCurrentFrame(), upgrade_bmp, (float)flyingObjects.get(i).getAngle(), 1.0f);
+    				drawSSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), flyingObjects.get(i).getID(), flyingObjects.get(i).getCurrentFrame(), (float)flyingObjects.get(i).getAngle(), 1.0f, 255);
     			}
     			else if(flyingObjects.get(i) instanceof GroundEnemy){
-    				drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  t_columns, t_rows,  thorn_bmp.getWidth()/t_columns, thorn_bmp.getHeight()/t_rows,  flyingObjects.get(i).getCurrentFrame(), thorn_bmp, (float)flyingObjects.get(i).getAngle(), 1.0f);
+    				//drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  t_columns, t_rows,  thorn_bmp.getWidth()/t_columns, thorn_bmp.getHeight()/t_rows,  flyingObjects.get(i).getCurrentFrame(), thorn_bmp, (float)flyingObjects.get(i).getAngle(), 1.0f);
+    				drawSSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), flyingObjects.get(i).getID(), flyingObjects.get(i).getCurrentFrame(), (float)flyingObjects.get(i).getAngle(), 1.0f, 255);
     			}
     			//update (klatki ++)
     			flyingObjects.get(i).update();
@@ -545,7 +574,8 @@ public class GameView extends SurfaceView{
     	//rysowanie wybuchow
     	for(int i = temps.size()-1; i >=0; i--){
     		if(temps.get(i).getType() == tempType.explosion){
-    			drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), ex_columns, ex_rows, explosion_bmp.getWidth()/ex_columns, explosion_bmp.getHeight()/ex_rows, temps.get(i).getCurrentFrame(), explosion_bmp, 0, 1.0f);
+    			//drawSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), ex_columns, ex_rows, explosion_bmp.getWidth()/ex_columns, explosion_bmp.getHeight()/ex_rows, temps.get(i).getCurrentFrame(), explosion_bmp, 0, 1.0f);
+    			drawSSprite(canvas, (int)temps.get(i).getX(),  (int)temps.get(i).getY(), temps.get(i).getID(), temps.get(i).getCurrentFrame(), 0, 1.0f, 255);
     		}
     		temps.get(i).update();
     	}
@@ -554,9 +584,10 @@ public class GameView extends SurfaceView{
     		drawUpgrade(canvas, info_bmp);
     	}
     	//rysowanie paska zycia
-    	drawSprite(canvas, 246, 720, 1, 1, 128, 48, 0, lifebar_bmp, 0, 1.0f);
+    	//drawSprite(canvas, 246, 720, 1, 1, 128, 48, 0, lifebar_bmp, 0, 1.0f);
+		drawSSprite(canvas, 246, 720, 20, 0, 0, 1.0f, 255);
     	for(int i = 0; i < player.getLife(); i++){
-    		drawSprite(canvas, 214 + (i * 34), 720, 1, 1, 32, 32, 0, heart_bmp, 0, 1.0f);
+    		drawSSprite(canvas, 214 + (i * 34), 720, 19, 0, 0, 1.0f, 255);
     	}
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
 			//sprawdzamy czy obiekt "zyje"
@@ -593,19 +624,8 @@ public class GameView extends SurfaceView{
     		//zaktualizowanie danych
     		for(int i = 0; i < flyingObjects.size(); i++){
     			flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
-    			
-    			if(flyingObjects.get(i) instanceof Asteroid){
-    				flyingObjects.get(i).setBmpData(a_columns, a_rows);
-    			}
-    			else if(flyingObjects.get(i) instanceof Money){
-    				flyingObjects.get(i).setBmpData(m_columns, m_rows);
-    			}
-    			else if(flyingObjects.get(i) instanceof Upgrade){
-    				flyingObjects.get(i).setBmpData(u_columns, u_rows);
-    			}
-    			else if(flyingObjects.get(i) instanceof MoneyAsteroid){
-    				flyingObjects.get(i).setBmpData(a_columns, a_rows);
-    			}
+    			//klatki animacji dla obiektow latajacych
+        		flyingObjects.get(i).setFrames(bitmapProperties[flyingObjects.get(i).getID()][0] * bitmapProperties[flyingObjects.get(i).getID()][1] - 1);
     		}
     		//jesli gracz odpalil generator z armagedonem lub money_rainem wylacz je
 	    	if(player.isArmagedon()){
@@ -641,6 +661,8 @@ public class GameView extends SurfaceView{
     		//nadanie zaktualizowanych statystyk ziemi obiektom latajacym
     		for(int i = flyingObjects.size()-1; i >= 0; i--){
     			flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
+    			//klatki animacji dla obiektow latajacych
+        		flyingObjects.get(i).setFrames(bitmapProperties[flyingObjects.get(i).getID()][0] * bitmapProperties[flyingObjects.get(i).getID()][1] - 1);
     			if(!flyingObjects.get(i).isOn_ground()){
         			flyingObjects.get(i).resolveGravity(earth.getGravity(), earth.getMass(), earth.getRadius());
         		}
@@ -838,6 +860,45 @@ public class GameView extends SurfaceView{
     	Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
 		Rect dst = new Rect(x - width/2, y - height/2, x + width/2, y + height/2);
 		canvas.drawBitmap(bmp, src, dst, paint);
+		
+		canvas.restore();
+    }
+    
+    public void drawSSprite(Canvas canvas, int x, int y, int ID, int currentFrame, float angle, float scale, int alpha){
+    	//bledne ID
+    	if(ID < 0) return;
+    	
+    	int columns = bitmapProperties[ID][1];
+    	int rows = bitmapProperties[ID][0];
+    	int width  = bitmaps.get(ID).getWidth()/bitmapProperties[ID][1];
+    	int height = bitmaps.get(ID).getHeight()/bitmapProperties[ID][0];
+    	//rotacja
+		canvas.save();
+		canvas.rotate(angle, x, y);
+		
+		//skala
+		canvas.scale(scale, scale, x, y);
+		
+    	int srcX = 0;
+    	int srcY = 0;
+    	int row;
+    	srcX = (currentFrame % (columns)) * width;
+    	if(rows % 2 == 0){
+    		row = currentFrame / (rows);
+    	}
+    	else{
+    		row = currentFrame / (rows + 1);
+    	}
+        srcY = row * height;
+        
+    	Rect src = new Rect(srcX, srcY, srcX + width, srcY + height);
+		Rect dst = new Rect(x - width/2, y - height/2, x + width/2, y + height/2);
+		
+		paint.setAlpha(alpha);
+		
+		canvas.drawBitmap(bitmaps.get(ID), src, dst, paint);
+		
+		paint.reset();
 		
 		canvas.restore();
     }
@@ -1077,6 +1138,7 @@ public class GameView extends SurfaceView{
 	    	earth.setDefault_radius(earth.getRadius());
 	    	//tekstura
 			earth_bmp = BitmapFactory.decodeResource(getResources(), settings.getEarthStats()[settings.getEarth()][0]);
+			bitmaps.put(3, earth_bmp);
 	    	
 	    	//GRACZ
 			//statystyki ziemi
@@ -1099,6 +1161,8 @@ public class GameView extends SurfaceView{
 			//OBIEKTY LATAJACE
 			for(int i = 0; i < flyingObjects.size(); i++){
 				flyingObjects.get(i).set_earth(earth.getX(), earth.getY(), earth.getRadius());
+				//klatki animacji dla obiektow latajacych
+	    		flyingObjects.get(i).setFrames(bitmapProperties[flyingObjects.get(i).getID()][0] * bitmapProperties[flyingObjects.get(i).getID()][1] - 1);
 			}
     	}
     }

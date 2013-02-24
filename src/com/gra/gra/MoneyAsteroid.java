@@ -65,4 +65,9 @@ public class MoneyAsteroid extends Asteroid{
 		}
 		return money;
 	}
+	
+	@Override
+	public int getID() {
+		return 22;
+	}
 }

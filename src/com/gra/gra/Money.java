@@ -124,4 +124,9 @@ public class Money extends FlyingObject {
 	public void setPoints(int points){
 		this.points = points;
 	}
+
+	@Override
+	public int getID() {
+		return 1;
+	}
 }

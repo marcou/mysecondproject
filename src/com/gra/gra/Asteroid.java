@@ -95,4 +95,8 @@ public class Asteroid extends FlyingObject {
 	public void setExploded(boolean exploded) {
 		this.exploded = exploded;
 	}
+	@Override
+	public int getID() {
+		return 0;
+	}
 }

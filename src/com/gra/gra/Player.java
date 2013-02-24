@@ -706,5 +706,7 @@ public class Player implements Serializable{
 		this.upgradeLevel = upgradeLevel;
 	}
 	
-	
+	public int getID(){
+		return 21;
+	}
 }

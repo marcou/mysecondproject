@@ -253,5 +253,10 @@ public class Upgrade extends FlyingObject {
 	public void setPlayer_life(int player_life) {
 		this.player_life = player_life;
 	}
+
+	@Override
+	public int getID() {
+		return 2;
+	}
 	
 }

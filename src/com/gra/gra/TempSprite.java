@@ -117,5 +117,10 @@ public class TempSprite implements Serializable{
 	public void setType(tempType type) {
 		this.type = type;
 	} 
-	
+
+	public int getID(){
+		if(type == tempType.explosion) return 18;
+		else if(type == tempType.smoke) return 6;
+		return -1;
+	}
 }

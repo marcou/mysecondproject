@@ -45,9 +45,6 @@ public abstract class FlyingObject implements Serializable{
 	
 	private int life_timer = 10;	//po jakim czasie od uderzenia w ziemie obiekt zniknie
 
-	private int columns = 1;
-	private int rows = 1;
-
 	private int currentFrame = 0;
 	private int frames;
 	
@@ -76,6 +73,8 @@ public abstract class FlyingObject implements Serializable{
 	
 	//tu odbywa sie animacja sprajta i walenie konia
 	public abstract void update();
+	
+	public abstract int getID();
 	
 	public void set_earth(float x, float y, int radius){
 		this.earth_x = x;
@@ -327,12 +326,6 @@ public abstract class FlyingObject implements Serializable{
 
 	public void setFrames(int frames) {
 		this.frames = frames;
-	}
-
-	public void setBmpData(int a_columns, int a_rows) {
-		this.columns = a_columns;
-		this.rows = a_rows;
-		this.frames = (a_columns * a_rows) - 1;
 	}
 	
 }

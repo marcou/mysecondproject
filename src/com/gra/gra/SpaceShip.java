@@ -92,5 +92,12 @@ public class SpaceShip {
 		this.scale = scale;
 	}
 	
+	public int getID(){
+		return 23;
+	}
+
+	public int getCurrentFrame() {
+		return 0;
+	}
 	
 }
