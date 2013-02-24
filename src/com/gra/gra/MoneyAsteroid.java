@@ -52,14 +52,14 @@ public class MoneyAsteroid extends Asteroid{
 		}
 		//kolizja asteroidy z pieniedzmi
 		else if(object instanceof Money){
-			//((Money) object).setLife(0);
+			((Money) object).setLife(0);
 		}
 	}
 
 	public ArrayList<FlyingObject> getMoney(float x, float y, double angle){
 		ArrayList<FlyingObject> money = new ArrayList<FlyingObject>();
 		Random rand = new Random();
-		for(int i = 0; i <= quota; i++){//super.getSize(); i++){	//size w tym przydpadku informuje ile monet zostanie wyrzuconych w kosmos
+		for(int i = 0; i <= quota * super.getSize(); i++){//super.getSize(); i++){	//size w tym przydpadku informuje ile monet zostanie wyrzuconych w kosmos
 			Money m = new Money(money, x, y, (double)(rand.nextInt(10) + 10), (double)(rand.nextInt(90) - 45 + angle), value, 5);
 			money.add(m);
 		}

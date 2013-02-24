@@ -96,7 +96,7 @@ public class Generator {
     		money_value = 16;
     		
     		money_asteroid_count = 1;
-    		money_asteroid_quota = rand.nextInt(4) + 4;
+    		money_asteroid_quota = rand.nextInt(2) + 2;
     	}
     	else if(points <threshold_5){
     		asteroid_count = 4;
@@ -107,7 +107,7 @@ public class Generator {
     		money_value = 32;
     		
     		money_asteroid_count = 1;
-    		money_asteroid_quota = rand.nextInt(6) + 6;
+    		money_asteroid_quota = rand.nextInt(3) + 3;
     	}
     	else if(points <threshold_6){
     		asteroid_count = 4;
@@ -118,7 +118,7 @@ public class Generator {
     		money_value = 64;
     		
     		money_asteroid_count = 2;
-    		money_asteroid_quota = rand.nextInt(6) + 6;
+    		money_asteroid_quota = rand.nextInt(4) + 4;
     	}
     	else if(points <threshold_7){
     		asteroid_count = 4;
@@ -129,7 +129,7 @@ public class Generator {
     		money_value = 128;
     		
     		money_asteroid_count = 2;
-    		money_asteroid_quota = rand.nextInt(8) + 8;
+    		money_asteroid_quota = rand.nextInt(5) + 5;
     	}
     	else{
     		asteroid_count = 5;
@@ -140,7 +140,7 @@ public class Generator {
     		money_value = 256;
     		
     		money_asteroid_count = 3;
-    		money_asteroid_quota = rand.nextInt(10) + 10;
+    		money_asteroid_quota = rand.nextInt(6) + 6;
     	}
     	
     	if(armagedon && money_rain){
@@ -206,7 +206,7 @@ public class Generator {
 		for(int i = 0; i < money_asteroid_count; i++){
     		prop = calculateProperties();
 //    		MoneyAsteroid money_asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, money_asteroid_quota, money_value);
-    		MoneyAsteroid money_asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, 1, money_value, money_asteroid_quota);
+    		MoneyAsteroid money_asteroid = new MoneyAsteroid(objects, prop.getX(), prop.getY(), rand.nextInt(12), prop.getAngle(), 20, 5, money_asteroid_quota/6, money_value, money_asteroid_quota);
     		objects.add(money_asteroid);
     	}
 		return objects;

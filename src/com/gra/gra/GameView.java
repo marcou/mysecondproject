@@ -873,7 +873,11 @@ public class GameView extends SurfaceView{
     }
     
     public void showAchievementInfo(achievementType type){
-    	if(type == null) return;
+    	Log.d("GameView", "Pokazuje achievement");
+    	if(type == null){
+    		Log.d("GameView", "Jednak nie");
+    		return;
+    	}
     	//wyzerowanie frame-a i life-a
     	info_current_frame = 0;
     	info_life = default_info_life;
@@ -998,12 +1002,12 @@ public class GameView extends SurfaceView{
     	//jesli gracz zyje
     	if(player.getLife() > 0){
 	    	//jesli gracz ma wiecej niz 10k skroc liczbe punktow
-	    	if(player.getPoints() > 10000){
+	    	if(player.getPoints() >= 10000){
 	    		//canvas.drawText("POINTS : " + player.getPoints()/1000 + " K", earth.getX() - 64, earth.getY(), paint);
 	    		canvas.drawText("POINTS : " + player.getPoints()/1000 + " K", xPosition, yPosition, paint);
 	    	}
 	    	//jesli gracz ma wiecej niz 10M skroc liczbe punktow
-	    	else if(player.getPoints() > 10000000){
+	    	else if(player.getPoints() >= 10000000){
 	    		//canvas.drawText("POINTS : " + player.getPoints()/1000000 + " M", earth.getX() - 64, earth.getY(), paint);
 	    		canvas.drawText("POINTS : " + player.getPoints()/1000000 + " M", xPosition, yPosition, paint);
 	    	}
