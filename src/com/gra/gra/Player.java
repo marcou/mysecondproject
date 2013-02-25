@@ -101,9 +101,9 @@ public class Player implements Serializable{
 	}
 	
 	public void onDraw(Canvas canvas){
-		Paint paint = new Paint();
-		paint.setColor(Color.YELLOW);
-		canvas.drawCircle(x, y, (float)radius, paint);
+//		Paint paint = new Paint();
+//		paint.setColor(Color.YELLOW);
+//		canvas.drawCircle(x, y, (float)radius, paint);
 		//dekrementacja tajmerow
 		if(timer > 0){
 			timer--;

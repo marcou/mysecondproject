@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import aasmieci.Ball;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -1219,7 +1220,7 @@ public class GameView extends SurfaceView{
 			this.settings=inputSettings;
 		}
 		else {
-			Log.d("GameView", "SETTINGSY ZJEBANE");
+			Log.d("GameView", "SETTINGSow nie ma");
 			this.settings = new UserSettings();
 		}
 		this.achievements=settings.getAchievements();
@@ -1237,6 +1238,20 @@ public class GameView extends SurfaceView{
 	 */
 	public UserSettings getSettings() {
 		return settings;
+	}
+
+	/**
+	 * @return the thorn
+	 */
+	public boolean isThorn() {
+		return thorn;
+	}
+
+	/**
+	 * @param thorn the thorn to set
+	 */
+	public void setThorn(boolean thorn) {
+		this.thorn = thorn;
 	}
 }
     

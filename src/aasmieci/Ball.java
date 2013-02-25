@@ -1,6 +1,8 @@
-package com.gra.gra;
+package aasmieci;
 
 import java.util.List;
+
+import com.gra.gra.GameView;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

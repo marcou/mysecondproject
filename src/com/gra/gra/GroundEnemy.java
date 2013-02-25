@@ -3,8 +3,6 @@ package com.gra.gra;
 import java.util.List;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 
 /**
  * 
@@ -15,7 +13,7 @@ import android.graphics.Paint;
 
 public class GroundEnemy extends FlyingObject{
 
-	private Paint paint;
+//	private Paint paint;
 	
 	private int speed;
 	
@@ -25,8 +23,8 @@ public class GroundEnemy extends FlyingObject{
 		
 		this.speed = (int)speed;
 		
-		this.paint = new Paint();
-		paint.setColor(Color.RED);
+//		this.paint = new Paint();
+//		paint.setColor(Color.RED);
 	}
 
 	@Override
@@ -59,7 +57,7 @@ public class GroundEnemy extends FlyingObject{
 	@Override
 	public void onDraw(Canvas canvas){
 		update();
-		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
+//		canvas.drawCircle(super.getX(), super.getY(), super.getRadius(), paint);
 	}
 
 	@Override

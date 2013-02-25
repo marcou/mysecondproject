@@ -33,12 +33,12 @@ public class Earth {
 	private int radius; 	//promien ziemi
 	private double gravity;	//stala grawitacyjna
 	
-	private Bitmap bmp;
+//	private Bitmap bmp;
 	
 	private int currentFrame = 0;
 	private int frames = 0;	//zmienic kiedy bedzie juz animowana kula ziemska
 	
-	private Paint paint;
+//	private Paint paint;
 	
 	
 	public Earth(float x, float y, int mass, int radius, double gravity){
@@ -51,8 +51,8 @@ public class Earth {
 		this.default_gravity = gravity;
 		this.default_radius = radius;
 		
-		this.paint = new Paint();
-		paint.setColor(Color.LTGRAY);
+//		this.paint = new Paint();
+//		paint.setColor(Color.LTGRAY);
 	}
 	public float getX() {
 		return x;
@@ -84,12 +84,12 @@ public class Earth {
 	public void setGravity(double gravity) {
 		this.gravity = gravity;
 	}
-	public Paint getPaint() {
-		return paint;
-	}
-	public void setPaint(Paint paint) {
-		this.paint = paint;
-	}
+//	public Paint getPaint() {
+//		return paint;
+//	}
+//	public void setPaint(Paint paint) {
+//		this.paint = paint;
+//	}
 	
 	public boolean checkCollision(float x, float y){
 		Log.d("Earth", "this.x : " + this.x);
@@ -104,7 +104,7 @@ public class Earth {
 	}
 	
 	public void onDraw(Canvas canvas){
-		canvas.drawCircle(x, y, radius, paint);
+//		canvas.drawCircle(x, y, radius, paint);
 		update();
 //		
 //		int srcX = 0;

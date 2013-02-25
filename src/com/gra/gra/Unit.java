@@ -1,6 +1,5 @@
 package com.gra.gra;
 
-import android.graphics.Paint;
 
 /**
  * 
