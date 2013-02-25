@@ -111,7 +111,6 @@ public class GameView extends SurfaceView{
 	private boolean info = false;
 	
 	private Bitmap info_bmp;
-	
 	private Bitmap info_speed;
 	private Bitmap info_x2;
 	private Bitmap info_x3;
