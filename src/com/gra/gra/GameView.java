@@ -592,7 +592,9 @@ public class GameView extends SurfaceView{
     		
     		//jesli gracz ma pelnego lajfa i ponad 10k punktow to ma szanse, ¿e pojawi sie statek kosmiczny
     		if(spaceShipReady && player.getPoints() >= 10 && player.getLife() == player.getMaxLife()){
-    			ship = new SpaceShip(-50, 100, 128, 128);
+    			ship = new SpaceShip(-100, -100, 128, 128);
+    			ship.setBounds(area_x, area_y, area_w, area_h);
+    			ship.calculateProperties();
     			spaceShipReady = false;
     		}
     		

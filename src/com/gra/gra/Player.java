@@ -56,7 +56,7 @@ public class Player implements Serializable{
 	private int earth_radius;	//promien okregu po jakim ma siê poruszaæ nasz obiekt
 	private boolean on_ground = true;	//czy dotyka ziemi
 	
-	private long points = 10000;	//punkty gracza
+	private long points = 10;	//punkty gracza
 	private int multiplier = 1;		//mnoznik punktow
 	
 	private boolean armagedon = false;
@@ -160,8 +160,8 @@ public class Player implements Serializable{
 	public void immortalityGlow(){
 		if(alphaDown){
 			alpha -= 40;
-			if(alpha < 0) {
-				alpha = 0;
+			if(alpha < 100) {
+				alpha = 100;
 				alphaDown = false;
 			}
 		}
@@ -543,7 +543,7 @@ public class Player implements Serializable{
 	}
 
 	public void setMoney_rain_timer(long money_rain_timer) {
-		this.money_rain_timer = money_rain_timer + (this.upgradeLevel * 20);
+		this.money_rain_timer = money_rain_timer + this.upgradeLevel;
 	}
 	
 	public long getImmortality_timer() {
