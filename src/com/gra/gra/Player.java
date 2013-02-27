@@ -371,7 +371,7 @@ public class Player implements Serializable{
 			if(((Upgrade) object).isMoney_rain()){
 				money_rain = true;
 				//money_rain_timer = 
-				setMoney_rain_timer(((Upgrade) object).getTime());
+				setMoney_rain_timer(((Upgrade) object).getTime() +  + this.upgradeLevel);
 			}
 			((Upgrade) object).setLife(0);
 		}
@@ -543,7 +543,7 @@ public class Player implements Serializable{
 	}
 
 	public void setMoney_rain_timer(long money_rain_timer) {
-		this.money_rain_timer = money_rain_timer + this.upgradeLevel;
+		this.money_rain_timer = money_rain_timer;
 	}
 	
 	public long getImmortality_timer() {

@@ -64,82 +64,84 @@ public class Generator {
     	
     	if(points < threshold_1){
     		asteroid_count = 1;
-    		money_count = 4;
+    		money_count = 5;
     		//upgrade_count = 0;
     		
     		asteroid_difficulty = 1;
     		money_value = 1;
     	}
     	else if(points <threshold_2){
-    		asteroid_count = 1;
-    		money_count = 5;
+    		asteroid_count = 2;
+    		money_count = 6;
     		//upgrade_count = 0;
     		
     		asteroid_difficulty = 1;
     		money_value = 4;
     	}
     	else if(points <threshold_3){
-    		asteroid_count = 2;
+    		asteroid_count = 3;
     		money_count = 6;
     		//upgrade_count = playerUpgradeMultiplier/4;
     		
     		asteroid_difficulty = 2;
     		money_value = 8;
     		
+    		money_asteroid_count = 1;
+    		money_asteroid_quota = rand.nextInt(2) + 2;
     	}
     	else if(points <threshold_4){
-    		asteroid_count = 3;
+    		asteroid_count = 4;
     		money_count = 10;
     		//upgrade_count = playerUpgradeMultiplier/3;
     		
     		asteroid_difficulty = 3;
     		money_value = 16;
     		
-    		money_asteroid_count = 1;
+    		money_asteroid_count = 2;
     		money_asteroid_quota = rand.nextInt(2) + 2;
     	}
     	else if(points <threshold_5){
-    		asteroid_count = 4;
+    		asteroid_count = 5;
     		money_count = 8;
     		//upgrade_count = playerUpgradeMultiplier/3;
     		
     		asteroid_difficulty = 4;
     		money_value = 32;
     		
-    		money_asteroid_count = 1;
+    		money_asteroid_count = 2;
     		money_asteroid_quota = rand.nextInt(3) + 3;
     	}
     	else if(points <threshold_6){
-    		asteroid_count = 4;
+    		asteroid_count = 6;
     		money_count = 6;
     		//upgrade_count = playerUpgradeMultiplier/3 + 1;
     		
     		asteroid_difficulty = 5;
     		money_value = 64;
     		
-    		money_asteroid_count = 2;
+    		money_asteroid_count = 3;
     		money_asteroid_quota = rand.nextInt(4) + 4;
     	}
     	else if(points <threshold_7){
-    		asteroid_count = 4;
+    		asteroid_count = 7;
     		money_count = 4;
     		//upgrade_count = playerUpgradeMultiplier/3 + 1;
     		
     		asteroid_difficulty = 7;
     		money_value = 128;
     		
-    		money_asteroid_count = 2;
+    		money_asteroid_count = 3;
     		money_asteroid_quota = rand.nextInt(5) + 5;
     	}
     	else{
-    		asteroid_count = 5;
+    		asteroid_count = 8;
     		money_count = 2;
     		//upgrade_count = playerUpgradeMultiplier/2 + 1;
     		
     		asteroid_difficulty = 10;
     		money_value = 256;
     		
-    		money_asteroid_count = 3;
+    		money_asteroid_count = 4;
     		money_asteroid_quota = rand.nextInt(6) + 6;
     	}
     	
