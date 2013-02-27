@@ -734,7 +734,13 @@ public class Player implements Serializable{
 		this.upgradeLevel = upgradeLevel;
 	}
 	
-	
+	public double getDefault_speed() {
+		return default_speed;
+	}
+
+	public void setDefault_speed(double default_speed) {
+		this.default_speed = default_speed;
+	}
 	
 	public int getAlpha() {
 		return alpha;

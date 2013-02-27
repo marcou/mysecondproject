@@ -1122,6 +1122,7 @@ public class GameView extends SurfaceView{
 			player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
 			//predkosc gracza
 			player.setSpeed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 1.0);
+			player.setDefault_speed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 1.0);
 			//zycie gracza
 			player.setLife(settings.getPlayerStats()[settings.getCharacter()][2]);
 			player.setMaxLife(settings.getPlayerStats()[settings.getCharacter()][2]);
