@@ -1,74 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-android:id="@+id/widget32"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
->
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget32"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
-
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentLeft="true"
+        android1:layout_alignParentRight="true"
+        android1:layout_alignParentTop="true"
+        android1:orientation="vertical" >
+
         <TextView
-            android:id="@+id/ScoreTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:text="@string/score"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
+            android1:id="@+id/ScoreTitle"
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_gravity="center_vertical|center_horizontal"
+            android1:text="@string/score"
+            android1:textAppearance="?android:attr/textAppearanceLarge" />
+
         <TextView
-            android:id="@+id/Score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="35dp" android:layout_gravity="center_vertical|center_horizontal"/>
+            android1:id="@+id/Score"
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_gravity="center_vertical|center_horizontal"
+            android1:text="Large Text"
+            android1:textAppearance="?android:attr/textAppearanceLarge"
+            android1:textSize="35dp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_marginTop="50dp">
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_marginTop="50dp"
+            android1:orientation="vertical" >
         </LinearLayout>
+
+        <Button
+            android1:id="@+id/Resume"
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_marginLeft="60dp"
+            android1:layout_marginRight="60dp"
+            android1:layout_weight="0.20"
+            android1:background="@drawable/resume" />
+
+        <LinearLayout
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_marginTop="50dp"
+            android1:orientation="vertical" >
+        </LinearLayout>
+
+        <Button
+            android1:id="@+id/StartNew"
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_marginLeft="60dp"
+            android1:layout_marginRight="60dp"
+            android1:layout_weight="0.20"
+            android1:background="@drawable/newgame" />
+
+        <LinearLayout
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_marginTop="50dp"
+            android1:orientation="vertical" >
+        </LinearLayout>
+
+        <Button
+            android1:id="@+id/Options"
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_marginLeft="60dp"
+            android1:layout_marginRight="60dp"
+            android1:layout_weight="0.17"
+            android1:background="@drawable/options"
+            android1:text=" " />
 
-        <Button
-            android:id="@+id/Resume"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="@drawable/resume" android:layout_marginLeft="60dp" android:layout_marginRight="60dp"/>
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_marginTop="50dp">
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/StartNew"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="@drawable/newgame" android:layout_marginRight="60dp" android:layout_marginLeft="60dp"/>
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content"
+            android1:layout_weight="0.45"
+            android1:orientation="vertical" >
+
+            <RadioGroup
+                android1:id="@+id/mainMenu_radioButtons"
+                android1:layout_width="wrap_content"
+                android1:layout_height="wrap_content" android1:clickable="true">
+
+                <RadioButton
+                    android1:id="@+id/mainMenu_radioButton1"
+                    android1:layout_width="wrap_content"
+                    android1:layout_height="wrap_content"
+                    android1:checked="true"
+                    android1:text="0 points" />
+
+                <RadioButton
+                    android1:id="@+id/mainMenu_radioButton2"
+                    android1:layout_width="wrap_content"
+                    android1:layout_height="wrap_content"
+                    android1:text="1000 points" android1:checked="false"/>
+
+                <RadioButton
+                    android1:id="@+id/mainMenu_radioButton3"
+                    android1:layout_width="wrap_content"
+                    android1:layout_height="wrap_content"
+                    android1:text="10k points" android1:checked="false"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_marginTop="50dp">
+            </RadioGroup>
+
         </LinearLayout>
-
-        <Button
-            android:id="@+id/Options"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.17"
-            android:background="@drawable/options"
-            android:text=" " android:layout_marginLeft="60dp" android:layout_marginRight="60dp"/>
 
     </LinearLayout>
 

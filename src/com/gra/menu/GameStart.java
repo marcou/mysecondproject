@@ -6,7 +6,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
+import com.gra.R;
 import com.gra.gra.GameView;
 
 import com.gra.zapisy.SaveContainer;
@@ -18,6 +22,8 @@ public class GameStart extends Activity {
 	GameView view;
 	
 	SaveService saver;
+	
+	public static int points = 0;
 	
 	boolean resuming = false;
 	
@@ -51,9 +57,8 @@ public class GameStart extends Activity {
         double h_factor = height/800.0;
         double w_factor = width/480.0;
         
-        
-        
         Bundle extras = getIntent().getExtras();
+        
         if(extras !=null) {
 			Log.d("GameActivity","byly extrasy");
 			
@@ -69,15 +74,16 @@ public class GameStart extends Activity {
 			}
 			else {
 				view = new GameView(this,w_factor, h_factor);
+				//view.getPlayer().setPoints(points);
 			}
-			
 			view.setSettings((UserSettings) extras.get("SETTINGS")) ;
+			Log.d("KURWISKO", "PUNKTY : " + points);
+			view.setPoints(points);
         }
         else {
         	view = new GameView(this,w_factor, h_factor);
+        	//view.getPlayer().setPoints(points);
         }
-        
-        
         setContentView(view);
         view.requestFocus();
     }

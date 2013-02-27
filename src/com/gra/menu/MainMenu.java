@@ -11,7 +11,9 @@ import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.gra.R;
 import com.gra.zapisy.SaveContainer;
@@ -39,6 +41,25 @@ public class MainMenu extends Activity {
 
         readState();
         Log.d("MainMenu","tworzenie menu");
+        
+        //grupa wyboru punktow
+        RadioGroup radioButtons = (RadioGroup) findViewById(R.id.mainMenu_radioButtons);
+        //zmiana wybranego progu punktowego z ktorym gracz startuje
+        radioButtons.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				switch(checkedId){
+		        case R.id.mainMenu_radioButton1:
+		        	GameStart.points = 0;
+		        	break;
+		        case R.id.mainMenu_radioButton2:
+		        	GameStart.points = 1000;
+		        	break;
+		        case R.id.mainMenu_radioButton3:
+		        	GameStart.points = 10000;
+		        	break;
+		        }
+			}
+		});
         
         TextView scoreTitle = (TextView) findViewById(R.id.ScoreTitle);
         

@@ -33,7 +33,8 @@ public class GameView extends SurfaceView{
 	/***********************************/
 	 private boolean DEBUG_MODE = false;
 	/***********************************/
-	 
+	//punkty startowe gracza
+	private int startPoints;
 	 
 	private float w_factor;
 	private float h_factor;
@@ -1121,13 +1122,15 @@ public class GameView extends SurfaceView{
 			player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
 			player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
 			//predkosc gracza
-			player.setSpeed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 1.0);
+			player.setSpeed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 0.7);
 			player.setDefault_speed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 1.0);
 			//zycie gracza
 			player.setLife(settings.getPlayerStats()[settings.getCharacter()][2]);
 			player.setMaxLife(settings.getPlayerStats()[settings.getCharacter()][2]);
 			//upgrady gracza
 			player.setUpgradeLevel(settings.getPlayerStats()[settings.getCharacter()][3]);
+			//punkty startowe gracza
+			player.setPoints(startPoints);
 			
 			//GENERATOR
 			generator.setPlayerUpgradeMultiplier(settings.getPlayerStats()[settings.getCharacter()][3]);
@@ -1254,6 +1257,13 @@ public class GameView extends SurfaceView{
 	 */
 	public void setThorn(boolean thorn) {
 		this.thorn = thorn;
+	}
+	/**
+	 * 
+	 * @param punkty startowe
+	 */
+	public void setPoints(int points) {
+		this.startPoints = points;
 	}
 }
     
