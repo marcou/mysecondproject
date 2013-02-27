@@ -35,7 +35,9 @@ public class GameView extends SurfaceView{
 	/***********************************/
 	//punkty startowe gracza
 	private int startPoints;
-	 
+	//gracz skonczyl gre
+	private boolean playerFinishedGame = false;
+	
 	private float w_factor;
 	private float h_factor;
 	
@@ -1070,6 +1072,10 @@ public class GameView extends SurfaceView{
     	}
     	else{
     		achievements.addDeath();
+    		if(!playerFinishedGame){
+    			settings.addGamesPlayed();
+    			playerFinishedGame = true;
+    		}
     		canvas.drawText("UMARLES! " , earth.getX() - 32, earth.getY() - 32, paint); 
     		canvas.drawText("ZDOBYLES : " + player.getPoints()+ " PUNKTOW", earth.getX() - 64, earth.getY(), paint);
     		playermoving = false;

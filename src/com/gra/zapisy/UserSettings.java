@@ -39,7 +39,7 @@ public class UserSettings implements Serializable {
 		earth = 0;
 		accelerometer = false;
 		invisibleButtons = true;
-		progress = 100;
+		progress = 0;
 		maxProgress = 1000;
 		gamesPlayed = 0;
 		score = 0;
@@ -108,6 +108,11 @@ public class UserSettings implements Serializable {
 
 	public void setMaxProgress(int maxProgress) {
 		this.maxProgress = maxProgress;
+	}
+	
+	//Metoda dodajaca rozegrana gre (tylko keidy gracz zginie liczba gier jest inkrementowana
+	public void addGamesPlayed(){
+		gamesPlayed++;
 	}
 	
 	//Metoda zwracaj¹ca tablice z bitmapami postaci/planet oraz wlasciwowsciami dla danej postaci/planety
@@ -210,6 +215,14 @@ public class UserSettings implements Serializable {
 
 	public void setScore(long score) {
 		this.score = score;
+	}
+
+	public int getGamesPlayed() {
+		return gamesPlayed;
+	}
+
+	public void setGamesPlayed(int gamesPlayed) {
+		this.gamesPlayed = gamesPlayed;
 	}
 	
 }
