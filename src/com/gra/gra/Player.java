@@ -141,7 +141,7 @@ public class Player implements Serializable{
 			this.sucking_range = default_sucking_range;
 		}
 		if(immortality_timer > 0){
-			immortalityGlow();
+			if(life > 0) immortalityGlow();
 			immortality_timer--;
 		}
 		else{
@@ -390,7 +390,7 @@ public class Player implements Serializable{
 	}
 	
 	public void setPoints(long points){
-		this.points = points;
+		if(life > 0) this.points = points;
 	}
 	public long getPoints(){
 		return points;

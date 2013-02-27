@@ -588,7 +588,8 @@ public class GameView extends SurfaceView{
     	if(world_timer <= 0){
     		resetTimer();
     		//dodaj graczowi punkty za generacje (przezycie kolejnych x sekund)
-    		player.setPoints(player.getPoints() + 1);
+    		//punkte zalezne sa od wielkosci ziemi (im mniejsza tym wiecej)
+    		player.setPoints(player.getPoints() + (6 - settings.getEarthStats()[settings.getEarth()][2]) * settings.getEarthStats()[settings.getEarth()][1]/2);
     		
     		flyingObjects.addAll(generator.generate(player.getPoints(), player.isArmagedon(), player.isMoney_rain()));
     		
@@ -1128,7 +1129,7 @@ public class GameView extends SurfaceView{
 			player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
 			player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
 			//predkosc gracza
-			player.setSpeed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 0.7);
+			player.setSpeed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 0.8 - (settings.getEarthStats()[settings.getEarth()][2])/2);
 			player.setDefault_speed(player.getSpeed());
 			//zycie gracza
 			player.setLife(settings.getPlayerStats()[settings.getCharacter()][2]);
