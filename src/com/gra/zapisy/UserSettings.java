@@ -39,7 +39,7 @@ public class UserSettings implements Serializable {
 		earth = 0;
 		accelerometer = false;
 		invisibleButtons = true;
-		progress = 0;
+		progress = 1000;
 		maxProgress = 1000;
 		gamesPlayed = 0;
 		score = 0;

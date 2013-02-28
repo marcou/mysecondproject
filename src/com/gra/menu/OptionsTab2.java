@@ -69,7 +69,8 @@ public class OptionsTab2 extends Activity{
         //postep gracza
         progress = (ProgressBar) findViewById(R.id.tab1_playerProgress);
         progress.setMax(Options.settings.getMaxProgress());
-        Options.settings.countProgress();
+        //Wlaczyc jak juz beda dzialaly achievementy tak jak powinny
+        //Options.settings.countProgress();
         setValue(progress, Options.settings.getProgress(), progress.getMax());
         Log.d("OptionsTab2", "Progress :" + Options.settings.getProgress());
         Log.d("OptionsTab2", "GamesPLayed :" + Options.settings.getGamesPlayed());

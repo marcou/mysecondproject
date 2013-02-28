@@ -408,7 +408,7 @@ public class GameView extends SurfaceView{
     	drawSSprite(canvas, (int)earth.getX(), (int)earth.getY(), earth.getID(), earth.getCurrentFrame(), 0, earth.getRadius()/100.0f, 255);
     	earth.update();
     	//drawSprite(canvas, (int)player.getX(), (int)player.getY(), p_columns, p_rows, player_bmp.getWidth()/p_columns, player_bmp.getHeight()/p_rows, player.getCurrentFrame(), player_bmp,0, (float)player.getRadius()/10.0f);
-    	drawSSprite(canvas, (int)player.getX(), (int)player.getY(), player.getID(), player.getCurrentFrame(), 0, (float)player.getRadius()/10.0f, player.getAlpha());
+    	drawSSprite(canvas, (int)player.getX(), (int)player.getY(), player.getID(), player.getCurrentFrame(), 90, (float)player.getRadius()/10.0f, player.getAlpha());
     	player.update();
     	//player.onDraw(canvas);
     	
@@ -461,7 +461,7 @@ public class GameView extends SurfaceView{
     			}
     			else if(flyingObjects.get(i) instanceof GroundEnemy){
     				//drawSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(),  t_columns, t_rows,  thorn_bmp.getWidth()/t_columns, thorn_bmp.getHeight()/t_rows,  flyingObjects.get(i).getCurrentFrame(), thorn_bmp, (float)flyingObjects.get(i).getAngle(), 1.0f);
-    				drawSSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), flyingObjects.get(i).getID(), flyingObjects.get(i).getCurrentFrame(), (float)flyingObjects.get(i).getAngle(), 1.0f, 255);
+    				drawSSprite(canvas, (int)flyingObjects.get(i).getX(), (int)flyingObjects.get(i).getY(), flyingObjects.get(i).getID(), flyingObjects.get(i).getCurrentFrame(), (float)flyingObjects.get(i).getAngle(), 0.5f, 255);
     			}
     			//update (klatki ++)
     			flyingObjects.get(i).update();
@@ -560,12 +560,9 @@ public class GameView extends SurfaceView{
     	if(info){
     		drawUpgrade(canvas, info_bmp);
     	}
-    	//rysowanie paska zycia
-    	//drawSprite(canvas, 246, 720, 1, 1, 128, 48, 0, lifebar_bmp, 0, 1.0f);
-		drawSSprite(canvas, 246, 720, 20, 0, 0, 1.0f, 255);
-    	for(int i = 0; i < player.getLife(); i++){
-    		drawSSprite(canvas, 214 + (i * 34), 720, 19, 0, 0, 1.0f, 255);
-    	}
+    	
+    	drawLife(canvas);
+    	
     	for(int i = flyingObjects.size()-1; i >= 0; i--){
 			//sprawdzamy czy obiekt "zyje"
 			if(flyingObjects.get(i).getLife() < 1){
@@ -656,6 +653,28 @@ public class GameView extends SurfaceView{
     	drawPoints(canvas);
     }
    
+    public void drawLife(Canvas canvas){
+    	//rysowanie paska zycia
+    	/**PORTRET***********************/
+    	//drawSSprite(canvas, 246, 720, 20, 0, 0, 1.0f, 255);
+    	//for(int i = 0; i < player.getLife(); i++){
+    		//drawSSprite(canvas, 214 + (i * 34), 720, 19, 0, 0, 1.0f, 255);
+    	//}
+    	/**LANDSCAPE**********************/
+    	//drawSSprite(canvas, 460, 50, 20, 0, 90, 1.0f, 255);
+    	//for(int i = 0; i < player.getLife(); i++){
+		drawSSprite(canvas, 460, 720, 19, 0, 90, 1.0f, 255);
+		canvas.save();
+		canvas.rotate(90, 440, 750);
+		paint.setColor(Color.RED);
+		paint.setAntiAlias(true);
+		paint.setTextSize(24.0f);
+		canvas.drawText(" x " + player.getLife(), 445, 740, paint);
+		canvas.restore();
+    	//}
+    	/***********************/
+    }
+    
 	public void resetTimer(){
     	world_timer = default_world_timer;
     }
@@ -1052,8 +1071,15 @@ public class GameView extends SurfaceView{
     	paint.setTextSize(20);
     	paint.setAntiAlias(true);
     	paint.setColor(Color.GREEN);
+    	/**PORTRET***********************/
+    	//int yPosition = 50;
+    	//int xPosition = 200;
+    	/**LANDSCAPE**********************/
     	int yPosition = 50;
-    	int xPosition = 200;
+    	int xPosition = 460;
+    	canvas.save();
+    	canvas.rotate(90, xPosition, yPosition);
+    	/***********************/
     	//jesli gracz zyje
     	if(player.getLife() > 0){
 	    	//jesli gracz ma wiecej niz 10k skroc liczbe punktow
@@ -1081,6 +1107,7 @@ public class GameView extends SurfaceView{
     		canvas.drawText("ZDOBYLES : " + player.getPoints()+ " PUNKTOW", earth.getX() - 64, earth.getY(), paint);
     		playermoving = false;
     	}
+    	canvas.restore();
     	paint.reset();
     }
     
