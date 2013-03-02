@@ -59,6 +59,11 @@ public class Options extends TabActivity {
         tabHost.getTabWidget().getChildAt(1).setBackgroundColor(Color.parseColor("#202020"));
         tabHost.getTabWidget().getChildAt(2).setBackgroundColor(Color.parseColor("#202020"));
         
+        //wielkosc zakaldek
+        for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++) {
+            tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 40;
+        } 
+        
         //usuniecie ramki tabhosta
         tabHost.getTabWidget().setStripEnabled(false);
     }
