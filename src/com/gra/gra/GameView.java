@@ -915,10 +915,17 @@ public class GameView extends SurfaceView{
     }
     
     public void drawUpgrade(Canvas canvas, Bitmap bmp){
+    	/**PORTRET***********************/
+    	//int x = 240;
+    	//int y = 40;
+    	/**LANDSCAPE**********************/
+    	int x = 440;
+    	int y = 400;
+    	canvas.save();
+    	canvas.rotate(90, x, y);
+    	/***********************/
     	int srcX = 0;
     	int srcY = 0;
-    	int x = 240;
-    	int y = 40;
     	int row;
     	if(info_life > 0){
     		info_life--;
@@ -945,6 +952,7 @@ public class GameView extends SurfaceView{
 			info_life = default_info_life;
 			info = false;
 		}
+		canvas.restore();
     }
     
     public void showAchievementInfo(achievementType type){
