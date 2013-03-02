@@ -38,10 +38,10 @@ public class Unit {
 		private double earth_gravity_multiplier;
 		private double earth_radius_multiplier; 	
 		
-		private long timer;
-		private long earth_timer;
-		private long armagedon_timer;
-		private long money_rain_timer;
+		private int timer;
+		private int earth_timer;
+		private int armagedon_timer;
+		private int money_rain_timer;
 		
 		//flaga ktorej ustawienie na true sprawia ze zmienuly sie statystyki ziemi
 		private boolean earth_stats_changed;
@@ -98,8 +98,8 @@ public class Unit {
 		
 		public Unit(float x, float y, int angle, double speed, int mass,
 				int radius, int currentFrame, double earth_gravity_multiplier,
-				double earth_radius_multiplier, long timer, long earth_timer,
-				long armagedon_timer, long money_rain_timer,
+				double earth_radius_multiplier, int timer, int earth_timer,
+				int armagedon_timer, int money_rain_timer,
 				boolean earth_stats_changed, double current_jump_power,
 				boolean on_ground, long points, int multiplier,
 				boolean armagedon, boolean money_rain, int life,
@@ -175,7 +175,7 @@ public class Unit {
 		}
 
 		public Unit(float x, float y, int angle, double speed, int mass,
-				int radius, int currentFrame, long timer, boolean suck_my_stats, double gravity) {
+				int radius, int currentFrame, int timer, boolean suck_my_stats, double gravity) {
 			this.x = x;
 			this.y = y;
 			this.angle = angle;
@@ -260,35 +260,35 @@ public class Unit {
 			this.earth_radius_multiplier = earth_radius_multiplier;
 		}
 
-		public long getTimer() {
+		public int getTimer() {
 			return timer;
 		}
 
-		public void setTimer(long timer) {
+		public void setTimer(int timer) {
 			this.timer = timer;
 		}
 
-		public long getEarth_timer() {
+		public int getEarth_timer() {
 			return earth_timer;
 		}
 
-		public void setEarth_timer(long earth_timer) {
+		public void setEarth_timer(int earth_timer) {
 			this.earth_timer = earth_timer;
 		}
 
-		public long getArmagedon_timer() {
+		public int getArmagedon_timer() {
 			return armagedon_timer;
 		}
 
-		public void setArmagedon_timer(long armagedon_timer) {
+		public void setArmagedon_timer(int armagedon_timer) {
 			this.armagedon_timer = armagedon_timer;
 		}
 
-		public long getMoney_rain_timer() {
+		public int getMoney_rain_timer() {
 			return money_rain_timer;
 		}
 
-		public void setMoney_rain_timer(long money_rain_timer) {
+		public void setMoney_rain_timer(int money_rain_timer) {
 			this.money_rain_timer = money_rain_timer;
 		}
 

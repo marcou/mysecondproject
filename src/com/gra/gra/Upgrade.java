@@ -11,7 +11,7 @@ public class Upgrade extends FlyingObject {
 	
 	private String tag;
 	
-	private long time;	//czas przez jaki upgrade dziala
+	private int time;	//czas przez jaki upgrade dziala
 	
 	private static int mass = 20;
 	private static int radius = 5;
@@ -145,11 +145,11 @@ public class Upgrade extends FlyingObject {
 		}
 	}
 	
-	public long getTime() {
+	public int getTime() {
 		return time;
 	}
 
-	public void setTime(long time) {
+	public void setTime(int time) {
 		this.time = time;
 	}
 	

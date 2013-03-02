@@ -28,11 +28,11 @@ public class Player implements Serializable{
 	private double earth_radius_multiplier = 1;		//mnoznik promienia ziemi  	
 	
 	//tajmery logiczne dla playera, ziemi, armagedonu i deszczu pieniedzy
-	private long timer = 0;	//czas po ktorym przestaja dzialac upgrady
-	private long earth_timer = 0;
-	private long armagedon_timer = 0;
-	private long money_rain_timer = 0;
-	private long immortality_timer = 0;
+	private int timer = 0;	//czas po ktorym przestaja dzialac upgrady
+	private int earth_timer = 0;
+	private int armagedon_timer = 0;
+	private int money_rain_timer = 0;
+	private int immortality_timer = 0;
 	
 	//flaga ktorej ustawienie na true sprawia ze zmienuly sie statystyki ziemi
 	private boolean earth_stats_changed = false;
@@ -76,7 +76,8 @@ public class Player implements Serializable{
 	private int alpha;
 	//zliczanie alphy w dol
 	private boolean alphaDown;
-	
+	//dlugosc niesmiertelnosci (potrzebna do zwiekszenia czestotliwosci migania)
+	private int immortalityStartTime;
 	//poziom upgrade wybranego gracza (3 statystyka jeza w opcjach). Wplywa na dlugosc
 	//money rain i armagedonu
 	private int upgradeLevel;
@@ -159,14 +160,14 @@ public class Player implements Serializable{
 	
 	public void immortalityGlow(){
 		if(alphaDown){
-			alpha -= 40;
+			alpha -=  (100 - (((double)immortality_timer/2) / (double)immortalityStartTime) * 100.0);
 			if(alpha < 100) {
 				alpha = 100;
 				alphaDown = false;
 			}
 		}
 		else{
-			alpha += 40;
+			alpha += (100 - ((double)immortality_timer / (double)immortalityStartTime) * 100.0);
 			if(alpha > 255){
 				alpha = 255;
 				alphaDown = true;
@@ -180,10 +181,11 @@ public class Player implements Serializable{
 		this.earth_radius = radius;
 	}
 	
-	public void setUpgrade(long time, double radius, double multiplier, double speed, double jump_power, double sucking_range, boolean immortality, int player_life){
+	public void setUpgrade(int time, double radius, double multiplier, double speed, double jump_power, double sucking_range, boolean immortality, int player_life){
 		this.timer = time;
 		if(immortality){
 			this.immortality_timer = time;
+			this.immortalityStartTime = time;
 		}
 		this.radius *= radius;
 		this.multiplier *= multiplier;
@@ -384,9 +386,10 @@ public class Player implements Serializable{
 		}
 	}
 	
-	public void immortal(long time){
+	public void immortal(int time){
 		this.immortal = true;
 		this.immortality_timer = time;
+		this.immortalityStartTime = time;
 	}
 	
 	public void setPoints(long points){
@@ -495,7 +498,7 @@ public class Player implements Serializable{
 		return timer;
 	}
 
-	public void setTimer(long timer) {
+	public void setTimer(int timer) {
 		this.timer = timer;
 	}
 	public void resetUpgrade(){
@@ -530,27 +533,27 @@ public class Player implements Serializable{
 		this.money_rain = money_rain;
 	}
 
-	public long getArmagedon_timer() {
+	public int getArmagedon_timer() {
 		return armagedon_timer;
 	}
 
-	public void setArmagedon_timer(long armagedon_timer) {
+	public void setArmagedon_timer(int armagedon_timer) {
 		this.armagedon_timer = armagedon_timer;
 	}
 
-	public long getMoney_rain_timer() {
+	public int getMoney_rain_timer() {
 		return money_rain_timer;
 	}
 
-	public void setMoney_rain_timer(long money_rain_timer) {
+	public void setMoney_rain_timer(int money_rain_timer) {
 		this.money_rain_timer = money_rain_timer;
 	}
 	
-	public long getImmortality_timer() {
+	public int getImmortality_timer() {
 		return immortality_timer;
 	}
 
-	public void setImmortality_timer(long immortality_timer) {
+	public void setImmortality_timer(int immortality_timer) {
 		this.immortality_timer = immortality_timer;
 	}
 
