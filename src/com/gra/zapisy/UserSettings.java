@@ -26,7 +26,7 @@ public class UserSettings implements Serializable {
 	//liczba rozegranych gier
 	private int gamesPlayed;
 	//statystyki postaci 			|BITMAP|SPEED|LIFE|UPGRADE|
-	private  int[][] playerStats= {{R.drawable.jez1,1,1,1},{R.drawable.jez2,5,1,1},{R.drawable.jez3,1,3,1},{R.drawable.jez4,2,1,3},{R.drawable.jez3,5,1,1},{R.drawable.jez4,3,4,1}};
+	private  int[][] playerStats= {{R.drawable.jez1,1,1,1},{R.drawable.jez2,3,1,1},{R.drawable.jez3,1,3,1},{R.drawable.jez4,2,2,3},{R.drawable.jez3,2,5,5},{R.drawable.jez4,5,3,5}};
 	//statystyki planety			|BITMAP|GRAVITY|SIZE|
 	private  int[][] earthStats= {{R.drawable.ziemia1,1,1},{R.drawable.ziemia2,5,5},{R.drawable.ziemia3,1,3},{R.drawable.ziemia1,2,1},{R.drawable.ziemia2,4,1},{R.drawable.ziemia3,3,3}};
 	//informacje o acziwmentach

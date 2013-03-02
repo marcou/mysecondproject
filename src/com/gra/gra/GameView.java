@@ -1103,8 +1103,16 @@ public class GameView extends SurfaceView{
     			settings.addGamesPlayed();
     			playerFinishedGame = true;
     		}
+    		/**PORTRET***********************/
+//    		canvas.drawText("UMARLES! " , earth.getX() - 32, earth.getY() - 32, paint); 
+//    		canvas.drawText("ZDOBYLES : " + player.getPoints()+ " PUNKTOW", earth.getX() - 64, earth.getY(), paint);
+        	/**LANDSCAPE**********************/
+    		canvas.restore();
+    		canvas.rotate(90, earth.getX() - 32, earth.getY() - 32);
     		canvas.drawText("UMARLES! " , earth.getX() - 32, earth.getY() - 32, paint); 
     		canvas.drawText("ZDOBYLES : " + player.getPoints()+ " PUNKTOW", earth.getX() - 64, earth.getY(), paint);
+        	/***********************/
+    		
     		playermoving = false;
     	}
     	canvas.restore();
@@ -1156,7 +1164,7 @@ public class GameView extends SurfaceView{
 			player.set_earth(earth.getX(), earth.getY(), earth.getRadius());
 			player.setY((float)(earth.getY() - earth.getRadius() - player.getRadius()));
 			//predkosc gracza
-			player.setSpeed( 1.5 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 0.8 - (settings.getEarthStats()[settings.getEarth()][2])/2);
+			player.setSpeed( 2.2 + (double)settings.getPlayerStats()[settings.getCharacter()][1] * 0.8 - (settings.getEarthStats()[settings.getEarth()][2])/2);
 			player.setDefault_speed(player.getSpeed());
 			//zycie gracza
 			player.setLife(settings.getPlayerStats()[settings.getCharacter()][2]);
