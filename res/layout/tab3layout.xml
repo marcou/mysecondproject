@@ -3,126 +3,113 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="361dp"
-        android:layout_marginTop="20dp" >
-
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_weight="0.8">
-
-            <ImageView
-                android:id="@+id/tab3_row1col1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:src="@drawable/ziemia3" />
-
-            <ImageView
-                android:id="@+id/tab3_row1col2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:src="@drawable/ziemia3" />
-
-            <ImageView
-                android:id="@+id/tab3_row1col3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:src="@drawable/ziemia3" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_weight="0.6">
-
-            <ImageView
-                android:id="@+id/tab3_row2col1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ziemia3" />
-
-            <ImageView
-                android:id="@+id/tab3_row2col2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ziemia3" />
-
-            <ImageView
-                android:id="@+id/tab3_row2col3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ziemia3" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_weight="0.4">
-
-            <ImageView
-                android:id="@+id/tab3_row3col1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ziemia3" />
-
-            <ImageView
-                android:id="@+id/tab3_row3col2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ziemia3" />
-
-            <ImageView
-                android:id="@+id/tab3_row3col3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/ziemia3" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/tab3_row4col1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ziemia3" android:layout_weight="0.8"/>
-
-            <ImageView
-                android:id="@+id/tab3_row4col2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/jez3" android:layout_weight="0.1"/>
-
-            <ImageView
-                android:id="@+id/tab3_row4col3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ziemia3" android:layout_weight="0.8"/>
-
-        </TableRow>
-    </TableLayout>
-
+
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="44dp" >
+
+        <ImageView
+            android:id="@+id/tab3_row1col1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/ziemia3" />
+
+        <ImageView
+            android:id="@+id/tab3_row1col2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/ziemia3" />
+
+        <ImageView
+            android:id="@+id/tab3_row3col3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:src="@drawable/ziemia3" />
+
+        <ImageView
+            android:id="@+id/tab3_row2col1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:src="@drawable/ziemia3" />
+
+        <ImageView
+            android:id="@+id/tab3_row1col3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/ziemia3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp" >
+
+        <ImageView
+            android:id="@+id/tab3_row3col1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:src="@drawable/ziemia3" />
+
+        <ImageView
+            android:id="@+id/tab3_row2col2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:src="@drawable/ziemia3" />
+
+        <ImageView
+            android:id="@+id/tab3_row4col1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:src="@drawable/ziemia3" />
+
+        <ImageView
+            android:id="@+id/tab3_row2col3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/ziemia3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="76dp" >
+
+        <ImageView
+            android:id="@+id/tab3_row3col2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/ziemia3" />
+
+        <ImageView
+            android:id="@+id/tab3_row4col2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:src="@drawable/jez3" />
+
+        <ImageView
+            android:id="@+id/tab3_row4col3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:src="@drawable/ziemia3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp" >
+        android:layout_gravity="center_horizontal" >
 
         <ImageView
             android:id="@+id/tab3_achievementPreview"

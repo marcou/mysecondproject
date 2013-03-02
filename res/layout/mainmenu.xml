@@ -32,63 +32,44 @@
 
         <LinearLayout
             android1:layout_width="match_parent"
-            android1:layout_height="wrap_content"
-            android1:layout_marginTop="50dp"
-            android1:orientation="vertical" >
+            android1:layout_height="wrap_content" >
+
+            <Button
+                android1:id="@+id/Resume"
+                android1:layout_width="match_parent"
+                android1:layout_height="wrap_content"
+                android1:layout_weight="0.30"
+                android1:background="@drawable/resume" />
+
+            <Button
+                android1:id="@+id/StartNew"
+                android1:layout_width="match_parent"
+                android1:layout_height="wrap_content"
+                android1:layout_weight="0.30"
+                android1:background="@drawable/newgame" />
+
+            <Button
+                android1:id="@+id/Options"
+                android1:layout_width="match_parent"
+                android1:layout_height="wrap_content"
+                android1:layout_weight="0.3"
+                android1:background="@drawable/options"
+                android1:text=" " />
+
         </LinearLayout>
-
-        <Button
-            android1:id="@+id/Resume"
-            android1:layout_width="match_parent"
-            android1:layout_height="wrap_content"
-            android1:layout_marginLeft="60dp"
-            android1:layout_marginRight="60dp"
-            android1:layout_weight="0.20"
-            android1:background="@drawable/resume" />
-
-        <LinearLayout
-            android1:layout_width="match_parent"
-            android1:layout_height="wrap_content"
-            android1:layout_marginTop="50dp"
-            android1:orientation="vertical" >
-        </LinearLayout>
-
-        <Button
-            android1:id="@+id/StartNew"
-            android1:layout_width="match_parent"
-            android1:layout_height="wrap_content"
-            android1:layout_marginLeft="60dp"
-            android1:layout_marginRight="60dp"
-            android1:layout_weight="0.20"
-            android1:background="@drawable/newgame" />
-
-        <LinearLayout
-            android1:layout_width="match_parent"
-            android1:layout_height="wrap_content"
-            android1:layout_marginTop="50dp"
-            android1:orientation="vertical" >
-        </LinearLayout>
-
-        <Button
-            android1:id="@+id/Options"
-            android1:layout_width="match_parent"
-            android1:layout_height="wrap_content"
-            android1:layout_marginLeft="60dp"
-            android1:layout_marginRight="60dp"
-            android1:layout_weight="0.17"
-            android1:background="@drawable/options"
-            android1:text=" " />
 
         <LinearLayout
             android1:layout_width="match_parent"
             android1:layout_height="wrap_content"
             android1:layout_weight="0.45"
             android1:orientation="vertical" >
-
+
             <RadioGroup
                 android1:id="@+id/mainMenu_radioButtons"
                 android1:layout_width="wrap_content"
-                android1:layout_height="wrap_content" android1:clickable="true">
+                android1:layout_height="wrap_content"
+                android1:layout_gravity="center_horizontal"
+                android1:clickable="true" >
 
                 <RadioButton
                     android1:id="@+id/mainMenu_radioButton1"
