@@ -68,6 +68,7 @@ public class GameView extends SurfaceView{
 	private Paint paint;
 	
 	private boolean playermoving = false;
+	@SuppressWarnings("unused")
 	private boolean playerjumping = false;
 	private boolean clockwisedirection;
 	
@@ -1156,6 +1157,7 @@ public class GameView extends SurfaceView{
 	    	earth.setDefault_gravity(earth.getGravity());
 	    	earth.setDefault_radius(earth.getRadius());
 	    	//tekstura
+	    	Log.d("GameView", "TEKSTURA ZIEMI : " + settings.getEarthStats()[settings.getEarth()][0]);
 			earth_bmp = BitmapFactory.decodeResource(getResources(), settings.getEarthStats()[settings.getEarth()][0]);
 			bitmaps.put(3, earth_bmp);
 	    	
