@@ -90,12 +90,13 @@ public class AchievementsHolder implements Serializable{
 
 	public achievementType addUpgrade(upgradeType type){
 		//achievementType zwracany przez metode
-		achievementType acvType = null;
+		achievementType acvType = achievementType.collector;
 		//collector
 		allUpgrades[type.ordinal()] = true;
 		collector = true;
 		for(int i = 0; i < upgradeType.values().length; i++){
 			if(allUpgrades[i] == false){
+				acvType = null;
 				collector = false;
 				break;
 			}
@@ -111,23 +112,31 @@ public class AchievementsHolder implements Serializable{
 		if(oneGameUpgrades % 30 == 0) upgrades30++;
 		//Upgrade Novice 
 		if(oneGameUpgrades >= 5){
-			upgradeNovice = true;
-			acvType = achievementType.novice;
+			if(!upgradeNovice){
+				upgradeNovice = true;
+				acvType = achievementType.novice;
+			}
 		}
 		//Upgrade Apprentice 
 		if(upgrades10 >= 2){
-			upgradeApprentice = true;
-			acvType = achievementType.apprentice;
+			if(!upgradeApprentice){
+				upgradeApprentice = true;
+				acvType = achievementType.apprentice;
+			}
 		}
 		//Upgrade Adept 
 		if(upgrades20 >= 3){
-			upgradeAdept = true;
-			acvType = achievementType.adept;
+			if(!upgradeAdept){
+				upgradeAdept = true;
+				acvType = achievementType.adept;
+			}
 		}
 		//Upgrade Master 
 		if(upgrades30 >= 4){
-			upgradeMaster = true;
-			acvType = achievementType.master;
+			if(!upgradeMaster){
+				upgradeMaster = true;
+				acvType = achievementType.master;
+			}
 		}
 		return acvType;
 	}
@@ -139,13 +148,18 @@ public class AchievementsHolder implements Serializable{
 			deaths++;
 			//I see dead people
 			if(deaths >= 100){
-				iSeeDeadPeople = true;
-				acvType = achievementType.isdp;
+				if(!isiSeeDeadPeople()){
+					iSeeDeadPeople = true;
+					acvType = achievementType.isdp;
+				}
+				
 			}
 			//Walking dead
 			if(deaths >= 1000){
-				walkingDead = true;
-				acvType = achievementType.dead;
+				if(!walkingDead){
+					walkingDead = true;
+					acvType = achievementType.dead;
+				}
 			}
 			playerAlreadyDead = true;
 		}
@@ -157,12 +171,16 @@ public class AchievementsHolder implements Serializable{
 		achievementType acvType = null;
 		hearts++;
 		if(hearts >= 50){
-			lover = true;
-			acvType = achievementType.lover;
+			if(!lover){
+				lover = true;
+				acvType = achievementType.lover;
+			}
 		}
 		if(hearts >= 250){
-			casanova = true;
-			acvType = achievementType.casanova;
+			if(!casanova){
+				casanova = true;
+				acvType = achievementType.casanova;
+			}
 		}
 		return acvType;
 	}
@@ -172,8 +190,10 @@ public class AchievementsHolder implements Serializable{
 		achievementType acvType = null;
 		aliens++;
 		if(aliens >= 5){
-			alienInvasion = true;
-			acvType = achievementType.alien;
+			if(!alienInvasion){
+				alienInvasion = true;
+				acvType = achievementType.alien;
+			}
 		}
 		return acvType;
 	}
@@ -183,8 +203,10 @@ public class AchievementsHolder implements Serializable{
 		achievementType acvType = null;
 		duck++;
 		if(duck >= 10){
-			duckHunter = true;
-			acvType = achievementType.duck;
+			if(!duckHunter){
+				duckHunter = true;
+				acvType = achievementType.duck;
+			}
 		}
 		return acvType;
 	}
