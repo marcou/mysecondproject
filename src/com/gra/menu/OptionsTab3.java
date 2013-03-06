@@ -58,7 +58,6 @@ public class OptionsTab3
 	private int array[][];
 	
 	
-	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab3layout);
