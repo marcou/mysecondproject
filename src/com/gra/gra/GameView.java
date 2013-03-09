@@ -12,12 +12,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.gra.R;
+import com.gra.R.raw;
 import com.gra.zapisy.AchievementsHolder;
 import com.gra.zapisy.UserSettings;
 import com.gra.zapisy.achievementType;
@@ -88,6 +90,8 @@ public class GameView extends SurfaceView{
 	private HashMap<Integer, Bitmap> bitmaps;
 	//Tablica zawierajaca liczbe kolumn i wierszy (dla animacji) ID rowne temu z hashmapy
 	private int[][] bitmapProperties;
+	//mediaplayer do odgrywania dzwiekow
+	private MediaPlayer mediaPlayer;
 	
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
@@ -326,6 +330,10 @@ public class GameView extends SurfaceView{
     	info_frames = bitmapProperties[11][0] * bitmapProperties[11][1] - 1; 
     	
     	achievements = new AchievementsHolder();
+    	
+    	mediaPlayer = MediaPlayer.create(getContext(), R.raw.maintheme);
+    	mediaPlayer.setVolume(0.5f, 0.5f);
+    	mediaPlayer.start();
     }
     
     @Override
