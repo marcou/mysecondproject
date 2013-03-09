@@ -90,8 +90,10 @@ public class GameView extends SurfaceView{
 	private HashMap<Integer, Bitmap> bitmaps;
 	//Tablica zawierajaca liczbe kolumn i wierszy (dla animacji) ID rowne temu z hashmapy
 	private int[][] bitmapProperties;
-	//mediaplayer do odgrywania dzwiekow
+	//mediaplayer do odgrywania glownej melodyjki
 	private MediaPlayer mediaPlayer;
+	//FXPlayer do odtwarzania efektow dzwiekowych (wybuchy i inne)
+	private FXPlayer fx;
 	
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
@@ -331,11 +333,18 @@ public class GameView extends SurfaceView{
     	
     	achievements = new AchievementsHolder();
     	
-    	mediaPlayer = MediaPlayer.create(getContext(), R.raw.maintheme);
-    	mediaPlayer.setVolume(0.5f, 0.5f);
-    	mediaPlayer.start();
+    	prepareSounds();
     }
-    
+
+    private void prepareSounds() {
+    	mediaPlayer = MediaPlayer.create(getContext(), R.raw.maintheme);
+    	mediaPlayer.setVolume(0.1f, 0.1f);
+    	//mediaPlayer.start();
+    	
+    	fx = new FXPlayer(10, getContext());
+    	fx.addSound(0, R.raw.expl);
+    	
+	}
     @Override
     public void onDraw(Canvas canvas) {
     	//jesli player zdobyl ponad 1000 punktow to dodawany zostaje kolec (przeciwnik)
@@ -493,6 +502,7 @@ public class GameView extends SurfaceView{
     			if(!((Asteroid) flyingObjects.get(i)).isExploded()){
     				temps.add(new TempSprite(temps, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), tempType.explosion));
     				((Asteroid) flyingObjects.get(i)).setExploded(true);
+    				fx.playSound(0);
     			}
     			if(flyingObjects.get(i).isOn_ground() && flyingObjects.get(i) instanceof MoneyAsteroid){
         			int size = flyingObjects.size();
@@ -507,6 +517,7 @@ public class GameView extends SurfaceView{
     				//jesli koliduja ze soba 2 asteroidy to dodaj wybuch
     				if(flyingObjects.get(i) instanceof Asteroid && flyingObjects.get(j) instanceof Asteroid){
     					temps.add(new TempSprite(temps,flyingObjects.get(j).getX() - (flyingObjects.get(j).getX() - flyingObjects.get(i).getX())/2, flyingObjects.get(j).getY() - (flyingObjects.get(j).getY() - flyingObjects.get(i).getY())/2, tempType.explosion));
+    					fx.playSound(0);
     				}
     				//rozwiazanie kolizji
     				flyingObjects.get(j).resolveCollision(flyingObjects.get(i));
