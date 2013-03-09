@@ -516,8 +516,16 @@ public class GameView extends SurfaceView{
     			if(flyingObjects.get(i).checkCollision(flyingObjects.get(j).getX(), flyingObjects.get(j).getY(), flyingObjects.get(j).getRadius())){
     				//jesli koliduja ze soba 2 asteroidy to dodaj wybuch
     				if(flyingObjects.get(i) instanceof Asteroid && flyingObjects.get(j) instanceof Asteroid){
-    					temps.add(new TempSprite(temps,flyingObjects.get(j).getX() - (flyingObjects.get(j).getX() - flyingObjects.get(i).getX())/2, flyingObjects.get(j).getY() - (flyingObjects.get(j).getY() - flyingObjects.get(i).getY())/2, tempType.explosion));
-    					fx.playSound(0);
+    					//jesli obiekty sa widoczne
+    					if(checkIfInArea(flyingObjects.get(i)) || checkIfInArea(flyingObjects.get(j))){
+    						//dodaj wybuch
+	    					temps.add(new TempSprite(temps,flyingObjects.get(j).getX() - (flyingObjects.get(j).getX() - flyingObjects.get(i).getX())/2, flyingObjects.get(j).getY() - (flyingObjects.get(j).getY() - flyingObjects.get(i).getY())/2, tempType.explosion));
+	    					//oblicz odleglosc od ziemi i wedlug niej odwtorz dzwiek z glosnoscia
+	    					//odwrotnie propocjonalna do niej
+	    					float distance = (float)(Math.pow(Math.pow((earth.getX() - flyingObjects.get(i).getX()), 2) + Math.pow((earth.getY() - flyingObjects.get(i).getY()), 2),0.5))/400.0f;
+	    					Log.d("GameView", "DISTANCE : " + distance);
+	    					fx.playVolumeSound(0, distance);
+    					}
     				}
     				//rozwiazanie kolizji
     				flyingObjects.get(j).resolveCollision(flyingObjects.get(i));

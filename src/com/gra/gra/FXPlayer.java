@@ -43,6 +43,11 @@ public class FXPlayer {
 		 mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f);
 	 }
 	 
+	 public void playVolumeSound(int index, float volume){
+		 volume = volume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		 mSoundPool.play(mSoundPoolMap.get(index), volume, volume, 0, 0, 1f);
+	 }
+	 
 	 // Returns the stream id of the sound.
 	 public int playLoopedSound(int index){
 		 float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
