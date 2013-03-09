@@ -343,6 +343,7 @@ public class GameView extends SurfaceView{
     	
     	fx = new FXPlayer(10, getContext());
     	fx.addSound(0, R.raw.expl);
+    	fx.addSound(1, R.raw.achievement_collected);
     	
 	}
     @Override
@@ -988,6 +989,8 @@ public class GameView extends SurfaceView{
     		Log.d("GameView", "Jednak nie");
     		return;
     	}
+    	//odegraj dzwiek ktory oznacza ze gracz zdobyl achievement
+    	fx.playSound(1, 0.3f);
     	//wyzerowanie frame-a i life-a
     	info_current_frame = 0;
     	info_life = default_info_life;
