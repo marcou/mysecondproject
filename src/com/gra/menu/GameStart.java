@@ -91,6 +91,9 @@ public class GameStart extends Activity {
 	protected void onStop() 
     {
         super.onStop();
+        if(view != null){
+    		view.releaseSounds();
+    	}
         Log.d("GameActivity", "MYonStop is called");
         //saveState();
         finish();
@@ -99,6 +102,9 @@ public class GameStart extends Activity {
 	
 	protected void onPause() {
     	super.onPause();
+    	if(view != null){
+    		view.releaseSounds();
+    	}
     	Log.d("GameActivity", "MYonPause is called");
     	saveState();
     	resuming=true; //so that on resume you can read in last state

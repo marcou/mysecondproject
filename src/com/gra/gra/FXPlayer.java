@@ -43,7 +43,8 @@ public class FXPlayer {
 		 mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f);
 	 }
 	 
-	 public void playVolumeSound(int index, float volume){
+	 public void playSound(int index, float volume){
+		 if(volume <= 0.0f) return;
 		 volume = volume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		 mSoundPool.play(mSoundPoolMap.get(index), volume, volume, 0, 0, 1f);
 	 }
