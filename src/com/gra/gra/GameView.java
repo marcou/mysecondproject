@@ -159,6 +159,7 @@ public class GameView extends SurfaceView{
                public void surfaceCreated(SurfaceHolder holder) {
             	   createSprites();
             	   createGenerator();
+            	   //prepareSounds();
             	   thread.setRunning(true);
             	   thread.start();
 	            }
@@ -332,8 +333,6 @@ public class GameView extends SurfaceView{
     	info_frames = bitmapProperties[11][0] * bitmapProperties[11][1] - 1; 
     	
     	achievements = new AchievementsHolder();
-    	
-    	prepareSounds();
     }
 
     public void prepareSounds() {
