@@ -503,7 +503,7 @@ public class GameView extends SurfaceView{
     			if(!((Asteroid) flyingObjects.get(i)).isExploded()){
     				temps.add(new TempSprite(temps, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), tempType.explosion));
     				((Asteroid) flyingObjects.get(i)).setExploded(true);
-    				fx.playSound(0, 1.0f);
+    				fx.playSound(0, 0.2f);
     			}
     			if(flyingObjects.get(i).isOn_ground() && flyingObjects.get(i) instanceof MoneyAsteroid){
         			int size = flyingObjects.size();
