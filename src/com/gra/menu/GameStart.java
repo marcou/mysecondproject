@@ -114,7 +114,6 @@ public class GameStart extends Activity {
 	protected void onResume() {
         super.onResume();
         Log.d("GameActivity", "!jestem w GameActivity.onResume()");
-        
         if (resuming) { //only if the game is being resumed, o/w the game that's sitting in the save file is not relevant
         	readSavedState();
         	Log.d("GameActivity", "read last saved state");

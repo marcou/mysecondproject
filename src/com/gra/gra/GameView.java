@@ -336,7 +336,7 @@ public class GameView extends SurfaceView{
     	prepareSounds();
     }
 
-    private void prepareSounds() {
+    public void prepareSounds() {
     	mediaPlayer = MediaPlayer.create(getContext(), R.raw.maintheme);
     	mediaPlayer.setVolume(0.1f, 0.1f);
     	mediaPlayer.setLooping(true);
@@ -503,7 +503,7 @@ public class GameView extends SurfaceView{
     			if(!((Asteroid) flyingObjects.get(i)).isExploded()){
     				temps.add(new TempSprite(temps, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), tempType.explosion));
     				((Asteroid) flyingObjects.get(i)).setExploded(true);
-    				fx.playSound(0, 0.5f);
+    				fx.playSound(0, 1.0f);
     			}
     			if(flyingObjects.get(i).isOn_ground() && flyingObjects.get(i) instanceof MoneyAsteroid){
         			int size = flyingObjects.size();
@@ -523,7 +523,7 @@ public class GameView extends SurfaceView{
 	    					temps.add(new TempSprite(temps,flyingObjects.get(j).getX() - (flyingObjects.get(j).getX() - flyingObjects.get(i).getX())/2, flyingObjects.get(j).getY() - (flyingObjects.get(j).getY() - flyingObjects.get(i).getY())/2, tempType.explosion));
 	    					//oblicz odleglosc od ziemi i wedlug niej odwtorz dzwiek z glosnoscia
 	    					//odwrotnie propocjonalna do niej
-	    					float distance = (float)(Math.pow(Math.pow((earth.getX() - flyingObjects.get(i).getX()), 2) + Math.pow((earth.getY() - flyingObjects.get(i).getY()), 2),0.5))/800.0f;
+	    					float distance = (400.0f - (float)(Math.pow(Math.pow((earth.getX() - flyingObjects.get(i).getX()), 2) + Math.pow((earth.getY() - flyingObjects.get(i).getY()), 2),0.5)))/400.0f;
 	    					Log.d("GameView", "DISTANCE : " + distance);
 	    					fx.playSound(0, distance);
     					}
