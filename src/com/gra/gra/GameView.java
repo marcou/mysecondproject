@@ -598,14 +598,14 @@ public class GameView extends SurfaceView{
     				}
     				//jesli obiekt to asteroida lub asterodia z kasa 
     				else if(flyingObjects.get(i) instanceof Asteroid || flyingObjects.get(i) instanceof MoneyAsteroid){
-    					//gracz stracil zycie wiec wlacz dzwiek starty zycia
-    					fx.playSound(20, 0.5f);
+    					//gracz stracil zycie wiec wlacz dzwiek starty zycia (jesli nie jest neismeirtelny)
+    					if(!player.isImmortal()) fx.playSound(20, 0.2f);
     					//to sprawdz czy gracz dostal w locie (duck hunter achievement)
     					if(!player.isOn_ground()) showAchievementInfo(achievements.addDuck());
     				}
-    				//jelsi gracz uderzyl w kolec to tez zagraj odpowiedni dzwiek
+    				//jelsi gracz uderzyl w kolec to tez zagraj odpowiedni dzwiek (jesli nie jest neismeirtelny)
     				else if(flyingObjects.get(i) instanceof GroundEnemy){
-    					fx.playSound(20, 0.5f);
+    					if(!player.isImmortal()) fx.playSound(20, 0.2f);
     				}
         			player.resolveCollision(flyingObjects.get(i));
         		}
