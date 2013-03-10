@@ -348,13 +348,18 @@ public class GameView extends SurfaceView{
     	//mediaPlayer.start();
     	
     	fx = new FXPlayer(10, getContext());
+    	
     	fx.addSound(0, R.raw.expl1);
     	fx.addSound(1, R.raw.expl2);
     	fx.addSound(2, R.raw.expl3);
     	
     	fx.addSound(10, R.raw.achievement_collected);
+    	
     	fx.addSound(20, R.raw.life_lost);
+    	fx.addSound(21, R.raw.death);
+    	
     	fx.addSound(30, R.raw.jump);
+    	
     	fx.addSound(40, R.raw.immortality);
     	
 	}
@@ -593,10 +598,14 @@ public class GameView extends SurfaceView{
     				}
     				//jesli obiekt to asteroida lub asterodia z kasa 
     				else if(flyingObjects.get(i) instanceof Asteroid || flyingObjects.get(i) instanceof MoneyAsteroid){
-    					//gracz stracil zycie wiec wlacz bicie serca
-    					fx.playSound(20, 5.0f);
+    					//gracz stracil zycie wiec wlacz dzwiek starty zycia
+    					fx.playSound(20, 0.5f);
     					//to sprawdz czy gracz dostal w locie (duck hunter achievement)
     					if(!player.isOn_ground()) showAchievementInfo(achievements.addDuck());
+    				}
+    				//jelsi gracz uderzyl w kolec to tez zagraj odpowiedni dzwiek
+    				else if(flyingObjects.get(i) instanceof GroundEnemy){
+    					fx.playSound(20, 0.5f);
     				}
         			player.resolveCollision(flyingObjects.get(i));
         		}
@@ -1164,6 +1173,7 @@ public class GameView extends SurfaceView{
     	else{
     		achievements.addDeath();
     		if(!playerFinishedGame){
+    			fx.playSound(21, 0.5f);
     			settings.addGamesPlayed();
     			playerFinishedGame = true;
     		}
