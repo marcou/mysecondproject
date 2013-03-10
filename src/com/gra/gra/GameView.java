@@ -345,7 +345,7 @@ public class GameView extends SurfaceView{
     	mediaPlayer = MediaPlayer.create(getContext(), R.raw.maintheme);
     	mediaPlayer.setVolume(0.1f, 0.1f);
     	mediaPlayer.setLooping(false);
-    	//mediaPlayer.start();
+    	mediaPlayer.start();
     	
     	fx = new FXPlayer(10, getContext());
     	

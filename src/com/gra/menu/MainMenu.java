@@ -81,7 +81,7 @@ public class MainMenu extends Activity {
 			}
 		});
         
-        Button showScoreButton = (Button)findViewById(R.id.HighScore);
+        Button showScoreButton = (Button)findViewById(R.id.mainmenu_highscore);
         showScoreButton.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {

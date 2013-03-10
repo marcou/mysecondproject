@@ -57,12 +57,19 @@
             android1:layout_height="wrap_content" >
 
             <Button
+                android1:id="@+id/mainmenu_highscore"
+                android1:layout_width="wrap_content"
+                android1:layout_height="wrap_content"
+                android1:layout_weight="0.3"
+                android1:background="@drawable/highscore" />
+
+            <Button
                 android1:id="@+id/Options"
                 android1:layout_width="wrap_content"
                 android1:layout_height="wrap_content"
                 android1:layout_weight="0.3"
                 android1:background="@drawable/options"
-                android1:text=" " android1:layout_marginLeft="150dp" android1:layout_marginRight="150dp"/>
+                android1:text=" " />
 
         </LinearLayout>
 
@@ -79,14 +86,14 @@
                     android1:id="@+id/mainMenu_radioButtons"
                     android1:layout_width="wrap_content"
                     android1:layout_height="wrap_content"
-                    android1:clickable="true" android1:orientation="horizontal">
+                    android1:clickable="true" android1:orientation="horizontal" android1:layout_gravity="center_vertical|center_horizontal">
 
                     <RadioButton
                         android1:id="@+id/mainMenu_radioButton3"
                         android1:layout_width="wrap_content"
                         android1:layout_height="wrap_content"
                         android1:checked="false"
-                        android1:text="10k points" />
+                        android1:text="10k points"/>
 
                     <RadioButton
                         android1:id="@+id/mainMenu_radioButton2"
@@ -103,13 +110,6 @@
                         android1:text="0 points" />
 
                 </RadioGroup>
-
-                <Button
-                    android1:id="@+id/HighScore"
-                    android1:layout_width="wrap_content"
-                    android1:layout_height="wrap_content"
-                    android1:layout_weight="0.3"
-                    android1:background="@drawable/highscore" />
 
             </LinearLayout>
 
