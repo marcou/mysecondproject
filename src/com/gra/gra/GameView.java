@@ -338,16 +338,23 @@ public class GameView extends SurfaceView{
     public void prepareSounds() {
     	mediaPlayer = MediaPlayer.create(getContext(), R.raw.maintheme);
     	mediaPlayer.setVolume(0.1f, 0.1f);
-    	mediaPlayer.setLooping(true);
+    	mediaPlayer.setLooping(false);
     	mediaPlayer.start();
     	
     	fx = new FXPlayer(10, getContext());
     	fx.addSound(0, R.raw.expl);
     	fx.addSound(1, R.raw.achievement_collected);
+    	fx.addSound(2, R.raw.life_lost);
     	
 	}
     @Override
     public void onDraw(Canvas canvas) {
+    	//jesli skonczyla sie melodyjka to skocz do odpowiedniej ms
+    	if(mediaPlayer != null && mediaPlayer.isPlaying()){
+	    	if(mediaPlayer.getCurrentPosition() >= 113485){
+	    		mediaPlayer.seekTo(33070);
+	    	}
+    	}
     	//jesli player zdobyl ponad 1000 punktow to dodawany zostaje kolec (przeciwnik)
     	if(!thorn && player.getPoints() > 1000){
     		flyingObjects.add(new GroundEnemy(flyingObjects, -64, -64, 1, player.getAngle() + 180, 1, 10));
@@ -990,7 +997,7 @@ public class GameView extends SurfaceView{
     		return;
     	}
     	//odegraj dzwiek ktory oznacza ze gracz zdobyl achievement
-    	fx.playSound(1, 0.3f);
+    	fx.playSound(1, 0.2f);
     	//wyzerowanie frame-a i life-a
     	info_current_frame = 0;
     	info_life = default_info_life;
@@ -1230,7 +1237,26 @@ public class GameView extends SurfaceView{
     }
     
     public void releaseSounds(){
-    	mediaPlayer.release();
+    	/*
+    	  try{
+    		  if(mediaPlayer!=null && mediaPlayer.isPlaying()){
+    		 Log.d("TAG------->", "player is running");
+    		 mediaPlayer.stop();
+    		 Log.d("Tag------->", "player is stopped");
+    		 mediaPlayer.release();
+    		 Log.d("TAG------->", "player is released");
+
+    		     }
+    		 }catch(Exception e){
+    		     }
+    		     */
+    	if(mediaPlayer != null){
+    		if(mediaPlayer.isPlaying()){
+    			mediaPlayer.stop();
+    		}
+    		mediaPlayer.release();
+    		mediaPlayer = null;
+    	}
     	fx.release();
     }
     
