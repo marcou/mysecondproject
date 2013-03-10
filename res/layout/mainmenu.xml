@@ -54,14 +54,7 @@
 
         <LinearLayout
             android1:layout_width="match_parent"
-            android1:layout_height="wrap_content" >
-
-            <Button
-                android1:id="@+id/mainmenu_highscore"
-                android1:layout_width="wrap_content"
-                android1:layout_height="wrap_content"
-                android1:layout_weight="0.3"
-                android1:background="@drawable/highscore" />
+            android1:layout_height="wrap_content" android1:layout_marginTop="20dp">
 
             <Button
                 android1:id="@+id/Options"
@@ -71,16 +64,25 @@
                 android1:background="@drawable/options"
                 android1:text=" " />
 
+            <Button
+                android1:id="@+id/mainmenu_highscore"
+                android1:layout_width="wrap_content"
+                android1:layout_height="wrap_content"
+                android1:layout_weight="0.3"
+                android1:background="@drawable/highscore" />
+
         </LinearLayout>
 
         <LinearLayout
             android1:layout_width="match_parent"
             android1:layout_height="wrap_content"
             android1:orientation="vertical" >
-
+
             <LinearLayout
                 android1:layout_width="match_parent"
-                android1:layout_height="wrap_content" >
+                android1:layout_height="wrap_content"
+                android1:layout_gravity="center_vertical|center_horizontal"
+                android1:layout_marginLeft="60dp" >
 
                 <RadioGroup
                     android1:id="@+id/mainMenu_radioButtons"
