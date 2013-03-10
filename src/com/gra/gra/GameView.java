@@ -3,6 +3,7 @@ package com.gra.gra;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import aasmieci.Ball;
 import android.content.Context;
@@ -94,7 +95,8 @@ public class GameView extends SurfaceView{
 	private MediaPlayer mediaPlayer;
 	//FXPlayer do odtwarzania efektow dzwiekowych (wybuchy i inne)
 	private FXPlayer fx;
-	
+	//Random przydatny do odtwarzania zmienncyh dzwiekow
+	private Random rand;
 	/*
 	 * ZESTAW BITMAP DO RYSOWANIA WRAZ Z DANYMI (LICZBA KOLUMN I RZEDOW)
 	 */
@@ -335,6 +337,8 @@ public class GameView extends SurfaceView{
     	achievements = new AchievementsHolder();
     	
     	flyingObjects.add(new Upgrade(flyingObjects, 240, 100, 1, 0, upgradeType.immortality));
+    	
+    	rand = new Random();
     }
 
     public void prepareSounds() {
@@ -344,11 +348,14 @@ public class GameView extends SurfaceView{
     	//mediaPlayer.start();
     	
     	fx = new FXPlayer(10, getContext());
-    	fx.addSound(0, R.raw.expl);
-    	fx.addSound(1, R.raw.achievement_collected);
-    	fx.addSound(2, R.raw.life_lost);
-    	fx.addSound(3, R.raw.jump);
-    	fx.addSound(4, R.raw.immortality);
+    	fx.addSound(0, R.raw.expl1);
+    	fx.addSound(1, R.raw.expl2);
+    	fx.addSound(2, R.raw.expl3);
+    	
+    	fx.addSound(10, R.raw.achievement_collected);
+    	fx.addSound(20, R.raw.life_lost);
+    	fx.addSound(30, R.raw.jump);
+    	fx.addSound(40, R.raw.immortality);
     	
 	}
     @Override
@@ -514,7 +521,7 @@ public class GameView extends SurfaceView{
     			if(!((Asteroid) flyingObjects.get(i)).isExploded()){
     				temps.add(new TempSprite(temps, flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), tempType.explosion));
     				((Asteroid) flyingObjects.get(i)).setExploded(true);
-    				fx.playSound(0, 0.2f);
+    				fx.playSound(rand.nextInt(3), 0.2f);
     			}
     			if(flyingObjects.get(i).isOn_ground() && flyingObjects.get(i) instanceof MoneyAsteroid){
         			int size = flyingObjects.size();
@@ -534,9 +541,9 @@ public class GameView extends SurfaceView{
 	    					temps.add(new TempSprite(temps,flyingObjects.get(j).getX() - (flyingObjects.get(j).getX() - flyingObjects.get(i).getX())/2, flyingObjects.get(j).getY() - (flyingObjects.get(j).getY() - flyingObjects.get(i).getY())/2, tempType.explosion));
 	    					//oblicz odleglosc od ziemi i wedlug niej odwtorz dzwiek z glosnoscia
 	    					//odwrotnie propocjonalna do niej
-	    					float distance = (400.0f - (float)(Math.pow(Math.pow((earth.getX() - flyingObjects.get(i).getX()), 2) + Math.pow((earth.getY() - flyingObjects.get(i).getY()), 2),0.5)))/400.0f;
+	    					float distance = (400.0f - (float)(Math.pow(Math.pow((earth.getX() - flyingObjects.get(i).getX()), 2) + Math.pow((earth.getY() - flyingObjects.get(i).getY()), 2),0.5)))/800.0f;
 	    					Log.d("GameView", "DISTANCE : " + distance);
-	    					fx.playSound(0, distance);
+	    					fx.playSound(rand.nextInt(3), distance);
     					}
     				}
     				//rozwiazanie kolizji
@@ -577,7 +584,7 @@ public class GameView extends SurfaceView{
     				if(flyingObjects.get(i) instanceof Upgrade){
     					upgradeType tp = ((Upgrade) flyingObjects.get(i)).getType();
     					if(tp == upgradeType.immortality){
-    						fx.playSound(4, 0.5f);
+    						fx.playSound(40, 0.5f);
     					}
     					showInfo(tp);
     					drawUpgrade(canvas, info_speed);
@@ -587,7 +594,7 @@ public class GameView extends SurfaceView{
     				//jesli obiekt to asteroida lub asterodia z kasa 
     				else if(flyingObjects.get(i) instanceof Asteroid || flyingObjects.get(i) instanceof MoneyAsteroid){
     					//gracz stracil zycie wiec wlacz bicie serca
-    					fx.playSound(2, 5.0f);
+    					fx.playSound(20, 5.0f);
     					//to sprawdz czy gracz dostal w locie (duck hunter achievement)
     					if(!player.isOn_ground()) showAchievementInfo(achievements.addDuck());
     				}
@@ -819,7 +826,7 @@ public class GameView extends SurfaceView{
         	       	
         	else if (downT) {
         		if (y>=400 && player.isOn_ground()) {
-        			fx.playSound(3, 0.3f);
+        			fx.playSound(30, 0.3f);
 	        		player.jump();
 	    			playerjumping = true;
 	    			achievementLog();
@@ -1008,7 +1015,7 @@ public class GameView extends SurfaceView{
     		return;
     	}
     	//odegraj dzwiek ktory oznacza ze gracz zdobyl achievement
-    	fx.playSound(1, 0.2f);
+    	fx.playSound(10, 0.2f);
     	//wyzerowanie frame-a i life-a
     	info_current_frame = 0;
     	info_life = default_info_life;
