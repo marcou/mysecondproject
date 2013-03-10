@@ -333,6 +333,8 @@ public class GameView extends SurfaceView{
     	info_frames = bitmapProperties[11][0] * bitmapProperties[11][1] - 1; 
     	
     	achievements = new AchievementsHolder();
+    	
+    	flyingObjects.add(new Upgrade(flyingObjects, 240, 100, 1, 0, upgradeType.immortality));
     }
 
     public void prepareSounds() {
@@ -346,6 +348,7 @@ public class GameView extends SurfaceView{
     	fx.addSound(1, R.raw.achievement_collected);
     	fx.addSound(2, R.raw.life_lost);
     	fx.addSound(3, R.raw.jump);
+    	fx.addSound(4, R.raw.immortality);
     	
 	}
     @Override
@@ -572,7 +575,11 @@ public class GameView extends SurfaceView{
     			if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), false)){
     				//jesli obiekt to upgrade to wyswietlane jest info o tym upgradzie
     				if(flyingObjects.get(i) instanceof Upgrade){
-    					showInfo(((Upgrade) flyingObjects.get(i)).getType());
+    					upgradeType tp = ((Upgrade) flyingObjects.get(i)).getType();
+    					if(tp == upgradeType.immortality){
+    						fx.playSound(4, 0.5f);
+    					}
+    					showInfo(tp);
     					drawUpgrade(canvas, info_speed);
     					//dodaj achievement (podniesiony upgrade)
     					showAchievementInfo(achievements.addUpgrade(((Upgrade) flyingObjects.get(i)).getType()));
@@ -812,7 +819,7 @@ public class GameView extends SurfaceView{
         	       	
         	else if (downT) {
         		if (y>=400 && player.isOn_ground()) {
-        			fx.playSound(3, 0.5f);
+        			fx.playSound(3, 0.3f);
 	        		player.jump();
 	    			playerjumping = true;
 	    			achievementLog();
