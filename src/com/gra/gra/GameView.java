@@ -339,12 +339,13 @@ public class GameView extends SurfaceView{
     	mediaPlayer = MediaPlayer.create(getContext(), R.raw.maintheme);
     	mediaPlayer.setVolume(0.1f, 0.1f);
     	mediaPlayer.setLooping(false);
-    	mediaPlayer.start();
+    	//mediaPlayer.start();
     	
     	fx = new FXPlayer(10, getContext());
     	fx.addSound(0, R.raw.expl);
     	fx.addSound(1, R.raw.achievement_collected);
     	fx.addSound(2, R.raw.life_lost);
+    	fx.addSound(3, R.raw.jump);
     	
 	}
     @Override
@@ -576,8 +577,11 @@ public class GameView extends SurfaceView{
     					//dodaj achievement (podniesiony upgrade)
     					showAchievementInfo(achievements.addUpgrade(((Upgrade) flyingObjects.get(i)).getType()));
     				}
-    				//jesli obiekt to asteroida lub asterodia z kasa to sprawdz czy gracz dostal w locie (duck hunter achievement)
+    				//jesli obiekt to asteroida lub asterodia z kasa 
     				else if(flyingObjects.get(i) instanceof Asteroid || flyingObjects.get(i) instanceof MoneyAsteroid){
+    					//gracz stracil zycie wiec wlacz bicie serca
+    					fx.playSound(2, 5.0f);
+    					//to sprawdz czy gracz dostal w locie (duck hunter achievement)
     					if(!player.isOn_ground()) showAchievementInfo(achievements.addDuck());
     				}
         			player.resolveCollision(flyingObjects.get(i));
@@ -749,7 +753,6 @@ public class GameView extends SurfaceView{
     
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-    	
     	int touchInd = event.getActionIndex();
     	float x = event.getX(touchInd)/ this.w_factor;
         float y = event.getY(touchInd) / this.h_factor;
@@ -809,6 +812,7 @@ public class GameView extends SurfaceView{
         	       	
         	else if (downT) {
         		if (y>=400 && player.isOn_ground()) {
+        			fx.playSound(3, 0.5f);
 	        		player.jump();
 	    			playerjumping = true;
 	    			achievementLog();
