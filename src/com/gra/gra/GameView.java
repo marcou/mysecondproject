@@ -576,9 +576,10 @@ public class GameView extends SurfaceView{
     		//zasysanie monety w locie
     		else if(flyingObjects.get(i) instanceof Money && !flyingObjects.get(i).isOn_ground()){
     			if(player.checkCollision(flyingObjects.get(i).getX(), flyingObjects.get(i).getY(), flyingObjects.get(i).getRadius(), false)){
-    				if(settings.getScore() < player.getPoints()){
-    					settings.setScore(player.getPoints());
-    				}
+//    				if(settings.getScore() < player.getPoints()){ //serio kurwa to czea spawdzac przy KAZDEJ monecie?
+//    					settings.setScore(player.getPoints());
+//    					Log.d("GAMEVIEW NEW HISCORE: ", Long.toString(player.getPoints()));
+//    				}
 					player.resolveCollision(flyingObjects.get(i));
 				}
     		}

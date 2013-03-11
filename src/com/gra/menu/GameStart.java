@@ -141,6 +141,9 @@ public class GameStart extends Activity {
 		SaveContainer savedstate = new SaveContainer(view.getPlayer(), view.getFlyingObjects());
         saver.save(savedstate);
         UserSettings settings = view.getSettings();
+        if(settings.getScore() < view.getPlayer().getPoints()){ 
+			settings.setScore(view.getPlayer().getPoints());
+        }
         settings.setAchievements(view.getAchievements());
         saver.saveSettings(settings, "user_settings");
         Log.d("GameActivity", "SAVED STATE");

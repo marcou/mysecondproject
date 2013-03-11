@@ -4,8 +4,10 @@
     android:id="@+id/widget32"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android1:gravity="center_horizontal" >
-
+    android1:gravity="center_horizontal" 
+    >
+
+
     <LinearLayout
         android1:layout_width="wrap_content"
         android1:layout_height="wrap_content"
@@ -72,12 +74,16 @@
                 android1:background="@drawable/highscore" />
 
         </LinearLayout>
-
+
+
+
+
         <LinearLayout
             android1:layout_width="match_parent"
             android1:layout_height="wrap_content"
             android1:orientation="vertical" >
-
+
+
             <LinearLayout
                 android1:layout_width="match_parent"
                 android1:layout_height="wrap_content"

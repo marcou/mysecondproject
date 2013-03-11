@@ -92,11 +92,11 @@ public class Earth {
 //	}
 	
 	public boolean checkCollision(float x, float y){
-		Log.d("Earth", "this.x : " + this.x);
-		Log.d("Earth", "this.y : " + this.y);
-		Log.d("Earth", "x : " + x);
-		Log.d("Earth", "y : " + y);
-		Log.d("Earth", "radius : " + this.radius);
+//		Log.d("Earth", "this.x : " + this.x);
+//		Log.d("Earth", "this.y : " + this.y);
+//		Log.d("Earth", "x : " + x);
+//		Log.d("Earth", "y : " + y);
+//		Log.d("Earth", "radius : " + this.radius);
 		if(Math.pow(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2), 0.5) <= this.radius){
 			return true;
 		}

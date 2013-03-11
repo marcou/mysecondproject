@@ -27,6 +27,7 @@ public class MainMenu extends Activity {
 	SaveContainer savedstate;
 	UserSettings settings;
 	private boolean canresume = false;
+	private boolean canUpdate = false;
 	
     /** Called when the activity is first created. */
     @Override
@@ -69,6 +70,8 @@ public class MainMenu extends Activity {
         if(settings != null){
         	score.setText(Long.toString(settings.getScore()));
         }
+        
+        canUpdate = true;
         
         score.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
         scoreTitle.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
@@ -132,6 +135,10 @@ public class MainMenu extends Activity {
 	    settings = saver.readSettings("user_settings");
 	//    if (settings == null) settings = new UserSettings(); //in case it's a first game or something -> przeniesione do gameview
 	    canresume = (savedstate!=null);
+	    if(settings != null && canUpdate){ //dodane zeby sie aktualizowal hiscore przy wyjsciu do menu
+        	score.setText(Long.toString(settings.getScore()));
+        	Log.d("MainMenu","hiscore: " + Long.toString(settings.getScore()));
+        }
 		}
 	
 	protected void onResume() {
