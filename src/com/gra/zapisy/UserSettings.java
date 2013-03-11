@@ -35,6 +35,10 @@ public class UserSettings implements Serializable {
 	private AchievementsHolder achievements;
 	//wynik gracza
 	private long score;
+	//wlaczonoa muzyka
+	private boolean music;
+	//wlaczone dzwieki
+	private boolean fx;
 	
 	public UserSettings(){
 		character = 0;
@@ -46,6 +50,8 @@ public class UserSettings implements Serializable {
 		gamesPlayed = 0;
 		score = 0;
 		achievements = new AchievementsHolder();
+		this.music = true;
+		this.fx = true;
 	}
 	
 	public UserSettings(int character, int earth, boolean acelerometer,
@@ -57,6 +63,9 @@ public class UserSettings implements Serializable {
 		this.progress = progress;
 		this.maxProgress = maxProgress;
 		achievements = new AchievementsHolder();
+		
+		this.music = true;
+		this.fx = true;
 	}
 
 	public int getCharacter() {
@@ -222,5 +231,20 @@ public class UserSettings implements Serializable {
 	public void setGamesPlayed(int gamesPlayed) {
 		this.gamesPlayed = gamesPlayed;
 	}
-	
+
+	public boolean isMusic() {
+		return music;
+	}
+
+	public void setMusic(boolean music) {
+		this.music = music;
+	}
+
+	public boolean isFx() {
+		return fx;
+	}
+
+	public void setFx(boolean fx) {
+		this.fx = fx;
+	}
 }

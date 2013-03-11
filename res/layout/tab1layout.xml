@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.04" >
+        android:layout_weight="0.04"
+        android:gravity="left" >
 
         <RadioGroup
             android:id="@+id/radioGroup1"

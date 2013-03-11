@@ -15,6 +15,8 @@ public class FXPlayer {
 	 private AudioManager mAudioManager;
 	 private Context mContext;
 	 private int channels = 1;
+	 //czy fx dzialaja
+	 private boolean enabled = true;
 	 
 	 public FXPlayer(Context theContext){
 		 initSounds(theContext);
@@ -38,12 +40,14 @@ public class FXPlayer {
 	 }
 	 
 	 public void playSound(int index){
+		 if(!enabled) return;
 		 float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		 streamVolume = streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		 mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f);
 	 }
 	 
 	 public void playSound(int index, float volume){
+		 if(!enabled) return;
 		 if(volume <= 0.0f) return;
 		 float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		 volume = (streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)) * volume;
@@ -73,4 +77,12 @@ public class FXPlayer {
 			 mSoundPool = null;
 		 }
 	 }
+
+	public void disable() {
+		this.enabled = false;
+	}
+	
+	public void enable(){
+		this.enabled = true;
+	}
 }

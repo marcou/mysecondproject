@@ -20,7 +20,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.gra.R;
-import com.gra.R.raw;
 import com.gra.zapisy.AchievementsHolder;
 import com.gra.zapisy.UserSettings;
 import com.gra.zapisy.achievementType;
@@ -342,13 +341,12 @@ public class GameView extends SurfaceView{
     }
 
     public void prepareSounds() {
+    	
     	mediaPlayer = MediaPlayer.create(getContext(), R.raw.maintheme);
     	mediaPlayer.setVolume(0.1f, 0.1f);
     	mediaPlayer.setLooping(false);
-    	mediaPlayer.start();
     	
     	fx = new FXPlayer(10, getContext());
-    	
     	fx.addSound(0, R.raw.expl1);
     	fx.addSound(1, R.raw.expl2);
     	fx.addSound(2, R.raw.expl3);
@@ -590,7 +588,7 @@ public class GameView extends SurfaceView{
     				if(flyingObjects.get(i) instanceof Upgrade){
     					upgradeType tp = ((Upgrade) flyingObjects.get(i)).getType();
     					if(tp == upgradeType.immortality){
-    						fx.playSound(40, 0.5f);
+    						fx.playSound(40, 0.2f);
     					}
     					showInfo(tp);
     					drawUpgrade(canvas, info_speed);
@@ -600,13 +598,13 @@ public class GameView extends SurfaceView{
     				//jesli obiekt to asteroida lub asterodia z kasa 
     				else if(flyingObjects.get(i) instanceof Asteroid || flyingObjects.get(i) instanceof MoneyAsteroid){
     					//gracz stracil zycie wiec wlacz dzwiek starty zycia (jesli nie jest neismeirtelny)
-    					if(!player.isImmortal()) fx.playSound(20, 0.2f);
+    					if(!player.isImmortal()) fx.playSound(20, 0.1f);
     					//to sprawdz czy gracz dostal w locie (duck hunter achievement)
     					if(!player.isOn_ground()) showAchievementInfo(achievements.addDuck());
     				}
     				//jelsi gracz uderzyl w kolec to tez zagraj odpowiedni dzwiek (jesli nie jest neismeirtelny)
     				else if(flyingObjects.get(i) instanceof GroundEnemy){
-    					if(!player.isImmortal()) fx.playSound(20, 0.2f);
+    					if(!player.isImmortal()) fx.playSound(20, 0.1f);
     				}
         			player.resolveCollision(flyingObjects.get(i));
         		}
@@ -1262,6 +1260,11 @@ public class GameView extends SurfaceView{
 				//klatki animacji dla obiektow latajacych
 	    		flyingObjects.get(i).setFrames(bitmapProperties[flyingObjects.get(i).getID()][0] * bitmapProperties[flyingObjects.get(i).getID()][1] - 1);
 			}
+			//DZWIEKI
+			if(settings.isFx()) fx.disable();
+			else fx.enable();
+			if(settings.isMusic()) mediaPlayer.stop();
+			else mediaPlayer.start();
     	}
     }
     

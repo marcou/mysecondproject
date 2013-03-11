@@ -4,9 +4,7 @@
     android:id="@+id/widget32"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android1:gravity="center_horizontal" 
-    >
-
+    android1:gravity="center_horizontal" >
 
     <LinearLayout
         android1:layout_width="wrap_content"
@@ -16,6 +14,25 @@
         android1:layout_alignParentRight="true"
         android1:layout_alignParentTop="true"
         android1:orientation="vertical" >
+
+        <LinearLayout
+            android1:layout_width="match_parent"
+            android1:layout_height="wrap_content" >
+
+            <CheckBox
+                android1:id="@+id/music"
+                android1:layout_width="wrap_content"
+                android1:layout_height="wrap_content"
+                android1:button="@drawable/fx_selector" android1:checked="true"/>
+
+            <CheckBox
+                android1:id="@+id/fx"
+                android1:layout_width="wrap_content"
+                android1:layout_height="wrap_content"
+                android1:layout_gravity="right"
+                android1:button="@drawable/music_selector" android1:checked="true"/>
+
+        </LinearLayout>
 
         <TextView
             android1:id="@+id/ScoreTitle"
@@ -51,12 +68,12 @@
                 android1:layout_height="wrap_content"
                 android1:layout_weight="0.30"
                 android1:background="@drawable/newgame" />
-
         </LinearLayout>
 
         <LinearLayout
             android1:layout_width="match_parent"
-            android1:layout_height="wrap_content" android1:layout_marginTop="20dp">
+            android1:layout_height="wrap_content"
+            android1:layout_marginTop="20dp" >
 
             <Button
                 android1:id="@+id/Options"
@@ -72,17 +89,12 @@
                 android1:layout_height="wrap_content"
                 android1:layout_weight="0.3"
                 android1:background="@drawable/highscore" />
-
         </LinearLayout>
-
-
-
 
         <LinearLayout
             android1:layout_width="match_parent"
             android1:layout_height="wrap_content"
             android1:orientation="vertical" >
-
 
             <LinearLayout
                 android1:layout_width="match_parent"
@@ -94,14 +106,16 @@
                     android1:id="@+id/mainMenu_radioButtons"
                     android1:layout_width="wrap_content"
                     android1:layout_height="wrap_content"
-                    android1:clickable="true" android1:orientation="horizontal" android1:layout_gravity="center_vertical|center_horizontal">
+                    android1:layout_gravity="center_vertical|center_horizontal"
+                    android1:clickable="true"
+                    android1:orientation="horizontal" >
 
                     <RadioButton
                         android1:id="@+id/mainMenu_radioButton3"
                         android1:layout_width="wrap_content"
                         android1:layout_height="wrap_content"
                         android1:checked="false"
-                        android1:text="10k points"/>
+                        android1:text="10k points" />
 
                     <RadioButton
                         android1:id="@+id/mainMenu_radioButton2"
@@ -116,11 +130,8 @@
                         android1:layout_height="wrap_content"
                         android1:checked="true"
                         android1:text="0 points" />
-
                 </RadioGroup>
-
             </LinearLayout>
-
         </LinearLayout>
 
     </LinearLayout>

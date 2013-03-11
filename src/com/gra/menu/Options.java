@@ -40,7 +40,7 @@ public class Options extends TabActivity {
         controlls.setContent(controllsIntent);
  
         TabSpec progress = tabHost.newTabSpec("Progress");
-        progress.setIndicator("Progress", getResources().getDrawable(R.drawable.heart));
+        progress.setIndicator("Progress", getResources().getDrawable(R.drawable.jez));
         Intent progressIntent = new Intent(this, OptionsTab2.class);
         progress.setContent(progressIntent);
  

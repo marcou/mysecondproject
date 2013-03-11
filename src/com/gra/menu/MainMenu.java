@@ -11,6 +11,8 @@ import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -61,6 +63,24 @@ public class MainMenu extends Activity {
 		        }
 			}
 		});
+        
+        CheckBox music = (CheckBox) findViewById(R.id.music);
+        music.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+     	   public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+     		   if(isChecked) settings.setMusic(false);
+     		   else settings.setMusic(true);
+     	   }
+     	});
+        
+        CheckBox fx = (CheckBox) findViewById(R.id.fx);
+        fx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+     	   public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+     		   if(isChecked) settings.setFx(false);
+     		   else settings.setFx(true);
+     	   }
+     	});
         
         TextView scoreTitle = (TextView) findViewById(R.id.ScoreTitle);
         
