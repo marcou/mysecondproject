@@ -1,4 +1,4 @@
-package com.gra.menu;
+package com.gra.options;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -61,7 +61,7 @@ public class Options extends TabActivity {
         
         //wielkosc zakaldek
         for (int i = 0; i < tabHost.getTabWidget().getTabCount(); i++) {
-            tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 40;
+            tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 80;
         } 
         
         //usuniecie ramki tabhosta

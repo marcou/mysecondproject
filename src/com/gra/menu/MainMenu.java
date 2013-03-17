@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.gra.R;
+import com.gra.options.Options;
 import com.gra.zapisy.SaveContainer;
 import com.gra.zapisy.SaveService;
 import com.gra.zapisy.UserSettings;

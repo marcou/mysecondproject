@@ -1,4 +1,4 @@
-package com.gra.menu;
+package com.gra.options;
 
 
 
@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.gra.R;
+import com.gra.menu.ImageAdapter;
 import com.gra.zapisy.SaveService;
 import com.gra.zapisy.UserSettings;
 
