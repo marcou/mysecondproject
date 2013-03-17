@@ -70,6 +70,9 @@ public class GameStart extends Activity {
 				view.setFlyingObjects(savedstate.getObjects());
 				
 				view.setThorn(true); //rozwiazanie tymczasowe, za bardzo mnie wkurwialy te kolce
+				//Wkurwienie [wkurwienie] caly czas cos sie dzieje! 
+				//Na kazdej przecznicy sflustrowane uderzenie. 
+				//Stac na winklu rozpracowac wszystko na tacy podac...
 				
 			}
 			else {
