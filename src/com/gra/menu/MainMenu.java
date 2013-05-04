@@ -160,7 +160,7 @@ public class MainMenu extends Activity {
         	score.setText(Long.toString(settings.getScore()));
         	Log.d("MainMenu","hiscore: " + Long.toString(settings.getScore()));
         }
-		}
+	}
 	
 	protected void onResume() {
 		super.onResume();
