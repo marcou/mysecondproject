@@ -333,7 +333,9 @@ public class GameView extends SurfaceView{
     	//klatki informacji
     	info_frames = bitmapProperties[11][0] * bitmapProperties[11][1] - 1; 
     	
-    	achievements = new AchievementsHolder();
+    	if(achievements == null){
+    		achievements = new AchievementsHolder();
+    	}
     	
     	flyingObjects.add(new Upgrade(flyingObjects, 240, 100, 1, 0, upgradeType.immortality));
     	
@@ -1220,8 +1222,8 @@ public class GameView extends SurfaceView{
 	}
     
     public void updateGameSettings(){
-    	Log.d("GAMEVIEW", "WSZEDLEM DO UPDATESETTINGS");
     	if(settings != null){
+    		Log.d("GAMEVIEW", "WSZEDLEM DO UPDATESETTINGS");
     		//ZIEMIA
 	    	earth.setRadius(20 + (settings.getEarthStats()[settings.getEarth()][2]) * 15);
 	    	earth.setGravity(2.0 + (double)settings.getEarthStats()[settings.getEarth()][1] * 0.4);
@@ -1373,6 +1375,8 @@ public class GameView extends SurfaceView{
 			Log.d("GameView", "SETTINGSow nie ma");
 			this.settings = new UserSettings();
 		}
+		Log.d("GameView", "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		Log.d("GameView", "Achievemenmt DUCK : " + settings.getAchievements().getDuck());
 		this.achievements=settings.getAchievements();
 	}
 
@@ -1409,6 +1413,12 @@ public class GameView extends SurfaceView{
 	 */
 	public void setPoints(int points) {
 		this.startPoints = points;
+	}
+
+	public void resetTemporaryAchievements() {
+		if(settings != null){
+			settings.getAchievements().clearTemporaryData();
+		}
 	}
 }
     

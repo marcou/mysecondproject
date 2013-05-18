@@ -74,16 +74,23 @@ public class GameStart extends Activity {
 				//Na kazdej przecznicy sflustrowane uderzenie. 
 				//Stac na winklu rozpracowac wszystko na tacy podac...
 				
+				view.setSettings((UserSettings) extras.get("SETTINGS"));
+				Log.d("KURWISKO", "PUNKTY : " + points);
+				view.setPoints(points);
 			}
 			else {
 				view = new GameView(this,w_factor, h_factor);
 				//view.getPlayer().setPoints(points);
+				
+				view.setSettings((UserSettings) extras.get("SETTINGS"));
+				//zresetuj tymczasowe achievementy (zebrane upgrady)
+				view.resetTemporaryAchievements();
+				Log.d("KURWISKO", "PUNKTY : " + points);
+				view.setPoints(points);
 			}
-			view.setSettings((UserSettings) extras.get("SETTINGS")) ;
-			Log.d("KURWISKO", "PUNKTY : " + points);
-			view.setPoints(points);
         }
         else {
+        	Log.d("GameStart", "TEORETYCZNEIU NIE POWINIEN TUTAJ WEJSC KURWIORZ");
         	view = new GameView(this,w_factor, h_factor);
         	//view.getPlayer().setPoints(points);
         }
@@ -107,6 +114,7 @@ public class GameStart extends Activity {
     	super.onPause();
     	if(view != null){
     		view.releaseSounds();
+    		Log.d("GameStart", "DUCK : " + view.getAchievements().getDuck());
     	}
     	Log.d("GameActivity", "MYonPause is called");
     	saveState();
@@ -122,11 +130,8 @@ public class GameStart extends Activity {
         Log.d("GameActivity", "!jestem w GameActivity.onResume()");
         if (resuming) { //only if the game is being resumed, o/w the game that's sitting in the save file is not relevant
         	readSavedState();
-        	Log.d("GameActivity", "read last saved state");
-            
+        	Log.d("GameActivity", "read last saved state");        
         }
-		
-		
     }
 	
 	
@@ -136,11 +141,9 @@ public class GameStart extends Activity {
 		SaveContainer lastState = saver.readLastState();
 		view.setFlyingObjects(lastState.getObjects());
 		view.setPlayer(lastState.getPlayer());
-		
 	}
 
 	private void saveState() {
-		
 		SaveContainer savedstate = new SaveContainer(view.getPlayer(), view.getFlyingObjects());
         saver.save(savedstate);
         UserSettings settings = view.getSettings();

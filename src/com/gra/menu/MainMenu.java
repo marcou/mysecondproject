@@ -96,6 +96,7 @@ public class MainMenu extends Activity {
         
         score.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
         scoreTitle.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+        
         Button ShowOptions = (Button)findViewById(R.id.Options);
         ShowOptions.setOnClickListener(new OnClickListener() {
 			
@@ -136,8 +137,8 @@ public class MainMenu extends Activity {
         	}
         });
   
-        Button OptionsButton = (Button)findViewById(R.id.StartNew);
-        OptionsButton.setOnClickListener(new OnClickListener() {
+        Button startNew = (Button)findViewById(R.id.StartNew);
+        startNew.setOnClickListener(new OnClickListener() {
         	
         	//@Override
 			public void onClick(View v) {

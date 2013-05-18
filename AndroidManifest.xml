@@ -23,10 +23,10 @@
         <activity android:name=".menu.TimeAttack"
          android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".menu.Options" android:screenOrientation="landscape"></activity>
-        <activity android:name=".menu.OptionsTab1" android:screenOrientation="landscape"></activity>
-        <activity android:name=".menu.OptionsTab2" android:screenOrientation="landscape"></activity>
-        <activity android:name=".menu.OptionsTab3" android:screenOrientation="landscape"></activity>
+        <activity android:name=".options.Options" android:screenOrientation="landscape"></activity>
+        <activity android:name=".options.OptionsTab1" android:screenOrientation="landscape"></activity>
+        <activity android:name=".options.OptionsTab2" android:screenOrientation="landscape"></activity>
+        <activity android:name=".options.OptionsTab3" android:screenOrientation="landscape"></activity>
         <activity android:name=".menu.HighScoreMenu" android:screenOrientation="landscape"></activity>
 
     </application>
